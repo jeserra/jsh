@@ -3,14 +3,14 @@
 
     <div class="data-visualization-container">
       <p class="module-title">
-        <v-icon>account_balance</v-icon>Usuarios
+        <v-icon>account_balance</v-icon>Banco de Alimentos
       </p>
       <div class="table">
         <v-client-table class="table" :data="data" :columns="columnNames" :name="'myTable'"></v-client-table>
       </div>
     </div>
 
-    <v-btn absolute dark fab bottom right color="green" :to="'/nuevo-usuario'">
+    <v-btn absolute dark fab bottom right color="green">
       <v-icon>add</v-icon>
     </v-btn>
 
@@ -23,7 +23,7 @@
   export default {
     data () {
       return {
-        usersURL: "http://localhost:5000/api/usuarios",
+        banksURL: "http://localhost:5000/api/bancos",
 
         dataUrl: undefined,
         data: [],
@@ -31,20 +31,20 @@
       }
     },
     methods:{
-      getUsersInformation: function(){
-        this.dataUrl = this.usersURL;
-      },   
+      getBanksInformation: function(){
+        this.dataUrl = this.banksURL;
+      },
       loadData: function(){
+
         axios({ method: "GET", "url": this.dataUrl }).then(result => {
-            console.log(result.request.response)
+            
             var rawData = result.request.response;
             var parsedData = JSON.parse(rawData);            
             var cleanData = parsedData.data;
-
             var dataKeys = [];
 
-            var showAs = ["Nombre", "Tipo", "Curso", "Grupo", "Ciudad"];
-            var valuesToRecover = ["nombre", ["tipoUsuario","tipo"], ["curso","nombre"], "grupo", ["direccion","ciudad"]];
+            var showAs = ["Nombre", "Región", "Estado", "Ciudad"];
+            var valuesToRecover = ["nombre", ["region","nombre"], ["direccion","estado"], ["direccion","ciudad"]];
 
             if(showAs.length != valuesToRecover.length){
               return "ERROR: Arrays 'showAs' and 'valuesToRecover' in method loadData() have different sizes";
@@ -80,7 +80,7 @@
       },
     },
     mounted: function(){
-      this.getUsersInformation();
+      this.getBanksInformation();
       this.loadData();
     },
     watch: {      

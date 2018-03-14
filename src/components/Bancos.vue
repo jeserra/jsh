@@ -32,7 +32,7 @@
         </ul>
       </div>
     </div>
-    <v-btn fixed fab bottom right color="primary">
+    <v-btn fixed fab bottom right color="primary" :to="'/nuevo-banco'">
       <v-icon>add</v-icon>
     </v-btn>
 
