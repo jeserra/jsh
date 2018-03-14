@@ -130,6 +130,7 @@ export default {
   },
   created() {
     this.getData();
+  },
   components: {
     StarRating,
   },
