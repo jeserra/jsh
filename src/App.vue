@@ -64,9 +64,6 @@
         <v-layout justify-center align-center>
           <v-flex text-xs-center>
 
-            [componentes dinamicos]
-            <router-view></router-view>
-            [componentes dinamicos]
             <router-view></router-view>
 
           </v-flex>
@@ -104,7 +101,8 @@
   }
 </script>
 
-<style type="text/css">
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped type="text/css">
   .selected{
     background-color: green;
   }

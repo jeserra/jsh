@@ -11,7 +11,13 @@ import 'vuetify/dist/vuetify.min.css' // Ensure you are using css-loader
 // main.styl
 //import ('vuetify/src/stylus/main.styl') // Ensure you are using stylus-loader
 
+// Vue tables
+import {ServerTable, ClientTable, Event} from 'vue-tables-2';
+Vue.use(ClientTable);
+
 import Home from './components/Home.vue';
+import Bancos from './components/Bancos.vue';
+import Usuarios from './components/Usuarios.vue';
 
 Vue.use(VueRouter);
 Vue.config.productionTip = false;
@@ -19,8 +25,8 @@ Vue.config.productionTip = false;
 const routes = [
 	{path: '/', component: Home},
 	{path: '/inicio', component: Home, name: "inicio" },
-	{path: '/bancos', component: Home, name: "bancos" },
-	{path: '/usuarios', component: Home, name: "usuarios" },
+	{path: '/bancos', component: Bancos, name: "bancos" },
+	{path: '/usuarios', component: Usuarios, name: "usuarios" },
 ];
 
 const router = new VueRouter({
