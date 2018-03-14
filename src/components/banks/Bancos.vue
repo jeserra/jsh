@@ -59,16 +59,21 @@ export default {
       ],
     };
   },
+  methods:{
+    getData(){
+      axios({
+        method: 'GET',
+        url: this.banksURL,
+      }).then((response) => {
+        this.items = response.data.data;
+        console.log(response.data.data);
+      }).catch((e) => {
+        this.errors.push(e);
+      });
+    }
+  },
   created() {
-    axios({
-      method: 'GET',
-      url: this.banksURL,
-    }).then((response) => {
-      this.items = response.data.data;
-      console.log(response.data.data);
-    }).catch((e) => {
-      this.errors.push(e);
-    });
+    this.getData();
   },
 };
 </script>
