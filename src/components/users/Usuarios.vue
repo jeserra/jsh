@@ -6,11 +6,27 @@
         <v-icon>account_balance</v-icon>Usuarios
       </p>
       <div class="table">
-        <v-client-table class="table" :data="data" :columns="columnNames" :name="'myTable'"></v-client-table>
+        <v-data-table
+          :headers="headers"
+          :items="items"
+          class="elevation-2">
+          <template slot="items" slot-scope="props">
+            <td>{{ props.item.nombre }}</td>
+            <td>{{ props.item.tipoUsuario.tipo }}</td>
+            <td>{{ props.item.curso.nombre }}</td>
+            <td>{{ props.item.grupo }}</td>
+            <td>{{ props.item.direccion.ciudad }}</td>
+          </template>
+        </v-data-table>
+        <ul v-if="errors && errors.length">
+          <li v-bind:key="error" v-for="error of errors">
+            {{error.message}}
+          </li>
+        </ul>
       </div>
     </div>
 
-    <v-btn absolute dark fab bottom right color="green" :to="'/nuevo-usuario'">
+    <v-btn fixed fab bottom right color="primary" :to="{ name: 'nuevoUsuario'}">
       <v-icon>add</v-icon>
     </v-btn>
 
@@ -24,76 +40,32 @@
     data () {
       return {
         usersURL: "http://localhost:5000/api/usuarios",
-
-        dataUrl: undefined,
-        data: [],
-        columnNames: [],
+        items: [],
+        errors: [],
+        headers: [
+          { text: 'Nombre', value: 'nombre' },
+          { text: 'Tipo', value: 'tipoUsuario.tipo' },
+          { text: 'Curso Social', value: 'curso.nombre' },
+          { text: 'Grupo', value: 'grupo' },
+          { text: 'Ciudad', value: 'direccion.ciudad' },
+        ],
       }
     },
-    methods:{
-      getUsersInformation: function(){
-        this.dataUrl = this.usersURL;
-      },   
-      loadData: function(){
-        axios({ method: "GET", "url": this.dataUrl }).then(result => {
-            console.log(result.request.response)
-            var rawData = result.request.response;
-            var parsedData = JSON.parse(rawData);            
-            var cleanData = parsedData.data;
-
-            var dataKeys = [];
-
-            var showAs = ["Nombre", "Tipo", "Curso", "Grupo", "Ciudad"];
-            var valuesToRecover = ["nombre", ["tipoUsuario","tipo"], ["curso","nombre"], "grupo", ["direccion","ciudad"]];
-
-            if(showAs.length != valuesToRecover.length){
-              return "ERROR: Arrays 'showAs' and 'valuesToRecover' in method loadData() have different sizes";
-            }
-
-            this.data = [];
-            this.columnNames = showAs;
-
-            for(var i=0; i<cleanData.length; i++){
-
-              var elementInArray = cleanData[i];
-              var newBank = {};
-              for(var j=0; j<valuesToRecover.length; j++){
-                var key = valuesToRecover[j];
-                var saveKeyAs = showAs[j];
-                //Recover value
-                if(key instanceof Array){
-                  var value = elementInArray[key[0]][key[1]];
-                }
-                else{
-                  var value = elementInArray[key];
-                }      
-                
-                newBank[saveKeyAs] = value;
-                
-              }
-              this.data.push(newBank);
-            }
-
-        }, error => {
-            console.error(error);
-        });    
-      },
+    created() {
+      axios({
+        method: 'GET',
+        url: this.usersURL,
+      }).then((response) => {
+        this.items = response.data.data;
+        console.log(response.data.data);
+      }).catch((e) => {
+        this.errors.push(e);
+      });
     },
-    mounted: function(){
-      this.getUsersInformation();
-      this.loadData();
-    },
-    watch: {      
-      dataUrl: function() {
-        this.data = [];
-
-        this.loadData();
-      },
-    }
   }
 </script>
 
-<style type="text/css">
+<style scoped type="text/css">
   .module-title{
     text-align: left !important;
   }

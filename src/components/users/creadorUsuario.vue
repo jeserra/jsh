@@ -40,10 +40,24 @@
         <v-text-field label="Número" v-model="numberStreet"></v-text-field>
       </form>
 
-    <v-btn absolute dark fab bottom right color="green" v-on:click="saveUser">
+    <v-btn fixed fab bottom right color="primary" v-on:click="saveUser()">
       <v-icon>save</v-icon>
-    </v-btn>
+    </v-btn>    
 
+
+    <v-snackbar
+      :timeout="timeout"
+      :top="y === 'top'"
+      :bottom="y === 'bottom'"
+      :right="x === 'right'"
+      :left="x === 'left'"
+      :multi-line="mode === 'multi-line'"
+      :vertical="mode === 'vertical'"
+      v-model="snackbar"
+    >
+      {{confirmationMessage}}
+      <v-btn flat color="pink" @click.native="snackbar = false">Close</v-btn>
+    </v-snackbar>
 
     </div>
   </div>
@@ -55,6 +69,8 @@
   export default {
     data () {
       return {
+        usersURL: "http://localhost:5000/api/usuarios",
+
         password: '',
         repeatPassword: '',
 
@@ -85,60 +101,58 @@
         cp: '',
         street: '',
         numberStreet: '',
+
+        // Snackbar config
+        snackbar: false,
+        y: 'bottom',
+        x: null,
+        mode: '',
+        timeout: 3000,
+        confirmationMessage: 'El usuario ha sido creado',        
       }
     },
     methods:{
       saveUser: function(){
+        
+        var vueInstance = this;
 
-        axios({ method: "GET", "url": this.dataUrl }).then(result => {
-            
-            var rawData = result.request.response;
-            var parsedData = JSON.parse(rawData);            
-            var cleanData = parsedData.data;
-            var dataKeys = [];
-
-            var showAs = ["Nombre", "Región", "Estado", "Ciudad"];
-            var valuesToRecover = ["nombre", ["region","nombre"], ["direccion","estado"], ["direccion","ciudad"]];
-
-            if(showAs.length != valuesToRecover.length){
-              return "ERROR: Arrays 'showAs' and 'valuesToRecover' in method loadData() have different sizes";
-            }
-
-            this.data = [];
-            this.columnNames = showAs;
-
-            for(var i=0; i<cleanData.length; i++){
-
-              var elementInArray = cleanData[i];
-              var newBank = {};
-              for(var j=0; j<valuesToRecover.length; j++){
-                var key = valuesToRecover[j];
-                var saveKeyAs = showAs[j];
-                //Recover value
-                if(key instanceof Array){
-                  var value = elementInArray[key[0]][key[1]];
-                }
-                else{
-                  var value = elementInArray[key];
-                }      
-                
-                newBank[saveKeyAs] = value;
-                
-              }
-              this.data.push(newBank);
-            }
-
-        }, error => {
-            console.error(error);
-        });    
+        axios.post(this.usersURL, {
+            "nombre": this.name,
+            "contraseña": this.password,
+            "tipoUsuario": {
+                "tipo": this.userType,
+                "descripción": "---"
+            },
+            "grupo": this.group,
+            "habilitado": this.userEnabled,
+            "direccion": {
+                "calle": this.street,
+                "numero": this.numberStreet,
+                "cp": this.cp,
+                "ciudad": this.city,
+                "estado": this.state,
+            },
+            "curso": {
+                "id": 1,
+                "nombre": this.course,
+                "descripcion": "---",
+                "calificacion": 0,
+                "observaciones": "---"
+            }            
+          })
+          .then(function (response) {
+            vueInstance.snackbar = true;
+          })
+          .catch(function (error) {
+            console.log("Error in creation of user");
+            console.log(error);
+          });   
       },
     },
-    watch: {
-    }
   }
 </script>
 
-<style type="text/css">
+<style scoped type="text/css">
   .data-visualization-container{
     margin-left: 30%;
     width: 40%;

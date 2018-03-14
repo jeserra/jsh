@@ -35,7 +35,7 @@
           <v-list-tile v-for="(item, index) in items"
             :key="item.title"
             @click="selectIcon(index)"
-            :to="item.ref">
+            :to="{ name: item.ref }">
 
             <v-list-tile-action>
               <v-icon>{{ item.icon }}</v-icon>
@@ -102,8 +102,3 @@ export default {
   },
 };
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped type="text/css">
-
-</style>

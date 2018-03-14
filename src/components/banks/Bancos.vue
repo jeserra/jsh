@@ -132,77 +132,10 @@ export default {
         console.log(this.errors);
       });
   },
-  // methods: {
-  //   getBanksInformation: () => {
-  //     this.dataUrl = this.banksURL;
-  //   },
-  //   loadData: () => {
-  //     axios({
-  //       method: 'GET',
-  //       url: this.dataUrl,
-  //     }).then(
-  //       function(result) {
-  //         console.log(result);
-  //         const rawData = result.request.response;
-  //         const parsedData = JSON.parse(rawData);
-  //         var cleanData = parsedData.data;
-  //         var dataKeys = [];
-
-  //         var showAs = ['Nombre', 'Región', 'Estado', 'Ciudad'];
-  //         var valuesToRecover = [
-  //           'nombre',
-  //           ['region', 'nombre'],
-  //           ['direccion', 'estado'],
-  //           ['direccion', 'ciudad'],
-  //         ];
-
-  //         if (showAs.length != valuesToRecover.length) {
-  //           return "ERROR: Arrays 'showAs'
-  // and 'valuesToRecover' in method loadData() have different sizes";
-  //         }
-
-  //         this.data = [];
-  //         this.columnNames = showAs;
-
-  //         for (var i = 0; i < cleanData.length; i++) {
-  //           var elementInArray = cleanData[i];
-  //           var newBank = {};
-  //           for (var j = 0; j < valuesToRecover.length; j++) {
-  //             var key = valuesToRecover[j];
-  //             var saveKeyAs = showAs[j];
-  //             //Recover value
-  //             if (key instanceof Array) {
-  //               var value = elementInArray[key[0]][key[1]];
-  //             } else {
-  //               var value = elementInArray[key];
-  //             }
-
-  //             newBank[saveKeyAs] = value;
-  //           }
-  //           this.data.push(newBank);
-  //         }
-  //       },
-  //       error => {
-  //         console.error(error);
-  //       }
-  //     );
-  //   },
-  // },
-  // mounted: function() {
-  //   this.getBanksInformation();
-  //   this.loadData();
-  // },
-  // watch: {
-  //   dataUrl: function() {
-  //     this.data = [];
-
-  //     this.loadData();
-  //   },
-  // },
 };
 </script>
 
-<style type="text/css">
+<style scoped type="text/css">
 .module-title {
   text-align: left !important;
 }
