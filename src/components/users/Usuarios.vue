@@ -11,11 +11,13 @@
           :items="items"
           class="elevation-2">
           <template slot="items" slot-scope="props">
-            <td>{{ props.item.nombre }}</td>
-            <td>{{ props.item.tipoUsuario.tipo }}</td>
-            <td>{{ props.item.curso.nombre }}</td>
-            <td>{{ props.item.grupo }}</td>
-            <td>{{ props.item.direccion.ciudad }}</td>
+            <tr v-on:click="editItem(props.item)">
+              <td>{{ props.item.nombre }}</td>
+              <td>{{ props.item.tipoUsuario.tipo }}</td>
+              <td>{{ props.item.curso.nombre }}</td>
+              <td>{{ props.item.grupo }}</td>
+              <td>{{ props.item.direccion.ciudad }}</td>
+            </tr>
           </template>
         </v-data-table>
         <ul v-if="errors && errors.length">
@@ -51,16 +53,26 @@
         ],
       }
     },
+    methods:{
+      getData(){
+        axios({
+          method: 'GET',
+          url: this.usersURL,
+        }).then((response) => {
+          this.items = response.data.data;
+          //console.log(response.data.data);
+        }).catch((e) => {
+          this.errors.push(e);
+        });
+      },
+      editItem(item){
+        console.log(this._routerRoot);
+        //:to="{ name: 'editorUsuario', params: { id: item.id }}"
+        this._routerRoot._router.push({ name: 'editorUsuario', params: { id: item.id }});        
+      }
+    },
     created() {
-      axios({
-        method: 'GET',
-        url: this.usersURL,
-      }).then((response) => {
-        this.items = response.data.data;
-        console.log(response.data.data);
-      }).catch((e) => {
-        this.errors.push(e);
-      });
+      this.getData();
     },
   }
 </script>
