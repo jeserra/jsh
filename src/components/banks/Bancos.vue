@@ -115,7 +115,6 @@ export default {
       ],
     };
   },
-<<<<<<< HEAD
   methods:{
     getData(){
       axios({
@@ -131,7 +130,6 @@ export default {
   },
   created() {
     this.getData();
-=======
   components: {
     StarRating,
   },
@@ -148,7 +146,6 @@ export default {
         this.errors.push(e);
         console.log(this.errors);
       });
->>>>>>> develop
   },
 };
 </script>
