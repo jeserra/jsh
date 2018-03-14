@@ -4,7 +4,6 @@ import Vuetify from 'vuetify';
 import VueMoment from 'vue-moment';
 import spanish from 'moment/locale/es';
 
-import { ClientTable } from 'vue-tables-2';
 import 'vuetify/dist/vuetify.min.css';
 import App from './App';
 import router from './router/';
@@ -15,8 +14,6 @@ Vue.use(Vuetify, {
 });
 
 Vue.use(VueMoment, spanish);
-
-Vue.use(ClientTable);
 
 Vue.use(VueRouter);
 
