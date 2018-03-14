@@ -10,6 +10,10 @@
       </div>
     </div>
 
+    <v-btn absolute dark fab bottom right color="green">
+      <v-icon>add</v-icon>
+    </v-btn>
+
   </div>
 </template>
 
