@@ -2,18 +2,50 @@
   <div>
 
     <div class="data-visualization-container">
-      <p class="module-title">
-        <v-icon>account_balance</v-icon>Banco de Alimentos
-      </p>
-      <div class="table">
-        <v-client-table class="table" :data="data" :columns="columnNames" :name="'myTable'"></v-client-table>
-      </div>
-    </div>
+      <h2>Nuevo usuario</h2>
+      Ingrese al menos los datos que sean de caracter obligatorio(*)
 
-    <v-btn absolute dark fab bottom right color="green">
-      <v-icon>add</v-icon>
+      <form>
+
+        <v-text-field label="Contraseña"
+          v-model="password"
+          type="password"
+          required></v-text-field>
+
+        <v-text-field label="Confirmar Contraseña"
+          v-model="repeatPassword"
+          type="password"    
+          :error="password !== repeatPassword"
+          :rules="[() => ('Las contraseñas no coinciden')]"
+          required></v-text-field>
+
+        <v-switch :label="userEnabled" v-model="userEnabled" :true-value="enabledTag" :false-value="disabledTag"></v-switch>
+
+        <v-text-field label="Nombre" v-model="name" required></v-text-field>
+
+        <v-select label="Tipo de Usuario" v-model="userType" :items="userTypes"></v-select>
+
+        <v-select label="Grupo" v-model="group" :items="groupsData"></v-select>
+
+        <v-select label="Curso" v-model="course" :items="coursesData"></v-select>
+
+        <v-select label="Estado" v-model="state" :items="statesData"></v-select>
+
+        <v-select label="Ciudad" v-model="city" :items="citiesData[state]"></v-select>      
+
+        <v-text-field label="C.P." v-model="cp" type="number"></v-text-field>
+
+        <v-text-field label="Calle" v-model="street"></v-text-field>
+
+        <v-text-field label="Número" v-model="numberStreet"></v-text-field>
+      </form>
+
+    <v-btn absolute dark fab bottom right color="green" v-on:click="saveUser">
+      <v-icon>save</v-icon>
     </v-btn>
 
+
+    </div>
   </div>
 </template>
 
@@ -23,18 +55,40 @@
   export default {
     data () {
       return {
-        banksURL: "http://localhost:5000/api/bancos",
+        password: '',
+        repeatPassword: '',
 
-        dataUrl: undefined,
-        data: [],
-        columnNames: [],
+        enabledTag: 'Habilitado',
+        disabledTag: 'Deshabilitado',
+        userEnabled: 'Habilitado',
+
+        name: '',        
+
+        userType: undefined,
+        userTypes: ["Tipo 1", "Tipo 2", "Tipo 3"],
+
+        group: undefined,
+        groupsData: ["Tipo 1", "Tipo 2", "Tipo 3"],
+
+        course: undefined,
+        coursesData: ["Tipo 1", "Tipo 2", "Tipo 3"],
+
+        state: undefined,
+        statesData: ["Jalisco","Monterrey"],
+
+        city: undefined,
+        citiesData: {
+          "Jalisco": ["Ciudad 1 de Jalisco", "Ciudad 2 de Jalisco", "Ciudad 3 de Jalisco"],
+          "Monterrey": ["Ciudad 1 de Monterrey", "Ciudad 2 de Monterrey", "Ciudad 3 de Monterrey"]
+        },
+
+        cp: '',
+        street: '',
+        numberStreet: '',
       }
     },
     methods:{
-      getBanksInformation: function(){
-        this.dataUrl = this.banksURL;
-      },
-      loadData: function(){
+      saveUser: function(){
 
         axios({ method: "GET", "url": this.dataUrl }).then(result => {
             
@@ -79,30 +133,14 @@
         });    
       },
     },
-    mounted: function(){
-      this.getBanksInformation();
-      this.loadData();
-    },
-    watch: {      
-      dataUrl: function() {
-        this.data = [];
-
-        this.loadData();
-      },
+    watch: {
     }
   }
 </script>
 
 <style type="text/css">
-  .module-title{
-    text-align: left !important;
-  }
-
-  .table{
-    width: 90%;
-  }
-
   .data-visualization-container{
-    margin-left: 5%;
+    margin-left: 30%;
+    width: 40%;
   }
 </style>

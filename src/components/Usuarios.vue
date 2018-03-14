@@ -10,7 +10,7 @@
       </div>
     </div>
 
-    <v-btn absolute dark fab bottom right color="green">
+    <v-btn absolute dark fab bottom right color="green" :to="'/nuevoUsuario'">
       <v-icon>add</v-icon>
     </v-btn>
 

@@ -4,10 +4,13 @@ import Vuetify from 'vuetify';
 import colors from 'vuetify/es5/util/colors';
 import { ClientTable } from 'vue-tables-2';
 import 'vuetify/dist/vuetify.min.css';
+
 import App from './App';
 import Home from './components/Home';
 import Bancos from './components/Bancos';
 import Usuarios from './components/Usuarios';
+import creadorBanco from './components/creadorBanco.vue';
+import creadorUsuario from './components/creadorUsuario.vue';
 
 Vue.use(Vuetify, {
   theme: {
@@ -19,35 +22,17 @@ Vue.use(Vuetify, {
 });
 
 Vue.use(ClientTable);
-
-<<<<<<< Updated upstream
-=======
-import Home from './components/Home.vue';
-import Bancos from './components/Bancos.vue';
-import Usuarios from './components/Usuarios.vue';
-
-import creadorBanco from './components/creadorBanco.vue';
-import creadorUsuario from './components/creadorUsuario.vue';
-
->>>>>>> Stashed changes
 Vue.use(VueRouter);
 
 Vue.config.productionTip = false;
 
 const routes = [
-<<<<<<< Updated upstream
-  { path: '/', component: Home },
-  { path: '/inicio', component: Home, name: 'inicio' },
-  { path: '/bancos', component: Bancos, name: 'bancos' },
-  { path: '/usuarios', component: Usuarios, name: 'usuarios' },
-=======
 	{path: '/', component: Home},
 	{path: '/inicio', component: Home, name: "inicio" },
 	{path: '/bancos', component: Bancos, name: "bancos" },
-	{path: '/nuevoBanco', component: Usuarios, name: "nuevoBanco" },
+	{path: '/nuevoBanco', component: creadorBanco, name: "nuevoBanco" },
 	{path: '/usuarios', component: Usuarios, name: "usuarios" },	
-	{path: '/nuevoUsuario', component: Usuarios, name: "nuevoUsuario" },
->>>>>>> Stashed changes
+	{path: '/nuevoUsuario', component: creadorUsuario, name: "nuevoUsuario" },
 ];
 
 const router = new VueRouter({
