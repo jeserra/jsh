@@ -1,40 +1,54 @@
 <template>
   <v-app id="inspire">
-    <v-navigation-drawer stateless hide-overlay :mini-variant.sync="mini" v-model="drawer">
+    <v-navigation-drawer dark hide-overlay fixed app :mini-variant.sync="mini" v-model="drawer">
 
-      <div  v-on:mouseover="mini = false" v-on:mouseleave="mini = true">
-      <v-toolbar flat class="transparent">
-        <v-list class="pa-0">
-          <v-list-tile avatar>
-            <v-list-tile-avatar>
-              <img src="./../static/logoJSH.svg">
-            </v-list-tile-avatar>
-            <v-list-tile-content>
-              <v-list-tile-title>JSH</v-list-tile-title>
+      <div v-on:mouseover="mini = false" v-on:mouseleave="mini = true">
+        <v-toolbar flat class="transparent">
+          <v-list class="pa-0">
+            <v-list-tile avatar>
+              <v-list-tile-avatar>
+                <img src="./../static/logoJSH.svg">
+              </v-list-tile-avatar>
+              <v-list-tile-content>
+                <v-list-tile-title>JSH</v-list-tile-title>
+              </v-list-tile-content>
+              <v-list-tile-action>
+                <v-btn icon @click.native.stop="mini = !mini">
+                  <v-toolbar-side-icon></v-toolbar-side-icon>
+                </v-btn>
+              </v-list-tile-action>
+
+            </v-list-tile>
+          </v-list>
+        </v-toolbar>
+
+        <v-list class="pt-0" dense>
+          <v-list-tile>
+              <v-list-tile-content style="color: gray">
+                MÓDULOS
             </v-list-tile-content>
+          </v-list-tile>
+        </v-list>
+
+        <v-list class="pt-0" dense>
+          <v-divider></v-divider>
+          <v-list-tile v-for="(item, index) in items" 
+            :key="item.title"
+            @click="selectIcon(index)"
+            v-bind:class="{ selected: item.active }">
+
             <v-list-tile-action>
-              <v-btn icon @click.native.stop="mini = !mini">
-                <v-toolbar-side-icon></v-toolbar-side-icon>
-              </v-btn>
+              <v-icon>{{ item.icon }}</v-icon>
             </v-list-tile-action>
+
+            <v-list-tile-content>
+              <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+            </v-list-tile-content>
 
           </v-list-tile>
         </v-list>
-      </v-toolbar>
 
-      <v-list class="pt-0" dense>
-        <v-divider></v-divider>
-        <v-list-tile v-for="item in items" :key="item.title" @click="">
-          <v-list-tile-action>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-content>
-            <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
-      </v-list>
-    </div>
-
+      </div>
     </v-navigation-drawer>
 
 
@@ -52,14 +66,10 @@
         <v-layout justify-center align-center>
           <v-flex text-xs-center>
 
-            <v-tooltip left>
-              <v-btn icon large target="_blank" slot="activator">
-                <v-icon large>code</v-icon>
-              </v-btn>
-              <span>Source</span>
-            </v-tooltip>
-
-            La vista del router se verá aqui
+            [componentes dinamicos]
+            <router-view></router-view>
+            [componentes dinamicos]
+            <router-view></router-view>
 
           </v-flex>
         </v-layout>
@@ -71,16 +81,35 @@
 
 <script>
   export default {
-    data () {
+    data (){
       return {
         drawer: true,
         items: [
-          { title: 'Home', icon: 'dashboard' },
-          { title: 'About', icon: 'question_answer' }
+        //https://material.io/icons/
+          { title: 'Inicio', icon: 'home', active: true },
+          { title: 'Banco de alimentos', icon: 'account_balance', active: false },
+          { title: 'Usuarios', icon: 'account_box', active: false },
         ],
         mini: true,
         right: null
-      }
-    }
+      }    
+    },
+    methods: {
+      selectIcon(index){
+        console.log(index);
+
+        for(var i=0; i<this.items.length; i++){
+          this.items[i].active = false;
+        };
+
+        this.items[index].active = true;
+      },
+    },
   }
 </script>
+
+<style type="text/css">
+  .selected{
+    background-color: green;
+  }
+</style>
