@@ -1,9 +1,9 @@
 import Router from 'vue-router';
 import Home from '../components/Home';
-import Bancos from '../components/Bancos';
-import creadorBanco from '../components/creadorBanco';
-import Usuarios from '../components/Usuarios';
-import creadorUsuario from '../components/creadorUsuario';
+import Bancos from '../components/banks/Bancos';
+import creadorBanco from '../components/banks/creadorBanco';
+import Usuarios from '../components/users/Usuarios';
+import creadorUsuario from '../components/users/creadorUsuario';
 
 export default new Router({
   routes: [
