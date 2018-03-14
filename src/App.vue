@@ -7,7 +7,7 @@
           <v-list class="pa-0">
             <v-list-tile avatar>
               <v-list-tile-avatar>
-                <img src="./../static/logoJSH.svg">
+                <img src="./assets/logoJSH.svg">
               </v-list-tile-avatar>
               <v-list-tile-content>
                 <v-list-tile-title>JSH</v-list-tile-title>
