@@ -35,6 +35,7 @@
           <v-list-tile v-for="(item, index) in items" 
             :key="item.title"
             @click="selectIcon(index)"
+            :to="item.ref"
             v-bind:class="{ selected: item.active }">
 
             <v-list-tile-action>
@@ -54,11 +55,8 @@
 
     <v-toolbar color="white" dark fixed app>
       <v-toolbar-side-icon>
-        <v-icon dark left>arrow_back</v-icon>
+        <v-icon style="color:gray" left>arrow_back</v-icon>
       </v-toolbar-side-icon>
-      <!--
-      <v-toolbar-title>Application</v-toolbar-title>
-    -->
     </v-toolbar>
 
     <v-content>
@@ -86,9 +84,9 @@
         drawer: true,
         items: [
         //https://material.io/icons/
-          { title: 'Inicio', icon: 'home', active: true },
-          { title: 'Banco de alimentos', icon: 'account_balance', active: false },
-          { title: 'Usuarios', icon: 'account_box', active: false },
+          { title: 'Inicio', icon: 'home', active: true, ref: "inicio" },
+          { title: 'Banco de alimentos', icon: 'account_balance', active: false, ref: "bancos" },
+          { title: 'Usuarios', icon: 'account_box', active: false, ref: "usuarios" },
         ],
         mini: true,
         right: null
@@ -96,8 +94,6 @@
     },
     methods: {
       selectIcon(index){
-        console.log(index);
-
         for(var i=0; i<this.items.length; i++){
           this.items[i].active = false;
         };
