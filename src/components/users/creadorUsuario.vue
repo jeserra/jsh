@@ -142,6 +142,12 @@
           })
           .then(function (response) {
             vueInstance.snackbar = true;
+            
+            vueInstance._routerRoot._router.push({
+              name: "editorUsuario",
+              params: { id: 1 }
+            });
+
           })
           .catch(function (error) {
             console.log("Error in creation of user");

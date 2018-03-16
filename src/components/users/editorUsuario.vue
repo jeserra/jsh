@@ -155,9 +155,9 @@
           url: this.usersURL+'/'+this.userID,
         }).then((response) => {
           let data = response.data.data;
-          
-          this.repeatPassword = data.contraseña;
-          this.password = data.contraseña;          
+                    
+          this.password = data.contraseña;
+          this.repeatPassword = this.password;
 
           if(data.habilitado){
             this.userEnabled = this.enabledTag;
