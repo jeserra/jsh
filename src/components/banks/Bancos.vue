@@ -149,7 +149,7 @@
           
         </v-card>
         <v-btn 
-          :to="'/nuevo-banco'"
+          :to="{ name: 'nuevoBanco' }"
           fixed 
           fab 
           bottom 
