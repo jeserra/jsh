@@ -1,22 +1,34 @@
 import Router from "vue-router";
 import Home from "../components/Home";
+
 import Bancos from "../components/banks/Bancos";
 import creadorBanco from "../components/banks/creadorBanco";
 import editorBanco from "../components/banks/editorBanco";
+
 import Usuarios from "../components/users/Usuarios";
 import creadorUsuario from "../components/users/creadorUsuario";
 import editorUsuario from "../components/users/editorUsuario";
+
+import Beneficiarios from "../components/beneficiaries/Beneficiarios";
+import creadorBeneficiario from "../components/beneficiaries/creadorBeneficiario";
+import editorBeneficiario from "../components/beneficiaries/editorBeneficiario";
 
 export default new Router({
   routes: [
     { path: "", component: Home },
     { path: "/inicio", component: Home, name: "inicio" },
+    //bancos
     { path: "/bancos", component: Bancos, name: "bancos" },
     { path: "/bancos/:id", component: editorBanco, name: "editorBanco" },
     { path: "/nuevo-banco", component: creadorBanco, name: "nuevoBanco" },
+    //usuarios
     { path: "/usuarios", component: Usuarios, name: "usuarios" },
     { path: "/usuarios/:id", component: editorUsuario, name: "editorUsuario" },
-    { path: "/nuevo-usuario", component: creadorUsuario, name: "nuevoUsuario" }
+    { path: "/nuevo-usuario", component: creadorUsuario, name: "nuevoUsuario" },
+    //beneficiarios
+    { path: "/beneficiarios", component: Beneficiarios, name: "beneficiarios" },
+    { path: "/beneficiarios/:id", component: editorBeneficiario, name: "editorBeneficiario" },
+    { path: "/nuevo-beneficiario", component: creadorBeneficiario, name: "nuevoBeneficiario" },
   ],
   mode: "history",
   scrollBehavior(to, from, savedPosition) {

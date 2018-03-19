@@ -97,7 +97,13 @@ export default {
           icon: "account_box",
           active: false,
           ref: "usuarios"
-        }
+        },
+        {
+          title: "Beneficiarios",
+          icon: "account_box",
+          active: false,
+          ref: "beneficiarios"
+        }        
       ],
       mini: true,
       right: null
