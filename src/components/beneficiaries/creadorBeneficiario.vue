@@ -1141,7 +1141,7 @@
             :key="index"
             wrap>
             <v-flex xs8>
-              ¿Alguna vez usted o algún adulto en su hogar tuvo una alimentación basada en poca variedad de alimentos?              
+            {{item}}              
             </v-flex>
             <v-flex xs1/>
             <v-flex xs2>
@@ -1162,7 +1162,7 @@
             :key="index"
             wrap>
             <v-flex xs8>
-              ¿Alguna vez usted o algún adulto en su hogar tuvo una alimentación basada en poca variedad de alimentos?              
+            {{item}}
             </v-flex>
             <v-flex xs1/>
             <v-flex xs2>
