@@ -27,8 +27,16 @@ export default new Router({
     { path: "/nuevo-usuario", component: creadorUsuario, name: "nuevoUsuario" },
     //beneficiarios
     { path: "/beneficiarios", component: Beneficiarios, name: "beneficiarios" },
-    { path: "/beneficiarios/:id", component: editorBeneficiario, name: "editorBeneficiario" },
-    { path: "/nuevo-beneficiario", component: creadorBeneficiario, name: "nuevoBeneficiario" },
+    {
+      path: "/beneficiarios/:id",
+      component: editorBeneficiario,
+      name: "editorBeneficiario"
+    },
+    {
+      path: "/nuevo-beneficiario",
+      component: creadorBeneficiario,
+      name: "nuevoBeneficiario"
+    }
   ],
   mode: "history",
   scrollBehavior(to, from, savedPosition) {
