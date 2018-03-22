@@ -1,5 +1,5 @@
 export const maps = {
   load: {
-    key: "AIzaSyCFmVoFH0dguHe4ZBKKlb-8qknnNj5tVpg"
+    key: "AIzaSyDkxP_aXdRg0MTzC94q-ihnsZn5e41IlbI"
   }
 };
