@@ -95,17 +95,15 @@
               <v-radio-group 
                 v-model="representante.escolaridad.estado" 
                 :mandatory="false">
-                <v-radio 
+                <v-radio
                   label="Completa"
-                  value="radio-1"/>
-                <v-radio 
-                  v-model="representante.escolaridad.estado"
-                  label="Incompleta" 
-                  value="radio-2"/>
-                <v-radio 
-                  v-model="representante.escolaridad.estado"                
+                  value="Completa"/>
+                <v-radio
+                  label="Incompleta"
+                  value="Incompleta"/>
+                <v-radio
                   label="Estudia"
-                  value="radio-2"/>
+                  value="Estudia"/>
               </v-radio-group>
             </v-flex>
           </v-layout>
@@ -814,7 +812,7 @@
 
           <h4>Tipo de casa</h4>
           <v-radio-group 
-            v-model="infraestructuraVivienda.tenencia" 
+            v-model="infraestructuraVivienda.tipoCasa" 
             :mandatory="false" 
             row>
             <v-radio 
@@ -925,12 +923,12 @@
               <v-checkbox
                 v-model="infraestructuraVivienda.caracteristicas.cocinaSeparada"
                 label="Cocina separada"
-                value="red"
+                value="true"
                 hide-details/>
               <v-checkbox
                 v-model="infraestructuraVivienda.caracteristicas.bañoExclusivo"
                 label="Cuarto de baño exclusivo"
-                value="red"
+                value="true"
                 hide-details/>
             </v-flex> 
           </v-layout>
@@ -956,15 +954,29 @@
             </v-flex>
             <v-flex xs4>
               <v-switch 
-                :label="userEnabled" 
-                v-model="infraestructuraVivienda.objetosCaseros[item.key].tiene" 
-                :true-value="enabledTag" 
+                v-if="infraestructuraVivienda.objetosCaseros.tiene[index] !== null"
+                :label="infraestructuraVivienda.objetosCaseros.tiene[index]" 
+                v-model="infraestructuraVivienda.objetosCaseros.tiene[index]"
+                :true-value="enabledTag"
                 :false-value="disabledTag"/>
+              <v-switch 
+                v-else
+                :label="disabledTag" 
+                v-model="infraestructuraVivienda.objetosCaseros.tiene[index]"
+                :true-value="enabledTag"
+                :false-value="disabledTag"/>                
             </v-flex>
             <v-flex xs4>
               <v-switch 
-                :label="userEnabled" 
-                v-model="infraestructuraVivienda.objetosCaseros[item.key].sirve"
+                v-if="infraestructuraVivienda.objetosCaseros.sirve[index] !== null"
+                :label="infraestructuraVivienda.objetosCaseros.sirve[index]" 
+                v-model="infraestructuraVivienda.objetosCaseros.sirve[index]"
+                :true-value="enabledTag" 
+                :false-value="disabledTag"/>
+              <v-switch
+                v-else
+                :label="disabledTag" 
+                v-model="infraestructuraVivienda.objetosCaseros.sirve[index]"
                 :true-value="enabledTag" 
                 :false-value="disabledTag"/>
             </v-flex>          
@@ -1172,16 +1184,15 @@
             :key="'pregunta-mayores-'+index"
             wrap>
             <v-flex xs8>
-              {{ item }}              
+              {{ item }}
             </v-flex>
             <v-flex xs1/>
             <v-flex xs2>
               <v-switch 
                 :label="userEnabled" 
-                v-model="alimentacion.adultos[index]" 
+                v-model="alimentacion.adultos[index]"
                 :true-value="enabledTag" 
                 :false-value="disabledTag"/>
-              {{ alimentacion.adultos }}
             </v-flex>
           </v-layout>
 
@@ -1203,7 +1214,6 @@
                 :label="userEnabled" 
                 :true-value="enabledTag" 
                 :false-value="disabledTag"/>
-              {{ alimentacion.menores }}
             </v-flex>
           </v-layout>
 
@@ -1384,14 +1394,233 @@ export default {
 
       //usersURL: "http://localhost:5000/api/usuarios",
 
-      representante: {},
-      datosGenerales: {},
-      estructuraFamiliar: {},
-      seguridadSocial: {},
-      servicios: {},
-      infraestructuraVivienda: {},
-      condicionesEconomicas: {},
-      alimentacion: {},
+      // Step 1
+      representante: {
+        comunidad: "",
+        nombre: "",
+
+        domicilio: {
+          calle: "",
+          colonia: "",
+          municipio: "",
+          numExt: "",
+          numInt: ""
+        },
+
+        nacimiento: {
+          municipio: "",
+          estado: ""
+        },
+
+        escolaridad: {
+          nivel: "",
+          estado: ""
+        }
+      },
+      // Step 2
+      datosGenerales: {
+        nombre: undefined,
+        grupo: undefined,
+        fechaLevantamiento: undefined,
+        fechaCaptura: undefined,
+
+        vialidad: {
+          tipo: undefined,
+          nombre: undefined,
+          numInt: undefined,
+          numExt: undefined
+        },
+
+        asentamiento: {
+          tipo: undefined,
+          nombre: undefined,
+          cp: undefined,
+          localidad: undefined,
+          municipio: undefined,
+          claveMunicipio: undefined,
+          estado: undefined,
+          claveEstado: undefined,
+          entreVialidades: undefined,
+          descripcion: undefined,
+          telefono: undefined
+        }
+      },
+      // Step 3
+      estructuraFamiliar: {
+        nombre: undefined,
+        primerApellido: undefined,
+        segundoApellido: undefined,
+        fechaNacimiento: undefined,
+        sexo: undefined,
+        estadoCivil: undefined,
+        parentesco: undefined,
+
+        escolaridad: {
+          grado: undefined,
+          nivel: undefined,
+          escuela: undefined
+        }
+      },
+      // Step 4
+      seguridadSocial: {
+        ocupacion: undefined,
+        tipoEmpleo: undefined,
+
+        prestaciones: {
+          A: undefined,
+          B: undefined,
+          C: undefined,
+          D: undefined,
+          E: undefined,
+          F: undefined,
+          G: undefined,
+          H: undefined,
+          I: undefined
+        },
+
+        jubiladoPension: undefined,
+        derechohabiencia: undefined,
+        motivoDerechohabiencia: undefined,
+        capacidadesDiferentes: undefined,
+        condicionesSalud: undefined,
+        adiciones: undefined,
+        etnia: undefined,
+        peso: undefined,
+        talla: undefined
+      },
+      // Step 5
+      servicios: {
+        luz: {
+          publico: undefined,
+          planta: true,
+          panel: undefined,
+          noTiene: undefined
+        },
+
+        drenaje: {
+          publico: undefined,
+          fosa: undefined,
+          grieta: undefined,
+          rio: undefined,
+          noTiene: undefined
+        },
+
+        baño: {
+          descarga: undefined,
+          cubeta: undefined,
+          letrina: undefined,
+          pozo: undefined,
+          noTiene: undefined,
+          gasTanque: undefined,
+          electricidad: undefined,
+          gasNatural: undefined,
+          sinChimenea: undefined,
+          conChimenea: undefined,
+          otroCombustible: undefined
+        },
+
+        combustible: {
+          descarga: undefined,
+          cubeta: undefined,
+          letrina: undefined,
+          pozo: undefined,
+          noTiene: undefined,
+          gasTanque: undefined,
+          electricidad: undefined,
+          gasNatural: undefined,
+          sinChimenea: undefined,
+          conChimenea: undefined,
+          otroCombustible: undefined
+        },
+
+        agua: {
+          tomaDomicilaria: undefined,
+          tomaComun: undefined,
+          llavePublica: undefined,
+          acarrean: undefined,
+          pipa: undefined,
+          pozo: undefined,
+          sinServicio: undefined
+        }
+      },
+      // Step 6
+      infraestructuraVivienda: {
+        tenencia: undefined,
+        tipoCasa: undefined,
+        muros: undefined,
+        piso: undefined,
+
+        caracteristicas: {
+          numCuartos: undefined,
+          dormitorios: undefined,
+          cocinaSeparada: undefined,
+          bañoExclusivo: undefined
+        },
+
+        objetosCaseros: {
+          tiene: [],
+          sirve: []
+        },
+        condiciones: undefined
+      },
+      // Step 7
+      condicionesEconomicas: {
+        vivienda: undefined,
+        alimentacion: undefined,
+        luz: undefined,
+        gas: undefined,
+        agua: undefined,
+        telefono: undefined,
+        celular: undefined,
+        atencionMedica: undefined,
+        educacion: undefined,
+        transporte: undefined,
+        otros: undefined,
+        total: undefined,
+
+        aportacionSemanal: {
+          padre: undefined,
+          madre: undefined,
+          hijos: undefined,
+          prospera: undefined,
+          adultosMayores: undefined,
+          becas: undefined,
+          pension: undefined,
+          otros: undefined,
+          total: undefined
+        },
+
+        apoyoEspecie: {
+          tipos: undefined,
+          quienProporciona: undefined,
+          frecuencia: undefined
+        },
+
+        remesas: {
+          recibe: undefined,
+          frecuencia: undefined
+        }
+      },
+      // Step 8
+      alimentacion: {
+        adultos: [],
+        menores: [],
+        estatus: undefined,
+
+        tipo: {
+          cuota: undefined,
+          beca: undefined,
+          mediaBeca: undefined
+        },
+
+        frecuencia: {
+          semanal: undefined,
+          quincenal: undefined,
+          mensual: undefined
+        },
+
+        duracion: undefined
+      },
 
       // Snackbar config
       snackbar: false,
@@ -1407,7 +1636,6 @@ export default {
   },
   methods: {
     saveBeneficiarie: function() {
-      console.log("WTF???");
       var vueInstance = this;
 
       axios
@@ -1462,18 +1690,15 @@ export default {
       this.representante.comunidad = "";
       this.representante.nombre = "";
 
-      this.representante.domicilio = {};
       this.representante.domicilio.calle = "";
       this.representante.domicilio.colonia = "";
       this.representante.domicilio.municipio = "";
       this.representante.domicilio.numExt = "";
       this.representante.domicilio.numInt = "";
 
-      this.representante.nacimiento = {};
       this.representante.nacimiento.municipio = "";
       this.representante.nacimiento.estado = "";
 
-      this.representante.escolaridad = {};
       this.representante.escolaridad.nivel = "";
       this.representante.escolaridad.estado = "";
     },
@@ -1484,13 +1709,11 @@ export default {
       this.datosGenerales.fechaLevantamiento = undefined;
       this.datosGenerales.fechaCaptura = undefined;
 
-      this.datosGenerales.vialidad = {};
       this.datosGenerales.vialidad.tipo = undefined;
       this.datosGenerales.vialidad.nombre = undefined;
       this.datosGenerales.vialidad.numInt = undefined;
       this.datosGenerales.vialidad.numExt = undefined;
 
-      this.datosGenerales.asentamiento = {};
       this.datosGenerales.asentamiento.tipo = undefined;
       this.datosGenerales.asentamiento.nombre = undefined;
       this.datosGenerales.asentamiento.cp = undefined;
@@ -1513,7 +1736,6 @@ export default {
       this.estructuraFamiliar.estadoCivil = undefined;
       this.estructuraFamiliar.parentesco = undefined;
 
-      this.estructuraFamiliar.escolaridad = {};
       this.estructuraFamiliar.escolaridad.grado = undefined;
       this.estructuraFamiliar.escolaridad.nivel = undefined;
       this.estructuraFamiliar.escolaridad.escuela = undefined;
@@ -1522,7 +1744,6 @@ export default {
       this.seguridadSocial.ocupacion = undefined;
       this.seguridadSocial.tipoEmpleo = undefined;
 
-      this.seguridadSocial.prestaciones = {};
       this.seguridadSocial.prestaciones.A = undefined;
       this.seguridadSocial.prestaciones.B = undefined;
       this.seguridadSocial.prestaciones.C = undefined;
@@ -1544,27 +1765,23 @@ export default {
       this.seguridadSocial.talla = undefined;
     },
     initializeStepFive: function() {
-      this.servicios.luz = {};
       this.servicios.luz.publico = undefined;
       this.servicios.luz.planta = true;
       this.servicios.luz.panel = undefined;
       this.servicios.luz.noTiene = undefined;
 
-      this.servicios.drenaje = {};
       this.servicios.drenaje.publico = undefined;
       this.servicios.drenaje.fosa = undefined;
       this.servicios.drenaje.grieta = undefined;
       this.servicios.drenaje.rio = undefined;
       this.servicios.drenaje.noTiene = undefined;
 
-      this.servicios.baño = {};
       this.servicios.baño.descarga = undefined;
       this.servicios.baño.cubeta = undefined;
       this.servicios.baño.letrina = undefined;
       this.servicios.baño.pozo = undefined;
       this.servicios.baño.noTiene = undefined;
 
-      this.servicios.combustible = {};
       this.servicios.combustible.gasTanque = undefined;
       this.servicios.combustible.electricidad = undefined;
       this.servicios.combustible.gasNatural = undefined;
@@ -1572,7 +1789,6 @@ export default {
       this.servicios.combustible.conChimenea = undefined;
       this.servicios.combustible.otroCombustible = undefined;
 
-      this.servicios.agua = {};
       this.servicios.agua.tomaDomicilaria = undefined;
       this.servicios.agua.tomaComun = undefined;
       this.servicios.agua.llavePublica = undefined;
@@ -1587,14 +1803,12 @@ export default {
       this.infraestructuraVivienda.muros = undefined;
       this.infraestructuraVivienda.piso = undefined;
 
-      this.infraestructuraVivienda.caracteristicas = {};
       this.infraestructuraVivienda.caracteristicas.numCuartos = undefined;
       this.infraestructuraVivienda.caracteristicas.dormitorios = undefined;
       this.infraestructuraVivienda.caracteristicas.cocinaSeparada = undefined;
       this.infraestructuraVivienda.caracteristicas.bañoExclusivo = undefined;
 
-      this.infraestructuraVivienda.objetosCaseros = {};
-
+      /* Once API is working
       for (var i = 0; i < this.houseObjects.length; i++) {
         var newKey = this.houseObjects[i].key;
 
@@ -1602,6 +1816,7 @@ export default {
         this.infraestructuraVivienda.objetosCaseros[newKey].tiene = false;
         this.infraestructuraVivienda.objetosCaseros[newKey].sirve = false;
       }
+      */
 
       this.infraestructuraVivienda.condiciones = undefined;
     },
@@ -1619,7 +1834,6 @@ export default {
       this.condicionesEconomicas.otros = undefined;
       this.condicionesEconomicas.total = undefined;
 
-      this.condicionesEconomicas.aportacionSemanal = {};
       this.condicionesEconomicas.aportacionSemanal.padre = undefined;
       this.condicionesEconomicas.aportacionSemanal.madre = undefined;
       this.condicionesEconomicas.aportacionSemanal.hijos = undefined;
@@ -1630,35 +1844,22 @@ export default {
       this.condicionesEconomicas.aportacionSemanal.otros = undefined;
       this.condicionesEconomicas.aportacionSemanal.total = undefined;
 
-      this.condicionesEconomicas.apoyoEspecie = {};
       this.condicionesEconomicas.apoyoEspecie.tipos = undefined;
       this.condicionesEconomicas.apoyoEspecie.quienProporciona = undefined;
       this.condicionesEconomicas.apoyoEspecie.frecuencia = undefined;
 
-      this.condicionesEconomicas.remesas = {};
       this.condicionesEconomicas.remesas.recibe = undefined;
       this.condicionesEconomicas.remesas.frecuencia = undefined;
     },
     initializeStepEight: function() {
-      this.alimentacion = {};
       this.alimentacion.adultos = [];
-      for (var i = 0; i < this.alimentationAdultQuestions.length; i++) {
-        this.alimentacion.adultos.push(false);
-      }
-
       this.alimentacion.menores = [];
-      for (var i = 0; i < this.alimentationMinorsQuestions.length; i++) {
-        this.alimentacion.menores.push(false);
-      }
-
       this.alimentacion.estatus = undefined;
 
-      this.alimentacion.tipo = {};
       this.alimentacion.tipo.cuota = undefined;
       this.alimentacion.tipo.beca = undefined;
       this.alimentacion.tipo.mediaBeca = undefined;
 
-      this.alimentacion.frecuencia = {};
       this.alimentacion.frecuencia.semanal = undefined;
       this.alimentacion.frecuencia.quincenal = undefined;
       this.alimentacion.frecuencia.mensual = undefined;
