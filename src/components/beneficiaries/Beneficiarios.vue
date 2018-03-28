@@ -1,9 +1,10 @@
 <template>
   <div>
+    <toolbar-handler/>
 
     <div class="data-visualization-container">
       <p class="module-title">
-        <v-icon>account_balance</v-icon>Usuarios
+        <v-icon>account_balance</v-icon>Beneficiarios
       </p>
       <div class="table">
 
@@ -11,13 +12,15 @@
           :headers="headers"
           :items="items"
           class="elevation-2">
-          <template slot="items" slot-scope="props">
+          <template
+            slot="items"
+            slot-scope="props">
             <tr @click="props.expanded = !props.expanded">
-              <td>{{ props.item.nombre }}</td>
-              <td>{{ props.item.tipoUsuario.tipo }}</td>
-              <td>{{ props.item.curso.nombre }}</td>
-              <td>{{ props.item.grupo }}</td>
-              <td>{{ props.item.direccion.ciudad }}</td>
+              <td>{{ props.item.representante.nombre }}</td>
+              <td>{{ props.item.representante.comunidad }}</td>
+              <td>{{ props.item.datosGenerales.nombre }}</td>
+              <td>{{ props.item.datosGenerales.grupo }}</td>
+              <td>{{ props.item.datosGenerales.fechaCaptura }}</td>
             </tr>          
           </template>
 
@@ -39,7 +42,7 @@
                     <v-list-tile>
                       <v-list-tile-content>
                         <v-list-tile-title>
-                          {{props.item.nombre}}
+                          {{ props.item.nombre }}
                         </v-list-tile-title>
                         <v-list-tile-sub-title>{{ props.item.tipoUsuario.tipo }}</v-list-tile-sub-title>
                       </v-list-tile-content>
@@ -59,7 +62,7 @@
                         <v-list-tile-title>
                           Último inicio de sesión
                         </v-list-tile-title>
-                        <v-list-tile-sub-title>{{ props.item.ultimoLogin | moment("calendar")}}</v-list-tile-sub-title>
+                        <v-list-tile-sub-title>{{ props.item.ultimoLogin | moment("calendar") }}</v-list-tile-sub-title>
                       </v-list-tile-content>
                     </v-list-tile>
 
@@ -74,16 +77,16 @@
                     <v-list-tile>
                       <v-list-tile-content>
                         <v-list-tile-title>
-                          Curso: {{ props.item.curso.nombre}}
+                          Curso: {{ props.item.curso.nombre }}
                         </v-list-tile-title>
                         <v-list-tile-sub-title v-if="props.item.curso.calificacion">
-                          Calificación: {{ props.item.curso.calificacion}}/10
+                          Calificación: {{ props.item.curso.calificacion }}/10
                         </v-list-tile-sub-title>
                         <v-list-tile-sub-title v-if="props.item.curso.descripcion">
-                          Descripción: {{ props.item.curso.descripcion}}
+                          Descripción: {{ props.item.curso.descripcion }}
                         </v-list-tile-sub-title>
                         <v-list-tile-sub-title v-if="props.item.curso.observaciones">
-                          Observaciones: {{ props.item.curso.observaciones}}
+                          Observaciones: {{ props.item.curso.observaciones }}
                         </v-list-tile-sub-title>
                       </v-list-tile-content>
                     </v-list-tile>
@@ -119,15 +122,23 @@
         </v-data-table>
 
         <ul v-if="errors && errors.length">
-          <li v-bind:key="error" v-for="error of errors">
-            {{error.message}}
+          <li
+            v-for="error of errors"
+            :key="error">
+            {{ error.message }}
           </li>
         </ul>
 
       </div>
     </div>
 
-    <v-btn fixed fab bottom right color="primary" :to="{ name: 'nuevoBeneficiario'}">
+    <v-btn
+      :to="{ name: 'nuevoBeneficiario' }"    
+      fixed
+      fab
+      bottom
+      right      
+      color="primary">
       <v-icon>add</v-icon>
     </v-btn>
 
@@ -136,27 +147,34 @@
 
 <script>
 import axios from "axios";
+import toolbarHandler from "../toolbars/toolbarHandler";
 
 export default {
+  components: {
+    toolbarHandler
+  },
   data() {
     return {
-      usersURL: "http://localhost:5000/api/usuarios",
+      beneficiariesURL: "http://localhost:5000/api/beneficiarios",
       items: [],
       errors: [],
       headers: [
-        { text: "Nombre", value: "nombre" },
-        { text: "Tipo", value: "tipoUsuario.tipo" },
-        { text: "Curso Social", value: "curso.nombre" },
-        { text: "Grupo", value: "grupo" },
-        { text: "Ciudad", value: "direccion.ciudad" }
+        { text: "Representante-Nombre", value: "representante.nombre" },
+        { text: "Representante-Comunidad", value: "representante.comunidad" },
+        { text: "Nombre", value: "datosGenerales.nombre" },
+        { text: "Grupo", value: "datosGenerales.grupo" },
+        { text: "Fecha de captura", value: "datosGenerales.fechaCaptura" }
       ]
     };
+  },
+  created() {
+    this.getData();
   },
   methods: {
     getData() {
       axios({
         method: "GET",
-        url: this.usersURL
+        url: this.beneficiariesURL
       })
         .then(response => {
           this.items = response.data.data;
@@ -172,9 +190,6 @@ export default {
         params: { id: item.id }
       });
     }
-  },
-  created() {
-    this.getData();
   }
 };
 </script>

@@ -1,167 +1,220 @@
 <template>
   <div>
 
+    <toolbarHandler/>
+
     <div class="data-visualization-container">
       <h2>Editar usuario</h2>
       Ingrese al menos los datos que sean de caracter obligatorio(*)
 
       <form>
 
-        <v-text-field label="Contraseña"
+        <v-text-field
           v-model="password"
+          label="Contraseña"
           type="password"
-          required></v-text-field>
+          required/>
 
-        <v-text-field label="Confirmar Contraseña"
-          v-model="repeatPassword"
-          type="password"    
-          :error="password !== repeatPassword"
+        <v-text-field
+          v-model="repeatPassword"                
           :rules="[() => ('Las contraseñas no coinciden')]"
-          required></v-text-field>
+          :error="password !== repeatPassword"          
+          label="Confirmar Contraseña"
+          type="password"
+          required/>
 
-        <v-switch :label="userEnabled" v-model="userEnabled" :true-value="enabledTag" :false-value="disabledTag"></v-switch>
+        <v-switch 
+          :label="userEnabled"
+          v-model="userEnabled"
+          :true-value="enabledTag"
+          :false-value="disabledTag"/>
 
-        <v-text-field label="Nombre" v-model="name" required></v-text-field>
+        <v-text-field
+          v-model="name"
+          label="Nombre"
+          required/>
 
-        <v-select label="Tipo de Usuario" v-model="userType" :items="userTypes"></v-select>
+        <v-select        
+          v-model="userType"
+          :items="userTypes"
+          label="Tipo de Usuario"/>
 
-        <v-select label="Grupo" v-model="group" :items="groupsData"></v-select>
+        <v-select          
+          v-model="group"
+          :items="groupsData"
+          label="Grupo"/>
 
-        <v-select label="Curso" v-model="course" :items="coursesData"></v-select>
+        <v-select          
+          v-model="course"
+          :items="coursesData"
+          label="Curso"/>
 
-        <v-select label="Estado" v-model="state" :items="statesData"></v-select>
+        <v-select          
+          v-model="state"
+          :items="statesData"
+          label="Estado"/>
 
-        <v-select label="Ciudad" v-model="city" :items="citiesData[state]"></v-select>      
+        <v-select          
+          v-model="city"
+          :items="citiesData[state]"
+          label="Ciudad"/>
 
-        <v-text-field label="C.P." v-model="cp" type="number"></v-text-field>
+        <v-text-field
+          v-model="cp"
+          label="C.P."
+          type="number"/>
 
-        <v-text-field label="Calle" v-model="street"></v-text-field>
+        <v-text-field          
+          v-model="street"
+          label="Calle"/>
 
-        <v-text-field label="Número" v-model="numberStreet"></v-text-field>
+        <v-text-field
+          v-model="numberStreet"
+          label="Número"/>
       </form>
 
-    <v-btn fixed fab bottom right color="primary" v-on:click="saveUser()">
-      <v-icon>save</v-icon>
-    </v-btn>    
+      <v-btn
+        fixed
+        fab
+        bottom
+        right
+        color="primary"
+        @click="saveUser()">
+        <v-icon>save</v-icon>
+      </v-btn>
 
-
-    <v-snackbar
-      :timeout="timeout"
-      :top="y === 'top'"
-      :bottom="y === 'bottom'"
-      :right="x === 'right'"
-      :left="x === 'left'"
-      :multi-line="mode === 'multi-line'"
-      :vertical="mode === 'vertical'"
-      v-model="snackbar"
-    >
-      {{confirmationMessage}}
-      <v-btn flat color="pink" @click.native="snackbar = false">Close</v-btn>
-    </v-snackbar>
+      <v-snackbar
+        :timeout="timeout"
+        :top="y === 'top'"
+        :bottom="y === 'bottom'"
+        :right="x === 'right'"
+        :left="x === 'left'"
+        :multi-line="mode === 'multi-line'"
+        :vertical="mode === 'vertical'"
+        v-model="snackbar">
+        {{ confirmationMessage }}
+        <v-btn 
+          flat 
+          color="pink" 
+          @click.native="snackbar = false">
+          Close
+        </v-btn>
+      </v-snackbar>
 
     </div>
   </div>
 </template>
 
 <script>
-  import axios from "axios";
+import axios from "axios";
 
-  export default {
-    data () {
-      return {
-        usersURL: "http://localhost:5000/api/usuarios",
-        userID: this.$route.params.id,
+export default {
+  data() {
+    return {
+      usersURL: "http://localhost:5000/api/usuarios",
+      userID: this.$route.params.id,
 
-        password: '',
-        repeatPassword: '',
+      password: "",
+      repeatPassword: "",
 
-        enabledTag: 'Habilitado',
-        disabledTag: 'Deshabilitado',
-        userEnabled: 'Habilitado',
+      enabledTag: "Habilitado",
+      disabledTag: "Deshabilitado",
+      userEnabled: "Habilitado",
 
-        name: '',        
+      name: "",
 
-        userType: undefined,
-        userTypes: ["Tipo 1", "Tipo 2", "Tipo 3"],
+      userType: undefined,
+      userTypes: ["Tipo 1", "Tipo 2", "Tipo 3"],
 
-        group: undefined,
-        groupsData: ["Tipo 1", "Tipo 2", "Tipo 3"],
+      group: undefined,
+      groupsData: ["Tipo 1", "Tipo 2", "Tipo 3"],
 
-        course: undefined,
-        coursesData: ["Tipo 1", "Tipo 2", "Tipo 3"],
+      course: undefined,
+      coursesData: ["Tipo 1", "Tipo 2", "Tipo 3"],
 
-        state: undefined,
-        statesData: ["Jalisco","Monterrey"],
+      state: undefined,
+      statesData: ["Jalisco", "Monterrey"],
 
-        city: undefined,
-        citiesData: {
-          "Jalisco": ["Ciudad 1 de Jalisco", "Ciudad 2 de Jalisco", "Ciudad 3 de Jalisco"],
-          "Monterrey": ["Ciudad 1 de Monterrey", "Ciudad 2 de Monterrey", "Ciudad 3 de Monterrey"]
-        },
-
-        cp: '',
-        street: '',
-        numberStreet: '',
-
-        // Snackbar config
-        snackbar: false,
-        y: 'bottom',
-        x: null,
-        mode: '',
-        timeout: 3000,
-        confirmationMessage: 'El usuario ha sido editado',        
-      }
-    },
-    methods:{
-      saveUser: function(){
-        
-        var vueInstance = this;
-
-        axios.put(this.usersURL+'/'+this.userID, {
-            "nombre": this.name,
-            "contraseña": this.password,
-            "tipoUsuario": {
-                "tipo": this.userType,
-                "descripción": "---"
-            },
-            "grupo": this.group,
-            "habilitado": this.userEnabled,
-            "direccion": {
-                "calle": this.street,
-                "numero": this.numberStreet,
-                "cp": this.cp,
-                "ciudad": this.city,
-                "estado": this.state,
-            },
-            "curso": {
-                "id": 1,
-                "nombre": this.course,
-                "descripcion": "---",
-                "calificacion": 0,
-                "observaciones": "---"
-            }            
-          })
-          .then(function (response) {
-            vueInstance.snackbar = true;
-          })
-          .catch(function (error) {
-            console.log("Error in creation of user");
-            console.log(error);
-          });   
+      city: undefined,
+      citiesData: {
+        Jalisco: [
+          "Ciudad 1 de Jalisco",
+          "Ciudad 2 de Jalisco",
+          "Ciudad 3 de Jalisco"
+        ],
+        Monterrey: [
+          "Ciudad 1 de Monterrey",
+          "Ciudad 2 de Monterrey",
+          "Ciudad 3 de Monterrey"
+        ]
       },
-      getData(){
-        axios({
-          method: 'GET',
-          url: this.usersURL+'/'+this.userID,
-        }).then((response) => {
+
+      cp: "",
+      street: "",
+      numberStreet: "",
+
+      // Snackbar config
+      snackbar: false,
+      y: "bottom",
+      x: null,
+      mode: "",
+      timeout: 3000,
+      confirmationMessage: "El usuario ha sido editado"
+    };
+  },
+  created() {
+    this.getData();
+  },
+  methods: {
+    saveUser: function() {
+      var vueInstance = this;
+
+      axios
+        .put(this.usersURL + "/" + this.userID, {
+          nombre: this.name,
+          contraseña: this.password,
+          tipoUsuario: {
+            tipo: this.userType,
+            descripción: "---"
+          },
+          grupo: this.group,
+          habilitado: this.userEnabled,
+          direccion: {
+            calle: this.street,
+            numero: this.numberStreet,
+            cp: this.cp,
+            ciudad: this.city,
+            estado: this.state
+          },
+          curso: {
+            id: 1,
+            nombre: this.course,
+            descripcion: "---",
+            calificacion: 0,
+            observaciones: "---"
+          }
+        })
+        .then(function(response) {
+          vueInstance.snackbar = true;
+        })
+        .catch(function(error) {
+          console.log("Error in creation of user");
+          console.log(error);
+        });
+    },
+    getData() {
+      axios({
+        method: "GET",
+        url: this.usersURL + "/" + this.userID
+      })
+        .then(response => {
           let data = response.data.data;
-                    
           this.password = data.contraseña;
           this.repeatPassword = this.password;
 
-          if(data.habilitado){
+          if (data.habilitado) {
             this.userEnabled = this.enabledTag;
-          }else{
+          } else {
             this.userEnabled = this.disabledTag;
           }
 
@@ -174,21 +227,18 @@
           this.cp = data.direccion.cp;
           this.street = data.direccion.calle;
           this.numberStreet = data.direccion.numero;
-          
-        }).catch((e) => {
+        })
+        .catch(e => {
           this.errors.push(e);
         });
-      }  
-    },
-    created() {
-      this.getData();
-    },    
+    }
   }
+};
 </script>
 
 <style scoped type="text/css">
-  .data-visualization-container{
-    margin-left: 30%;
-    width: 40%;
-  }
+.data-visualization-container {
+  margin-left: 30%;
+  width: 40%;
+}
 </style>

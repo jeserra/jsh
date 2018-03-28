@@ -1,5 +1,6 @@
 <template>
   <v-container grid-list-xl >
+    <toolbar-handler/>
     <v-layout 
       row
       wrap
@@ -166,10 +167,12 @@
 <script>
 import axios from "axios";
 import StarRating from "vue-star-rating";
+import toolbarHandler from "../toolbars/toolbarHandler";
 
 export default {
   components: {
-    StarRating
+    StarRating,
+    toolbarHandler
   },
   data() {
     return {

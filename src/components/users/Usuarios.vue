@@ -1,6 +1,8 @@
 <template>
   <div>
 
+    <toolbarHandler/>
+
     <div class="data-visualization-container">
       <p class="module-title">
         <v-icon>account_balance</v-icon>Usuarios
@@ -11,7 +13,9 @@
           :headers="headers"
           :items="items"
           class="elevation-2">
-          <template slot="items" slot-scope="props">
+          <template
+            slot="items"
+            slot-scope="props">
             <tr @click="props.expanded = !props.expanded">
               <td>{{ props.item.nombre }}</td>
               <td>{{ props.item.tipoUsuario.tipo }}</td>
@@ -39,7 +43,7 @@
                     <v-list-tile>
                       <v-list-tile-content>
                         <v-list-tile-title>
-                          {{props.item.nombre}}
+                          {{ props.item.nombre }}
                         </v-list-tile-title>
                         <v-list-tile-sub-title>{{ props.item.tipoUsuario.tipo }}</v-list-tile-sub-title>
                       </v-list-tile-content>
@@ -59,7 +63,7 @@
                         <v-list-tile-title>
                           Último inicio de sesión
                         </v-list-tile-title>
-                        <v-list-tile-sub-title>{{ props.item.ultimoLogin | moment("calendar")}}</v-list-tile-sub-title>
+                        <v-list-tile-sub-title>{{ props.item.ultimoLogin | moment("calendar") }}</v-list-tile-sub-title>
                       </v-list-tile-content>
                     </v-list-tile>
 
@@ -74,16 +78,16 @@
                     <v-list-tile>
                       <v-list-tile-content>
                         <v-list-tile-title>
-                          Curso: {{ props.item.curso.nombre}}
+                          Curso: {{ props.item.curso.nombre }}
                         </v-list-tile-title>
                         <v-list-tile-sub-title v-if="props.item.curso.calificacion">
-                          Calificación: {{ props.item.curso.calificacion}}/10
+                          Calificación: {{ props.item.curso.calificacion }}/10
                         </v-list-tile-sub-title>
                         <v-list-tile-sub-title v-if="props.item.curso.descripcion">
-                          Descripción: {{ props.item.curso.descripcion}}
+                          Descripción: {{ props.item.curso.descripcion }}
                         </v-list-tile-sub-title>
                         <v-list-tile-sub-title v-if="props.item.curso.observaciones">
-                          Observaciones: {{ props.item.curso.observaciones}}
+                          Observaciones: {{ props.item.curso.observaciones }}
                         </v-list-tile-sub-title>
                       </v-list-tile-content>
                     </v-list-tile>
@@ -119,15 +123,23 @@
         </v-data-table>
 
         <ul v-if="errors && errors.length">
-          <li v-bind:key="error" v-for="error of errors">
-            {{error.message}}
+          <li
+            v-for="error of errors"
+            :key="error">  
+            {{ error.message }}
           </li>
         </ul>
 
       </div>
     </div>
 
-    <v-btn fixed fab bottom right color="primary" :to="{ name: 'nuevoUsuario'}">
+    <v-btn
+      :to="{ name: 'nuevoUsuario'}"    
+      fixed
+      fab
+      bottom
+      right
+      color="primary">
       <v-icon>add</v-icon>
     </v-btn>
 
@@ -136,8 +148,12 @@
 
 <script>
 import axios from "axios";
+import toolbarHandler from "../toolbars/toolbarHandler";
 
 export default {
+  components: {
+    toolbarHandler
+  },
   data() {
     return {
       usersURL: "http://localhost:5000/api/usuarios",
@@ -151,6 +167,9 @@ export default {
         { text: "Ciudad", value: "direccion.ciudad" }
       ]
     };
+  },
+  created() {
+    this.getData();
   },
   methods: {
     getData() {
@@ -172,9 +191,6 @@ export default {
         params: { id: item.id }
       });
     }
-  },
-  created() {
-    this.getData();
   }
 };
 </script>

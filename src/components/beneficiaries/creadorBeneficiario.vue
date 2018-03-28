@@ -1,5 +1,7 @@
 <template>
   <div>
+    <toolbar-handler/>
+        
     <div class="data-visualization-container">
       <h2>Nuevo Beneficiario</h2>
       <h3>Estudio Socio Económico</h3>
@@ -278,7 +280,6 @@
               <v-text-field 
                 v-model="estructuraFamiliar.segundoApellido"
                 placeholder="Segundo apellido"/>
-
               <h4>Fecha de nacimiento</h4>
               <v-layout 
                 row 
@@ -1309,13 +1310,13 @@
  
     </div>
 
-    <v-btn 
-      :click="saveBeneficiarie"
+    <v-btn       
       fixed 
       fab 
       bottom 
       right 
-      color="primary">
+      color="primary"
+      @click="saveBeneficiarie">
       <v-icon>save</v-icon>
     </v-btn>    
 
@@ -1340,16 +1341,18 @@
 
 <script>
 import axios from "axios";
+import toolbarHandler from "../toolbars/toolbarHandler";
 
 export default {
+  components: {
+    toolbarHandler
+  },
   data() {
     return {
       currentStep: 0,
       escolaridades: ["Preparatoria", "Secundaria", "Primaria"],
 
       familyAmount: 1,
-      familyStructure: [],
-
       familyAmountSocialSecurity: 1,
 
       houseObjects: [
@@ -1628,7 +1631,7 @@ export default {
       x: null,
       mode: "",
       timeout: 3000,
-      confirmationMessage: "El usuario ha sido creado"
+      confirmationMessage: "El beneficiario ha sido creado"
     };
   },
   created() {
@@ -1640,39 +1643,25 @@ export default {
 
       axios
         .post(this.usersURL, {
-          nombre: this.name,
-          contraseña: this.password,
-          tipoUsuario: {
-            tipo: this.userType,
-            descripción: "---"
-          },
-          grupo: this.group,
-          habilitado: this.userEnabled,
-          direccion: {
-            calle: this.street,
-            numero: this.numberStreet,
-            cp: this.cp,
-            ciudad: this.city,
-            estado: this.state
-          },
-          curso: {
-            id: 1,
-            nombre: this.course,
-            descripcion: "---",
-            calificacion: 0,
-            observaciones: "---"
-          }
+          representante: this.representante,
+          datosGenerales: this.datosGenerales,
+          estructuraFamiliar: this.estructuraFamiliar,
+          seguridadSocial: this.seguridadSocial,
+          servicios: this.servicios,
+          infraestructuraVivienda: this.infraestructuraVivienda,
+          condicionesEconomicas: this.condicionesEconomicas,
+          alimentacion: this.alimentacion
         })
         .then(function(response) {
           vueInstance.snackbar = true;
 
           vueInstance._routerRoot._router.push({
-            name: "editorUsuario",
+            name: "editorBeneficiario",
             params: { id: 1 }
           });
         })
         .catch(function(error) {
-          console.log("Error in creation of user");
+          console.log("Error in creation of beneficiarie");
           console.log(error);
         });
     },

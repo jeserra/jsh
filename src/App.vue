@@ -61,15 +61,6 @@
       </div>
     </v-navigation-drawer>
 
-
-    <v-toolbar 
-      fixed 
-      app>
-      <v-toolbar-side-icon 
-        v-if="mini" 
-        @click.native.stop="mini = !mini"/>
-    </v-toolbar>
-
     <v-content>
       <v-container fluid>
         <router-view/>
