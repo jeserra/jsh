@@ -1,46 +1,83 @@
 <template>
   <v-app id="inspire">
-    <v-navigation-drawer 
+    <v-navigation-drawer
       v-model="drawer"
-      :mini-variant.sync="mini" 
-      hide-overlay 
-      fixed 
+      :mini-variant.sync="drawerIsMini" 
+      hide-overlay
+      width="160"
+      mini-variant-width="160"
+      class="transparent"
+      fixed
+      floating
       app>
       <div>
-        <!-- <div v-on:mouseover="mini = false" v-on:mouseleave="mini = true"> -->
-        <v-toolbar flat >
-          <v-list class="pa-0">
-            <v-list-tile avatar>
-              <v-list-tile-avatar>
-                <img src="./assets/logoJSH.svg">
-              </v-list-tile-avatar>
-              <v-list-tile-content>
-                <v-list-tile-title>JSH</v-list-tile-title>
-              </v-list-tile-content>
-              <v-list-tile-action>
-                <v-btn 
-                  icon 
-                  @click.native.stop="mini = !mini">
-                  <v-toolbar-side-icon/>
-                </v-btn>
-              </v-list-tile-action>
+        <div class="title-app">
+          <v-btn 
+            icon 
+            @click.native.stop="drawerIsMini = !drawerIsMini">
+            <v-toolbar-side-icon/>
+          </v-btn>
+          JSH MMT
+        </div>
 
+        <v-list-tile-content>
+          <v-list
+            class="gray elevation-6 pt-4">
+
+            <v-list-tile-avatar> 
+              <img src="./assets/logoJSH.svg"> 
+            </v-list-tile-avatar>
+            JSH
+            <br>
+            JSH@testing.gg
+
+            <v-divider/>
+
+            <v-list-tile
+              v-for="(item, index) in items"
+              :to="{ name: item.ref }"
+              :key="item.title"
+              @click="selectIcon(index)">
+              <v-list-tile-action>
+
+                <v-container
+                  grid-list-md
+                  align-center
+                  text-xs-center>
+                  <v-layout
+                    row
+                    wrap>
+                    <v-flex
+                      xs12
+                      class="text-in-left-nav-menu">
+                      <v-icon>{{ item.icon }}</v-icon>
+                      {{ item.title }}
+                    </v-flex>
+                  </v-layout>
+                </v-container>
+
+              </v-list-tile-action>
             </v-list-tile>
           </v-list>
-        </v-toolbar>
-        <v-list 
-          class="pt-0" 
-          dense>
-          <v-list-tile>
-            <v-list-tile-content >
-              MÓDULOS
-            </v-list-tile-content>
-          </v-list-tile>
-        </v-list>
+        </v-list-tile-content>
 
-        <v-list 
-          class="pt-0" 
-          dense>
+      </div>
+    </v-navigation-drawer>
+
+    <v-navigation-drawer
+      v-if="drawerIsMini"
+      v-model="drawer"
+      :mini-variant.sync="sidebarDrawerIsMini" 
+      hide-overlay
+      mini-variant-width="80"
+      class="transparent left-menu"
+      fixed
+      floating
+      app>
+      <v-sidebar>
+        <v-list
+          mini-variant-width="80"
+          class="left-nav-menu">
           <v-divider/>
           <v-list-tile 
             v-for="(item, index) in items"
@@ -48,7 +85,23 @@
             :key="item.title"
             @click="selectIcon(index)">
             <v-list-tile-action>
-              <v-icon>{{ item.icon }}</v-icon>
+
+              <v-container
+                grid-list-md
+                align-center
+                text-xs-center>
+                <v-layout
+                  row
+                  wrap>
+                  <v-flex
+                    xs12
+                    class="text-in-left-nav-menu">
+                    <v-icon>{{ item.icon }}</v-icon>
+                    {{ item.title }}
+                  </v-flex>
+                </v-layout>
+              </v-container>
+
             </v-list-tile-action>
 
             <v-list-tile-content>
@@ -57,8 +110,7 @@
 
           </v-list-tile>
         </v-list>
-
-      </div>
+      </v-sidebar>
     </v-navigation-drawer>
 
     <v-content>
@@ -76,29 +128,58 @@ export default {
       drawer: true,
       items: [
         // https://material.io/icons/
-        { title: "Inicio", icon: "home", active: true, ref: "inicio" },
         {
-          title: "Banco de alimentos",
-          icon: "account_balance",
+          title: "Dashboard",
+          icon: "home",
+          active: true,
+          ref: "inicio"
+        },
+        {
+          title: "Centros",
+          icon: "pin_drop",
           active: false,
           ref: "bancos"
         },
         {
-          title: "Usuarios",
-          icon: "account_box",
+          title: "Grupos",
+          icon: "school",
           active: false,
           ref: "usuarios"
         },
         {
-          title: "Beneficiarios",
-          icon: "account_box",
+          title: "Personas",
+          icon: "group",
+          active: false,
+          ref: "beneficiarios"
+        },
+        {
+          title: "Servicios",
+          icon: "explore",
+          active: false,
+          ref: "beneficiarios"
+        },
+        {
+          title: "Empleo",
+          icon: "work",
+          active: false,
+          ref: "beneficiarios"
+        },
+        {
+          title: "Activos",
+          icon: "local_offer",
           active: false,
           ref: "beneficiarios"
         }
       ],
-      mini: true,
+      drawerIsMini: true,
+      sidebarDrawerIsMini: true,
       right: null
     };
+  },
+  watch: {
+    sidebarDrawerIsMini: function() {
+      this.sidebarDrawerIsMini = true;
+    }
   },
   methods: {
     selectIcon(index) {
@@ -112,3 +193,31 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.left-menu {
+  margin-top: 5em !important;
+}
+
+.left-nav-menu {
+  padding-top: 7em !important;
+}
+
+.text-in-left-nav-menu {
+  font-family: Roboto, sans-serif;
+  color: rgba(0, 0, 0, 0.54);
+  font-size: 10px;
+  line-height: 10px;
+  text-align: center;
+}
+
+.title-app {
+  margin-top: 0.3em;
+  opacity: 1;
+  font-family: "Source Sans Pro", sans-serif;
+  color: rgba(0, 0, 0, 0.54);
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: 0px;
+}
+</style>

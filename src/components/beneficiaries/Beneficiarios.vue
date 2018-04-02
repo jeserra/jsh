@@ -1,6 +1,8 @@
 <template>
   <div>
-    <toolbar-handler/>
+    <toolbarHandler      
+      :items="toolbar.items"
+      :title="toolbar.title"/>
 
     <div class="data-visualization-container">
       <p class="module-title">
@@ -164,7 +166,18 @@ export default {
         { text: "Nombre", value: "datosGenerales.nombre" },
         { text: "Grupo", value: "datosGenerales.grupo" },
         { text: "Fecha de captura", value: "datosGenerales.fechaCaptura" }
-      ]
+      ],
+
+      toolbar: {
+        items: [
+          { title: "Trabajadores", ref: "usuarios" },
+          { title: "Mentores", ref: "mentores" },
+          { title: "Tutores", ref: "tutores" },
+          { title: "Beneficiarios", ref: "beneficiarios" },
+          { title: "Aliados", ref: "aliados" }
+        ],
+        title: "Dashboard"
+      }
     };
   },
   created() {

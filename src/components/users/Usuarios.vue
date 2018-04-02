@@ -1,7 +1,9 @@
 <template>
   <div>
 
-    <toolbarHandler/>
+    <toolbarHandler      
+      :items="toolbar.items"
+      :title="toolbar.title"/>
 
     <div class="data-visualization-container">
       <p class="module-title">
@@ -165,7 +167,18 @@ export default {
         { text: "Curso Social", value: "curso.nombre" },
         { text: "Grupo", value: "grupo" },
         { text: "Ciudad", value: "direccion.ciudad" }
-      ]
+      ],
+
+      toolbar: {
+        items: [
+          { title: "Trabajadores", ref: "usuarios" },
+          { title: "Mentores", ref: "mentores" },
+          { title: "Tutores", ref: "tutores" },
+          { title: "Beneficiarios", ref: "beneficiarios" },
+          { title: "Aliados", ref: "aliados" }
+        ],
+        title: "Dashboard"
+      }
     };
   },
   created() {
