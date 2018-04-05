@@ -1,8 +1,7 @@
 <template>
   <div>
     <toolbarHandler      
-      :items="toolbar.items"
-      :title="toolbar.title"/>
+      :key-name="'personas'"/>
 
     <div class="data-visualization-container">
       <p class="module-title">
@@ -126,7 +125,7 @@
         <ul v-if="errors && errors.length">
           <li
             v-for="error of errors"
-            :key="error">
+            :key="'error-index-' + error">
             {{ error.message }}
           </li>
         </ul>
@@ -166,18 +165,7 @@ export default {
         { text: "Nombre", value: "datosGenerales.nombre" },
         { text: "Grupo", value: "datosGenerales.grupo" },
         { text: "Fecha de captura", value: "datosGenerales.fechaCaptura" }
-      ],
-
-      toolbar: {
-        items: [
-          { title: "Trabajadores", ref: "usuarios" },
-          { title: "Mentores", ref: "mentores" },
-          { title: "Tutores", ref: "tutores" },
-          { title: "Beneficiarios", ref: "beneficiarios" },
-          { title: "Aliados", ref: "aliados" }
-        ],
-        title: "Dashboard"
-      }
+      ]
     };
   },
   created() {

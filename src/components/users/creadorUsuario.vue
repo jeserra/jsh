@@ -1,6 +1,9 @@
 <template>
   <div>
 
+    <toolbarHandler      
+      :key-name="'personas'"/>
+
     <div class="data-visualization-container">
       <h2>Nuevo usuario</h2>
       Ingrese al menos los datos que sean de caracter obligatorio(*)

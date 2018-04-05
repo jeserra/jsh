@@ -1,7 +1,8 @@
 <template>
   <div>
 
-    <toolbarHandler/>
+    <toolbarHandler      
+      :key-name="'personas'"/>
 
     <div class="data-visualization-container">
       <h2>Editar usuario</h2>

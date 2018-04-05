@@ -1,6 +1,7 @@
 <template>
   <div>
-    <toolbar-handler/>
+    <toolbarHandler      
+      :key-name="'personas'"/>
         
     <div class="data-visualization-container">
       <h2>Nuevo Beneficiario</h2>
