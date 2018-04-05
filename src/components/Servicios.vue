@@ -10,8 +10,7 @@
       <v-flex 
         xs6 
         m10  
-        offset-xs0 
-        offset-md1>
+        offset-xs0>
         <v-card>
 
           <v-card-title>
@@ -110,18 +109,6 @@
                   <v-flex 
                     xs12
                     lg6>
-                    <gmap-map
-                      :center="{lat:props.item.direccion.latitude, lng:props.item.direccion.longitud}"
-                      :zoom="14"
-                      map-type-id="roadmap"
-                      style="width: 400px; height: 250px"
-                    >
-                      <gmap-marker
-                        :position="{lat:props.item.direccion.latitude, lng:props.item.direccion.longitud}"
-                        :clickable="true"
-                        :draggable="true"
-                      />
-                    </gmap-map>
                     <blockquote class="subheading grey--text py-3" >
                       {{ props.item.direccion.calle }} 
                       #{{ props.item.direccion.numero }}. 
@@ -164,7 +151,23 @@
           color="primary">
           <v-icon>add</v-icon>
         </v-btn>
-
+      </v-flex>
+      <v-flex 
+        xs6 
+        m10  
+        offset-xs0>
+        <gmap-map
+          :center="{lat:mapCenter.latitude, lng:mapCenter.longitud}"
+          :zoom="14"
+          map-type-id="roadmap"
+          style="width: 400px; height: 250px"
+        >
+          <gmap-marker
+            :position="{lat:mapCenter.latitude, lng:mapCenter.longitud}"
+            :clickable="true"
+            :draggable="true"
+          />
+        </gmap-map>
       </v-flex>
     </v-layout>
   </v-container>
@@ -194,7 +197,12 @@ export default {
         { text: "Región", value: "region.nombre" },
         { text: "Estado", value: "direccion.estado" },
         { text: "Ciudad", value: "direccion.ciudad" }
-      ]
+      ],
+
+      mapCenter: {
+        latitude: 20.6596,
+        longitud: -103.3496
+      }
     };
   },
   watch: {
