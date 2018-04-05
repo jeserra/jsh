@@ -74,43 +74,43 @@
       fixed
       floating
       app>
-      <v-sidebar>
-        <v-list
-          mini-variant-width="80"
-          class="left-nav-menu">
-          <v-divider/>
-          <v-list-tile 
-            v-for="(item, index) in items"
-            :to="{ name: item.ref }"
-            :key="item.title"
-            @click="selectIcon(index)">
-            <v-list-tile-action>
 
-              <v-container
-                grid-list-md
-                align-center
-                text-xs-center>
-                <v-layout
-                  row
-                  wrap>
-                  <v-flex
-                    xs12
-                    class="text-in-left-nav-menu">
-                    <v-icon>{{ item.icon }}</v-icon>
-                    {{ item.title }}
-                  </v-flex>
-                </v-layout>
-              </v-container>
+      <v-list
+        mini-variant-width="80"
+        class="left-nav-menu">
+        <v-divider/>
+        <v-list-tile 
+          v-for="(item, index) in items"
+          :to="{ name: item.ref }"
+          :key="item.title"
+          @click="selectIcon(index)">
+          <v-list-tile-action>
 
-            </v-list-tile-action>
+            <v-container
+              grid-list-md
+              align-center
+              text-xs-center>
+              <v-layout
+                row
+                wrap>
+                <v-flex
+                  xs12
+                  class="text-in-left-nav-menu">
+                  <v-icon>{{ item.icon }}</v-icon>
+                  {{ item.title }}
+                </v-flex>
+              </v-layout>
+            </v-container>
 
-            <v-list-tile-content>
-              <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-            </v-list-tile-content>
+          </v-list-tile-action>
 
-          </v-list-tile>
-        </v-list>
-      </v-sidebar>
+          <v-list-tile-content>
+            <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+          </v-list-tile-content>
+
+        </v-list-tile>
+      </v-list>
+
     </v-navigation-drawer>
 
     <v-content>
@@ -156,7 +156,7 @@ export default {
           title: "Servicios",
           icon: "explore",
           active: false,
-          ref: "beneficiarios"
+          ref: "servicios"
         },
         {
           title: "Empleo",

@@ -13,6 +13,8 @@ import Beneficiarios from "../components/beneficiaries/Beneficiarios";
 import creadorBeneficiario from "../components/beneficiaries/creadorBeneficiario";
 import editorBeneficiario from "../components/beneficiaries/editorBeneficiario";
 
+import Servicios from "../components/Servicios";
+
 export default new Router({
   routes: [
     { path: "", component: Home },
@@ -36,7 +38,9 @@ export default new Router({
       path: "/nuevo-beneficiario",
       component: creadorBeneficiario,
       name: "nuevoBeneficiario"
-    }
+    },
+    //servicios
+    { path: "/servicios", component: Servicios, name: "servicios" }
   ],
   mode: "history",
   scrollBehavior(to, from, savedPosition) {
