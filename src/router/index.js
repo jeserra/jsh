@@ -43,8 +43,8 @@ export default new Router({
     },
     //servicios
     { path: "/servicios", component: Servicios, name: "servicios" },
-    //courses 
-    { path: "/nuevo-curso", component: creadorCurso, name: "cursos" }
+    //cursos
+    { path: "/nuevo-curso", component: creadorCurso, name: "nuevoCurso" }
   ],
   mode: "history",
   scrollBehavior(to, from, savedPosition) {

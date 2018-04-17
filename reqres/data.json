@@ -1,0 +1,398 @@
+{
+  "bancos": [
+    {
+      "id": 1,
+      "nombre": "Banco de Alimentos #1",
+      "razonSocial": "Banco de Alimentos #1 SA de CV",
+      "calificacion": "5",
+      "fechaAfiliacion": "2018-02-14T15:58:47.324Z",
+      "fechaRegistro": "2018-02-14T15:58:47.324Z",
+      "habilitado": true,
+      "direccion": {
+        "calle": "calle 1",
+        "numero": "32",
+        "cp": "45123",
+        "ciudad": "Guadalajara",
+        "estado": "Jalisco",
+        "latitude": 20.6596,
+        "longitud": -103.3496
+      },
+      "region": {
+        "nombre": "SJO-15",
+        "habilitado": true
+      },
+      "contacto": {
+        "valor": "ni idea del tipo de valor"
+      }
+    },
+    {
+      "id": 2,
+      "nombre": "Banco de Alimentos #2",
+      "razonSocial": "Banco de Alimentos #2 SA de CV",
+      "calificacion": "3",
+      "fechaAfiliacion": "2018-02-14T15:58:47.324Z",
+      "fechaRegistro": "2018-02-14T15:58:47.324Z",
+      "habilitado": true,
+      "direccion": {
+        "calle": "calzada independencia",
+        "numero": "3232",
+        "cp": "45123",
+        "ciudad": "Guadalajara",
+        "estado": "Jalisco",
+        "latitude": 20.6596,
+        "longitud": -103.3496
+      },
+      "region": {
+        "nombre": "SJO-15",
+        "habilitado": true
+      },
+      "contacto": {
+        "valor": "ni idea del tipo de valor"
+      }
+    },
+    {
+      "id": 3,
+      "nombre": "Banco de Alimentos #3",
+      "razonSocial": "Banco de Alimentos #3 SA de CV",
+      "calificacion": "1",
+      "fechaAfiliacion": "2018-02-14T15:58:47.324Z",
+      "fechaRegistro": "2018-02-14T15:58:47.324Z",
+      "habilitado": false,
+      "direccion": {
+        "calle": "calle 1",
+        "numero": "32",
+        "cp": "45123",
+        "ciudad": "Guadalajara",
+        "estado": "Jalisco",
+        "latitude": 20.6596,
+        "longitud": -103.3496
+      },
+      "region": {
+        "nombre": "SJO-15",
+        "habilitado": true
+      },
+      "contacto": {
+        "valor": "ni idea del tipo de valor"
+      }
+    }
+  ],
+  "usuarios": [
+    {
+      "id": 1,
+      "nombre": "Edgardo",
+      "contraseña": 12345,
+      "tipoUsuario": {
+        "tipo": "cliente",
+        "descripción": "choro mareador"
+      },
+      "grupo": "A",
+      "fechaRegistro": "2018-02-14T15:58:47.324Z",
+      "ultimoLogin": "2018-02-14T15:58:47.324Z",
+      "habilitado": true,
+      "contacto": {
+        "valor": "No se",
+        "nombre": "Arturo"
+      },
+      "direccion": {
+        "calle": "Av. la Paz",
+        "numero": 234,
+        "cp": 12345,
+        "ciudad": "Guadalajara",
+        "estado": "Jalisco",
+        "latitude": 23.223423,
+        "longitud": 25.23455
+      },
+      "curso": {
+        "id": 1,
+        "nombre": "Computacion",
+        "descripcion": "Usas compus",
+        "calificacion": 10,
+        "observaciones": "Buen pedo"
+      }
+    },
+    {
+      "id": 2,
+      "nombre": "Rodrigo",
+      "contraseña": 12345,
+      "tipoUsuario": {
+        "tipo": "cliente",
+        "descripción": "choro mareador"
+      },
+      "grupo": "A",
+      "fechaRegistro": "2018-02-14T15:58:47.324Z",
+      "ultimoLogin": "2018-02-14T15:58:47.324Z",
+      "habilitado": true,
+      "contacto": {
+        "valor": "No se",
+        "nombre": "Arturo"
+      },
+      "direccion": {
+        "calle": "Av. la Paz",
+        "numero": 234,
+        "cp": 12345,
+        "ciudad": "Guadalajara",
+        "estado": "Jalisco",
+        "latitude": 23.223423,
+        "longitud": 25.23455
+      },
+      "curso": {
+        "id": 1,
+        "nombre": "Computacion",
+        "descripcion": "Usas compus",
+        "calificacion": 10,
+        "observaciones": "Buen pedo"
+      }
+    },
+    {
+      "id": 3,
+      "nombre": "Gerardo",
+      "contraseña": 12345,
+      "tipoUsuario": {
+        "tipo": "cliente",
+        "descripción": "choro mareador"
+      },
+      "grupo": "A",
+      "fechaRegistro": "2018-02-14T15:58:47.324Z",
+      "ultimoLogin": "2018-02-14T15:58:47.324Z",
+      "habilitado": true,
+      "contacto": {
+        "valor": "No se",
+        "nombre": "Arturo"
+      },
+      "direccion": {
+        "calle": "Av. la Paz",
+        "numero": 234,
+        "cp": 12345,
+        "ciudad": "Guadalajara",
+        "estado": "Jalisco",
+        "latitude": 23.223423,
+        "longitud": 25.23455
+      },
+      "curso": {
+        "id": 2,
+        "nombre": "Computacion",
+        "descripcion": "Usas compus",
+        "calificacion": 10,
+        "observaciones": "Buen pedo"
+      }
+    }
+  ],
+  "beneficiarios":[
+    {
+      "id": 1,
+      "representante": {
+        "comunidad": "Comunidad las Pitayas",
+        "nombre": "Oscar Joaquin de la Rosa",
+
+        "domicilio": {
+          "calle": "Juan Lopez",
+          "colonia": "La gallina Juancho",
+          "municipio": "Capitan Lacteo",
+          "numExt": "39",
+          "numInt": "43"
+        },
+
+        "nacimiento": {
+          "municipio": "Capitan Lacteo",
+          "estado": "Tamaulipas"
+        },
+
+        "escolaridad": {
+          "nivel": "Secundaria",
+          "estado": "Completada"
+        }
+      },
+      "datosGenerales": {
+        "nombre": "Oscar Joaquin de la Rosa",
+        "grupo": "Abuelo",
+        "fechaLevantamiento": "2000-03-09",
+        "fechaCaptura": "2010-04-03",
+
+        "vialidad": {
+         "tipo": "Avenida",
+         "nombre": "Moctezuma",
+         "numInt": "25",
+         "numExt": "24"
+       },
+
+       "asentamiento": {
+         "tipo": "Coto",
+         "nombre": "Inquisición Española",
+         "cp": "42039",
+         "localidad": "La Mora",
+         "municipio": "Bahía de banderas",
+         "claveMunicipio": "bk399",
+         "estado": "Morelos",
+         "claveEstado": "Mor",
+         "entreVialidades": "Paciencia",
+         "descripcion": "Serenidad",
+         "telefono": "12345678"
+       }
+      },
+     "estructuraFamiliar": {
+        "nombre": "Kirino",
+        "primerApellido": "Ayase",
+        "segundoApellido": "Kurone",
+        "fechaNacimiento": "2000-01-01",
+        "sexo": "Mujer",
+        "estadoCivil": "Casada",
+        "parentesco": "Hermana",
+        "escolaridad": {
+        	"grado": "Preparatoria",
+        	"nivel": "En curso",
+        	"escuela": "Nipponi"
+        }
+      },
+      "seguridadSocial": {
+        "ocupacion": "Químico nuclear",
+        "tipoEmpleo": "Tipo D",
+
+        "prestaciones": {
+        	"A": true,
+        	"B": "undefined",
+        	"C": "undefined",
+        	"D": "undefined",
+        	"E": true,
+        	"F": "undefined",
+        	"G": "undefined",
+        	"H": true,
+        	"I": "undefined"
+        },
+
+        "jubiladoPension": "",
+        "derechohabiencia": "",
+        "motivoDerechohabiencia": "",
+        "capacidadesDiferentes": "",
+        "condicionesSalud": "",
+        "adiciones": "Sin comentarios",
+        "etnia": "Tepehuanes",
+        "peso": "999",
+        "talla": "199"
+      },
+      "servicios": {
+        "luz": {
+        	"publico": "undefined",
+        	"planta": true,
+        	"panel": "undefined",
+        	"noTiene": "undefined"
+        },
+
+        "drenaje": {
+        	"publico": "undefined",
+        	"fosa": "undefined",
+        	"grieta": true,
+        	"rio": "undefined",
+        	"noTiene": "undefined"
+        },
+
+        "baño": {
+        	"descarga": "undefined",
+        	"cubeta": "undefined",
+        	"letrina": true,
+        	"pozo": "undefined",
+        	"noTiene": "undefined",
+        	"gasTanque": "undefined",
+        	"electricidad": true,
+        	"gasNatural": "undefined",
+        	"sinChimenea": "undefined",
+        	"conChimenea": "undefined",
+        	"otroCombustible": "undefined"
+        },
+
+        "combustible": {
+        	"descarga": "undefined",
+        	"cubeta": true,
+        	"letrina": "undefined",
+        	"pozo": "undefined",
+        	"noTiene": "undefined",
+        	"gasTanque": true,
+        	"electricidad": "undefined",
+        	"gasNatural": "undefined",
+        	"sinChimenea": true,
+        	"conChimenea": "undefined",
+        	"otroCombustible": "undefined"
+        },
+
+        "agua": {
+        	"tomaDomicilaria": "undefined",
+        	"tomaComun": "undefined",
+        	"llavePublica": "undefined",
+        	"acarrean": true,
+        	"pipa": "undefined",
+        	"pozo": true,
+        	"sinServicio": "undefined"
+        }
+      },
+      "infraestructuraVivienda": {
+        "tenencia": "undefined",
+        "tipoCasa": "undefined",
+        "muros": true,
+        "piso": "undefined",
+
+        "caracteristicas": {
+        	"numCuartos": "undefined",
+        	"dormitorios": "undefined",
+        	"cocinaSeparada": "undefined",
+        	"bañoExclusivo": true
+        },
+
+        "objetosCaseros": {
+        	"tiene": [],
+        	"sirve": []
+        },
+        "condiciones": "Buena"
+      },
+      "condicionesEconomicas": {
+        "vivienda": "undefined",
+        "alimentacion": "undefined",
+        "luz": "undefined",
+        "gas": "undefined",
+        "agua": 50,
+        "telefono": "undefined",
+        "celular": "undefined",
+        "atencionMedica": "undefined",
+        "educacion": "undefined",
+        "transporte": "undefined",
+        "otros": "undefined",
+        "total": 50,
+
+        "aportacionSemanal": {
+        	"padre": "undefined",
+        	"madre": "undefined",
+        	"hijos": 50,
+        	"prospera": "undefined",
+        	"adultosMayores": "undefined",
+        	"becas": "undefined",
+        	"pension": "undefined",
+        	"otros": 50,
+        	"total": 100
+        },
+        "apoyoEspecie": {
+        	"tipos": "undefined",
+        	"quienProporciona": "undefined",
+        	"frecuencia": "undefined"
+        },
+        "remesas": {
+        	"recibe": true,
+        	"frecuencia": "cada eclipse lunar"
+        }
+      },
+      "alimentacion": {
+        "adultos": [],
+        "menores": [],
+        "estatus": "undefined",
+        "tipo": {
+        	"cuota": true,
+        	"beca": "undefined",
+        	"mediaBeca": true
+        },
+        "frecuencia": {
+        	"semanal": true,
+        	"quincenal": "undefined",
+        	"mensual": true
+        },
+        "duracion": 5
+      }
+    }
+  ]
+}
