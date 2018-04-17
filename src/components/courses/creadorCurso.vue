@@ -9,68 +9,50 @@
       Ingrese al menos los datos que sean de caracter obligatorio(*)
 
       <form>
+        <v-text-field
+          v-model="name"
+          label="Nombre del Curso"
+          required/>
 
         <v-text-field
-          v-model="password"
-          label="Nombre"
+          v-model="description"
+          label="Descripción breve del curso"
           required/>
 
-        <v-text-field          
-          v-model="repeatPassword"          
-          :rules="[() => ('Las contraseñas no coinciden')]"
-          :error="password !== repeatPassword"
-          type="password"
-          label="Confirmar Contraseña"
-          required/>
+        <h3>Tipo de donativo: Curso de capacitación</h3>
 
+        <v-select
+          v-model="community_center"
+          :items="community_centers"
+          label="Centro Comunitario"/>
+          
+        <v-text-field
+          v-model="trabajador_social"
+          label="Nombre del trabajador social"
+          disabled="True"/>
+
+        <v-text-field
+          v-model="aliado"
+          label="Nombre del aliado"
+          disabled="True"/>
+        <h3>Status</h3>
         <v-switch 
           :label="userEnabled"
           v-model="userEnabled"
           :true-value="enabledTag"
           :false-value="disabledTag"/>
 
-        <v-text-field
-          v-model="name"
-          label="Nombre"          
-          required/>
-
-        <v-select          
-          v-model="userType"
-          :items="userTypes"
-          label="Tipo de Usuario"/>
-
-        <v-select
-          v-model="group"
-          :items="groupsData"
-          label="Grupo"/>
-
-        <v-select
-          v-model="course"
-          :items="coursesData"
-          label="Curso"/>
-
-        <v-select
-          v-model="state"
-          :items="statesData"
-          label="Estado"/>
-
-        <v-select
-          v-model="city"
-          :items="citiesData[state]"
-          label="Ciudad"/>
-
-        <v-text-field
-          v-model="cp"
-          type="number"
-          label="C.P."/>
-
-        <v-text-field          
-          v-model="street"
-          label="Calle"/>
-
-        <v-text-field          
-          v-model="numberStreet"
-          label="Número"/>
+        <h3>Fecha de inicio</h3>
+        <v-date-picker
+        landscape="True"
+        v-model="initial_date"
+        />
+        <h3>Fecha Final</h3>
+        <v-date-picker
+        landscape="True"
+        v-model="final_date"
+        />
+   
       </form>
 
       <v-btn
@@ -106,51 +88,26 @@
 </template>
 
 <script>
-import axios from "axios";
-
 export default {
   data() {
     return {
       usersURL: "http://localhost:5000/api/usuarios",
 
-      password: "",
-      repeatPassword: "",
-
-      enabledTag: "Habilitado",
-      disabledTag: "Deshabilitado",
-      userEnabled: "Habilitado",
+      role: "Admin",
 
       name: "",
+      description: "",
+      community_center: undefined,
+      community_centers: ["Tonalá", "Zapopan", "Casa Dany"],
+      trabajador_social: "",
+      aliado: "",
 
-      userType: undefined,
-      userTypes: ["Tipo 1", "Tipo 2", "Tipo 3"],
+      enabledTag: "Verificado",
+      disabledTag: "Pendiente",
+      userEnabled: "Habilitado",
 
-      group: undefined,
-      groupsData: ["Tipo 1", "Tipo 2", "Tipo 3"],
-
-      course: undefined,
-      coursesData: ["Tipo 1", "Tipo 2", "Tipo 3"],
-
-      state: undefined,
-      statesData: ["Jalisco", "Monterrey"],
-
-      city: undefined,
-      citiesData: {
-        Jalisco: [
-          "Ciudad 1 de Jalisco",
-          "Ciudad 2 de Jalisco",
-          "Ciudad 3 de Jalisco"
-        ],
-        Monterrey: [
-          "Ciudad 1 de Monterrey",
-          "Ciudad 2 de Monterrey",
-          "Ciudad 3 de Monterrey"
-        ]
-      },
-
-      cp: "",
-      street: "",
-      numberStreet: "",
+      initial_date: "",
+      final_date: "",
 
       // Snackbar config
       snackbar: false,
@@ -161,49 +118,7 @@ export default {
       confirmationMessage: "El usuario ha sido creado"
     };
   },
-  methods: {
-    saveUser: function() {
-      var vueInstance = this;
-
-      axios
-        .post(this.usersURL, {
-          nombre: this.name,
-          contraseña: this.password,
-          tipoUsuario: {
-            tipo: this.userType,
-            descripción: "---"
-          },
-          grupo: this.group,
-          habilitado: this.userEnabled,
-          direccion: {
-            calle: this.street,
-            numero: this.numberStreet,
-            cp: this.cp,
-            ciudad: this.city,
-            estado: this.state
-          },
-          curso: {
-            id: 1,
-            nombre: this.course,
-            descripcion: "---",
-            calificacion: 0,
-            observaciones: "---"
-          }
-        })
-        .then(function(response) {
-          vueInstance.snackbar = true;
-
-          vueInstance._routerRoot._router.push({
-            name: "editorUsuario",
-            params: { id: 1 }
-          });
-        })
-        .catch(function(error) {
-          console.log("Error in creation of user");
-          console.log(error);
-        });
-    }
-  }
+  methods: {}
 };
 </script>
 
