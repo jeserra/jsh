@@ -14,6 +14,7 @@ import creadorBeneficiario from "../components/beneficiaries/creadorBeneficiario
 import editorBeneficiario from "../components/beneficiaries/editorBeneficiario";
 
 import creadorCurso from "../components/courses/creadorCurso";
+import Courses from "../components/courses/Courses";
 
 import Servicios from "../components/Servicios";
 
@@ -44,7 +45,8 @@ export default new Router({
     //servicios
     { path: "/servicios", component: Servicios, name: "servicios" },
     //cursos
-    { path: "/nuevo-curso", component: creadorCurso, name: "nuevoCurso" }
+    { path: "/nuevo-curso", component: creadorCurso, name: "nuevoCurso" },
+    { path: "/cursos", component: Courses, name: "cursos" }
   ],
   mode: "history",
   scrollBehavior(to, from, savedPosition) {
