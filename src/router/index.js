@@ -13,7 +13,9 @@ import Beneficiarios from "../components/beneficiaries/Beneficiarios";
 import creadorBeneficiario from "../components/beneficiaries/creadorBeneficiario";
 import editorBeneficiario from "../components/beneficiaries/editorBeneficiario";
 
+import Courses from "../components/courses/Courses";
 import creadorCurso from "../components/courses/creadorCurso";
+import editorCursos from "../components/courses/editorCursos";
 
 import Servicios from "../components/Servicios";
 
@@ -43,7 +45,10 @@ export default new Router({
     },
     //servicios
     { path: "/servicios", component: Servicios, name: "servicios" },
+
     //cursos
+    { path: "/cursos", component: Courses, name: "cursos" },
+    { path: "/cursos/:id", component: editorCursos, name: "editorCursos" },
     { path: "/nuevo-curso", component: creadorCurso, name: "nuevoCurso" }
   ],
   mode: "history",

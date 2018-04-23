@@ -1,11 +1,11 @@
-<template>
+<template> 
   <div>
 
     <toolbarHandler      
       :key-name="'cursos'"/>
 
     <div class="data-visualization-container">
-      <h2>Nuevo curso</h2>
+      <h2>Editar Curso</h2>
       Ingrese al menos los datos que sean de caracter obligatorio(*)
 
       <form>
@@ -23,7 +23,7 @@
 
         <v-select
           v-model="community_center"
-          :items="community_centers"
+          :items="centro_com"
           label="Centro Comunitario"/>
          
         <v-text-field v-if="role === 'Admin'"
@@ -32,7 +32,7 @@
           />
 
         <v-text-field v-if="role === 'Admin'"
-          v-model="aliado"
+          v-model="patrocinado"
           label="Nombre del Aliado"
           />
                 
@@ -46,7 +46,6 @@
         :landscape=true
         v-model="initial_date"
         />
-        
         <h3>Fecha Final</h3>
         <v-date-picker
         :landscape=true
@@ -54,7 +53,7 @@
         />
 
         <v-text-field v-if="role === 'Admin'"
-          v-model="tutor"
+          v-model="impartido"
           label="Nombre del Tutor"
           />
 
@@ -92,7 +91,7 @@
         color="primary"
         @click="saveCourse()">
         <v-icon>save</v-icon>
-      </v-btn>    
+      </v-btn>
 
       <v-snackbar
         :timeout="timeout"
@@ -104,9 +103,9 @@
         :vertical="mode === 'vertical'"
         v-model="snackbar">
         {{ confirmationMessage }}
-        <v-btn
-          flat
-          color="pink"
+        <v-btn 
+          flat 
+          color="pink" 
           @click.native="snackbar = false">
           Close
         </v-btn>
@@ -120,28 +119,33 @@
 import axios from "axios";
 
 export default {
+
   data() {
     return {
-      usersURL: "http://localhost:5000/api/curso",
+      coursesURL: "http://localhost:5000/api/curso",
+      courseID: this.$route.params.id,
 
+      dataUrl: undefined,
+      data: [],
+      columnNames: [],
       role: "Admin",
+      
+      initial_date: undefined,
+      final_date: undefined,
+
+      impartido: "",
 
       name: "",
       descripcion: "",
-      community_center: undefined,
-      community_centers: ["Tonalá", "Zapopan", "Casa Dany"],
+      centro_com: undefined,
+      centro_com: ["Tonalá", "Zapopan", "Casa Dany"],
       trabajador_social: "",
-      aliado: "",
+      patrocinado: "",
       status: undefined,
       statuses: ["Pendiente", "Verificado", "Terminado", "Rechazado"],
 
       state: undefined,
       statesData: ["Jalisco", "Monterrey"],
-
-      initial_date: undefined,
-      final_date: undefined,
-
-      tutor: "",
 
       city: undefined,
       citiesData: {
@@ -167,25 +171,28 @@ export default {
       x: null,
       mode: "",
       timeout: 3000,
-      confirmationMessage: "El curso ha sido creado"
+      confirmationMessage: "El curso ha sido editado"
     };
+  },
+created() {
+    this.getData();
   },
   methods: {
     saveCourse: function() {
       var vueInstance = this;
 
       axios
-        .post(this.usersURL, {
+        .put(this.coursesURL + "/" + this.courseID, {
           nombre: this.name,
           tema: this.descripcion,
           tipo_donativo: "Curso de capacitación",
-          centro_comunitario: this.community_center,
+          centro_comunitario: this.centro_com,
           trabajador_social: this.trabajador_social,
-          aliado: this.aliado,
+          patrocinado: this.patrocinado,
           estatus: this.status,
           fecha_inicial: this.initial_date,
           fecha_final: this.final_date,
-          tutor: this.tutor,
+          impartido: this.impartido,
           direccion: {
             calle: this.street,
             numero: this.numberStreet,
@@ -196,19 +203,41 @@ export default {
         })
         .then(function(response) {
           vueInstance.snackbar = true;
-
-          vueInstance._routerRoot._router.push({
-            name: "editorCursos",
-            params: { id: 1 }
-          });
         })
         .catch(function(error) {
-          console.log("Error in creation of user");
+          console.log("Error in creation of course");
           console.log(error);
+        });
+    },
+    getData() {
+      axios({
+        method: "GET",
+        url: this.coursesURL + "/" + this.courseID
+      })
+        .then(response => {
+          let data = response.data.data;
+          this.name = data.nombre;
+          this.descripcion = data.descripcion;
+          this.centro_com = data.centro_com;
+          this.trabajador_social = data.trabajador_social;
+          this.patrocinado = data.patrocinado;
+          this.status = data.status;
+          this.initial_date = data.initial_date;
+          this.final_date = data.final_date;
+          this.impartido = data.impartido;
+          this.state = data.direccion.estado;
+          this.city = data.direccion.ciudad;
+          this.cp = data.direccion.cp;
+          this.street = data.direccion.calle;
+          this.numberStreet = data.direccion.numero;
+        })
+        .catch(e => {
+          this.errors.push(e);
         });
     }
   }
 };
+
 </script>
 
 <style scoped type="text/css">
