@@ -169,6 +169,12 @@ export default {
           icon: "local_offer",
           active: false,
           ref: "beneficiarios"
+        },
+        {
+          title: "Cursos",
+          icon: "assignment",
+          active: false,
+          ref: "cursos"
         }
       ],
       drawerIsMini: true,

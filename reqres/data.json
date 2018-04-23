@@ -177,13 +177,74 @@
       }
     }
   ],
-  "beneficiarios":[
+  "curso": [
+    {
+      "id": "1",
+      "habilitado": false,
+      "nombre": "Cosecha",
+      "descripcion": "Sembrar plantas",
+      "patrocinado": "Costeña",
+      "impartido": "Arturo Lopez",
+      "calificacion": "10",
+      "fechaCurso": "2018-02-14T15:58:47.324Z",
+      "direccion": {
+        "calle": "Av. Tonaltecas",
+        "numero": 987,
+        "cp": 25252,
+        "ciudad": "Guadalajara",
+        "estado": "Jalisco",
+        "latitude": 20.639840,
+        "longitud": -103.240645
+      },
+      "centro_com": "Tonalá"
+    },
+    {
+      "id": "2",
+      "habilitado": true,
+      "nombre": "Computacion",
+      "descripcion": "Usar compus",
+      "patrocinado": "AMDOCS",
+      "impartido": "Gabriel Raya",
+      "calificacion": "10",
+      "fechaCurso": "2018-02-14T15:58:47.324Z",
+      "direccion": {
+        "calle": "Chapultepec",
+        "numero": 987,
+        "cp": 25252,
+        "ciudad": "Guadalajara",
+        "estado": "Jalisco",
+        "latitude": 20.670889,
+        "longitud": -103.368741
+      },
+      "centro_com": "Chapultepec"
+    },
+    {
+      "id": "3",
+      "habilitado": true,
+      "nombre": "Carpinteria",
+      "descripcion": "Hacer muebles",
+      "patrocinado": "Carpinteria El bueno",
+      "impartido": "Fernando Nidea",
+      "calificacion": "10",
+      "fechaCurso": "2018-02-14T15:58:47.324Z",
+      "direccion": {
+        "calle": "Polonia",
+        "numero": 200,
+        "cp": 25252,
+        "ciudad": "Guadalajara",
+        "estado": "Jalisco",
+        "latitude": 20.696114,
+        "longitud": -103.295559
+      },
+      "centro_com": "Oblatos"
+    }
+  ],
+  "beneficiarios": [
     {
       "id": 1,
       "representante": {
         "comunidad": "Comunidad las Pitayas",
         "nombre": "Oscar Joaquin de la Rosa",
-
         "domicilio": {
           "calle": "Juan Lopez",
           "colonia": "La gallina Juancho",
@@ -191,12 +252,10 @@
           "numExt": "39",
           "numInt": "43"
         },
-
         "nacimiento": {
           "municipio": "Capitan Lacteo",
           "estado": "Tamaulipas"
         },
-
         "escolaridad": {
           "nivel": "Secundaria",
           "estado": "Completada"
@@ -207,29 +266,27 @@
         "grupo": "Abuelo",
         "fechaLevantamiento": "2000-03-09",
         "fechaCaptura": "2010-04-03",
-
         "vialidad": {
-         "tipo": "Avenida",
-         "nombre": "Moctezuma",
-         "numInt": "25",
-         "numExt": "24"
-       },
-
-       "asentamiento": {
-         "tipo": "Coto",
-         "nombre": "Inquisición Española",
-         "cp": "42039",
-         "localidad": "La Mora",
-         "municipio": "Bahía de banderas",
-         "claveMunicipio": "bk399",
-         "estado": "Morelos",
-         "claveEstado": "Mor",
-         "entreVialidades": "Paciencia",
-         "descripcion": "Serenidad",
-         "telefono": "12345678"
-       }
+          "tipo": "Avenida",
+          "nombre": "Moctezuma",
+          "numInt": "25",
+          "numExt": "24"
+        },
+        "asentamiento": {
+          "tipo": "Coto",
+          "nombre": "Inquisición Española",
+          "cp": "42039",
+          "localidad": "La Mora",
+          "municipio": "Bahía de banderas",
+          "claveMunicipio": "bk399",
+          "estado": "Morelos",
+          "claveEstado": "Mor",
+          "entreVialidades": "Paciencia",
+          "descripcion": "Serenidad",
+          "telefono": "12345678"
+        }
       },
-     "estructuraFamiliar": {
+      "estructuraFamiliar": {
         "nombre": "Kirino",
         "primerApellido": "Ayase",
         "segundoApellido": "Kurone",
@@ -238,27 +295,25 @@
         "estadoCivil": "Casada",
         "parentesco": "Hermana",
         "escolaridad": {
-        	"grado": "Preparatoria",
-        	"nivel": "En curso",
-        	"escuela": "Nipponi"
+          "grado": "Preparatoria",
+          "nivel": "En curso",
+          "escuela": "Nipponi"
         }
       },
       "seguridadSocial": {
         "ocupacion": "Químico nuclear",
         "tipoEmpleo": "Tipo D",
-
         "prestaciones": {
-        	"A": true,
-        	"B": "undefined",
-        	"C": "undefined",
-        	"D": "undefined",
-        	"E": true,
-        	"F": "undefined",
-        	"G": "undefined",
-        	"H": true,
-        	"I": "undefined"
+          "A": true,
+          "B": "undefined",
+          "C": "undefined",
+          "D": "undefined",
+          "E": true,
+          "F": "undefined",
+          "G": "undefined",
+          "H": true,
+          "I": "undefined"
         },
-
         "jubiladoPension": "",
         "derechohabiencia": "",
         "motivoDerechohabiencia": "",
@@ -271,56 +326,52 @@
       },
       "servicios": {
         "luz": {
-        	"publico": "undefined",
-        	"planta": true,
-        	"panel": "undefined",
-        	"noTiene": "undefined"
+          "publico": "undefined",
+          "planta": true,
+          "panel": "undefined",
+          "noTiene": "undefined"
         },
-
         "drenaje": {
-        	"publico": "undefined",
-        	"fosa": "undefined",
-        	"grieta": true,
-        	"rio": "undefined",
-        	"noTiene": "undefined"
+          "publico": "undefined",
+          "fosa": "undefined",
+          "grieta": true,
+          "rio": "undefined",
+          "noTiene": "undefined"
         },
-
         "baño": {
-        	"descarga": "undefined",
-        	"cubeta": "undefined",
-        	"letrina": true,
-        	"pozo": "undefined",
-        	"noTiene": "undefined",
-        	"gasTanque": "undefined",
-        	"electricidad": true,
-        	"gasNatural": "undefined",
-        	"sinChimenea": "undefined",
-        	"conChimenea": "undefined",
-        	"otroCombustible": "undefined"
+          "descarga": "undefined",
+          "cubeta": "undefined",
+          "letrina": true,
+          "pozo": "undefined",
+          "noTiene": "undefined",
+          "gasTanque": "undefined",
+          "electricidad": true,
+          "gasNatural": "undefined",
+          "sinChimenea": "undefined",
+          "conChimenea": "undefined",
+          "otroCombustible": "undefined"
         },
-
         "combustible": {
-        	"descarga": "undefined",
-        	"cubeta": true,
-        	"letrina": "undefined",
-        	"pozo": "undefined",
-        	"noTiene": "undefined",
-        	"gasTanque": true,
-        	"electricidad": "undefined",
-        	"gasNatural": "undefined",
-        	"sinChimenea": true,
-        	"conChimenea": "undefined",
-        	"otroCombustible": "undefined"
+          "descarga": "undefined",
+          "cubeta": true,
+          "letrina": "undefined",
+          "pozo": "undefined",
+          "noTiene": "undefined",
+          "gasTanque": true,
+          "electricidad": "undefined",
+          "gasNatural": "undefined",
+          "sinChimenea": true,
+          "conChimenea": "undefined",
+          "otroCombustible": "undefined"
         },
-
         "agua": {
-        	"tomaDomicilaria": "undefined",
-        	"tomaComun": "undefined",
-        	"llavePublica": "undefined",
-        	"acarrean": true,
-        	"pipa": "undefined",
-        	"pozo": true,
-        	"sinServicio": "undefined"
+          "tomaDomicilaria": "undefined",
+          "tomaComun": "undefined",
+          "llavePublica": "undefined",
+          "acarrean": true,
+          "pipa": "undefined",
+          "pozo": true,
+          "sinServicio": "undefined"
         }
       },
       "infraestructuraVivienda": {
@@ -328,17 +379,15 @@
         "tipoCasa": "undefined",
         "muros": true,
         "piso": "undefined",
-
         "caracteristicas": {
-        	"numCuartos": "undefined",
-        	"dormitorios": "undefined",
-        	"cocinaSeparada": "undefined",
-        	"bañoExclusivo": true
+          "numCuartos": "undefined",
+          "dormitorios": "undefined",
+          "cocinaSeparada": "undefined",
+          "bañoExclusivo": true
         },
-
         "objetosCaseros": {
-        	"tiene": [],
-        	"sirve": []
+          "tiene": [],
+          "sirve": []
         },
         "condiciones": "Buena"
       },
@@ -355,26 +404,25 @@
         "transporte": "undefined",
         "otros": "undefined",
         "total": 50,
-
         "aportacionSemanal": {
-        	"padre": "undefined",
-        	"madre": "undefined",
-        	"hijos": 50,
-        	"prospera": "undefined",
-        	"adultosMayores": "undefined",
-        	"becas": "undefined",
-        	"pension": "undefined",
-        	"otros": 50,
-        	"total": 100
+          "padre": "undefined",
+          "madre": "undefined",
+          "hijos": 50,
+          "prospera": "undefined",
+          "adultosMayores": "undefined",
+          "becas": "undefined",
+          "pension": "undefined",
+          "otros": 50,
+          "total": 100
         },
         "apoyoEspecie": {
-        	"tipos": "undefined",
-        	"quienProporciona": "undefined",
-        	"frecuencia": "undefined"
+          "tipos": "undefined",
+          "quienProporciona": "undefined",
+          "frecuencia": "undefined"
         },
         "remesas": {
-        	"recibe": true,
-        	"frecuencia": "cada eclipse lunar"
+          "recibe": true,
+          "frecuencia": "cada eclipse lunar"
         }
       },
       "alimentacion": {
@@ -382,14 +430,14 @@
         "menores": [],
         "estatus": "undefined",
         "tipo": {
-        	"cuota": true,
-        	"beca": "undefined",
-        	"mediaBeca": true
+          "cuota": true,
+          "beca": "undefined",
+          "mediaBeca": true
         },
         "frecuencia": {
-        	"semanal": true,
-        	"quincenal": "undefined",
-        	"mensual": true
+          "semanal": true,
+          "quincenal": "undefined",
+          "mensual": true
         },
         "duracion": 5
       }

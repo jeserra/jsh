@@ -2,7 +2,7 @@
   <div>
 
     <toolbarHandler      
-      :key-name="'personas'"/>
+      :key-name="'cursos'"/>
 
     <div class="data-visualization-container">
       <h2>Nuevo curso</h2>
@@ -15,7 +15,7 @@
           required/>
 
         <v-text-field
-          v-model="description"
+          v-model="descripcion"
           label="Descripción breve del curso"
           required/>
 
@@ -25,33 +25,40 @@
           v-model="community_center"
           :items="community_centers"
           label="Centro Comunitario"/>
-          
-        <v-text-field
+         
+        <v-text-field v-if="role === 'Admin'"
           v-model="trabajador_social"
-          label="Nombre del trabajador social"
-          disabled="True"/>
+          label="Nombre del Trabajador Social"
+          />
 
-        <v-text-field
+        <v-text-field v-if="role === 'Admin'"
           v-model="aliado"
-          label="Nombre del aliado"
-          disabled="True"/>
-        <h3>Status</h3>
-        <v-switch 
-          :label="userEnabled"
-          v-model="userEnabled"
-          :true-value="enabledTag"
-          :false-value="disabledTag"/>
+          label="Nombre del Aliado"
+          />
+                
+        <v-select v-if="role === 'Admin'"
+          v-model="status"
+          :items="statuses"
+          label="Estatus"/>
 
         <h3>Fecha de inicio</h3>
         <v-date-picker
-        landscape="True"
+        :landscape=true
         v-model="initial_date"
         />
+        
         <h3>Fecha Final</h3>
         <v-date-picker
-        landscape="True"
+        :landscape=true
         v-model="final_date"
         />
+
+        <v-text-field v-if="role === 'Admin'"
+          v-model="tutor"
+          label="Nombre del Tutor"
+          />
+
+        <h3>Dirección</h3>
 
         <v-select
           v-model="state"
@@ -75,7 +82,6 @@
         <v-text-field          
           v-model="numberStreet"
           label="Número"/>
-   
       </form>
 
       <v-btn
@@ -84,7 +90,7 @@
         bottom
         right
         color="primary"
-        @click="saveUser()">
+        @click="saveCourse()">
         <v-icon>save</v-icon>
       </v-btn>    
 
@@ -111,28 +117,31 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   data() {
     return {
-      usersURL: "http://localhost:5000/api/usuarios",
+      usersURL: "http://localhost:5000/api/curso",
 
       role: "Admin",
 
       name: "",
-      description: "",
+      descripcion: "",
       community_center: undefined,
       community_centers: ["Tonalá", "Zapopan", "Casa Dany"],
       trabajador_social: "",
       aliado: "",
+      status: undefined,
+      statuses: ["Pendiente", "Verificado", "Terminado", "Rechazado"],
 
-      enabledTag: "Verificado",
-      disabledTag: "Pendiente",
-      userEnabled: "Habilitado",
-
-      initial_date: "",
-      final_date: "",
       state: undefined,
       statesData: ["Jalisco", "Monterrey"],
+
+      initial_date: undefined,
+      final_date: undefined,
+
+      tutor: "",
 
       city: undefined,
       citiesData: {
@@ -151,16 +160,54 @@ export default {
       cp: "",
       street: "",
       numberStreet: "",
+
       // Snackbar config
       snackbar: false,
       y: "bottom",
       x: null,
       mode: "",
       timeout: 3000,
-      confirmationMessage: "El usuario ha sido creado"
+      confirmationMessage: "El curso ha sido creado"
     };
   },
-  methods: {}
+  methods: {
+    saveCourse: function() {
+      var vueInstance = this;
+
+      axios
+        .post(this.usersURL, {
+          nombre: this.name,
+          tema: this.descripcion,
+          tipo_donativo: "Curso de capacitación",
+          centro_comunitario: this.community_center,
+          trabajador_social: this.trabajador_social,
+          aliado: this.aliado,
+          estatus: this.status,
+          fecha_inicial: this.initial_date,
+          fecha_final: this.final_date,
+          tutor: this.tutor,
+          direccion: {
+            calle: this.street,
+            numero: this.numberStreet,
+            cp: this.cp,
+            ciudad: this.city,
+            estado: this.state
+          }
+        })
+        .then(function(response) {
+          vueInstance.snackbar = true;
+
+          vueInstance._routerRoot._router.push({
+            name: "editorCursos",
+            params: { id: 1 }
+          });
+        })
+        .catch(function(error) {
+          console.log("Error in creation of user");
+          console.log(error);
+        });
+    }
+  }
 };
 </script>
 
