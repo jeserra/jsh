@@ -1,5 +1,6 @@
 import Router from "vue-router";
 import Home from "../components/Home";
+import LogIn from "../components/LogIn";
 
 import Bancos from "../components/banks/Bancos";
 import creadorBanco from "../components/banks/creadorBanco";
@@ -23,6 +24,7 @@ export default new Router({
   routes: [
     { path: "", component: Home },
     { path: "/inicio", component: Home, name: "inicio" },
+    { path: "/iniciar-sesion", component: LogIn, name: "logIn" },
     //bancos
     { path: "/bancos", component: Bancos, name: "bancos" },
     { path: "/bancos/:id", component: editorBanco, name: "editorBanco" },

@@ -11,7 +11,8 @@
           v-for="(item, index) in _data[keyName].items"
           :key="'top-toolbar-button-'+index"
           :to="{ name: item.ref }"
-          class="toolbar-container white"
+          class="toolbar-container toolbar-color"
+          active-class="active-button-toolbar"
           flat>
           {{ item.title }}
         </v-btn>
@@ -71,12 +72,22 @@ export default {
   height: 4em !important;
 }
 
+.active-button-toolbar {
+  background-color: rgba(150, 150, 150, 0.87);
+}
+
+.toolbar-color {
+  background-color: rgba(245, 245, 245, 0.87);
+}
+
 .toolbar-title {
-  margin-left: 3em;
-  padding-left: 3em;
+  margin-left: 5em;
+  padding-left: 5em;
   height: 2em !important;
 
+  /*
   border-left: 1px solid rgba(0, 0, 0, 0.16);
+  */
   font-family: Roboto, sans-serif;
   color: rgba(0, 0, 0, 0.54);
   font-size: 20px;

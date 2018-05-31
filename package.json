@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "es6-promise": "^4.2.4",
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-prettier": "^2.6.0",
     "eslint-plugin-vue": "^4.0.0",
@@ -23,7 +24,8 @@
     "vue-router": "^3.0.1",
     "vue-star-rating": "^1.5.1",
     "vue2-google-maps": "^0.8.11",
-    "vuetify": "^1.0.7"
+    "vuetify": "^1.0.7",
+    "vuex": "^3.0.1"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
