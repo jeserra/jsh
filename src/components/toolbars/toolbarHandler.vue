@@ -84,7 +84,7 @@ export default {
 
 .toolbar-title {
   margin-top: -0.2em;
-  margin-left: 4em;
+  margin-left: 4em !important;
   height: 2em !important;
 
   font-family: Roboto, sans-serif;
