@@ -1,10 +1,10 @@
 <template>
   <div>
-    <toolbarHandler      
+    <toolbarHandler
       :key-name="'personas'"/>
-
+        
     <div class="data-visualization-container">
-      <h2>Nuevo Beneficiario</h2>
+      <h2>Editar Beneficiario</h2>
       <h3>Estudio Socio Económico</h3>
 
       <v-stepper 
@@ -17,7 +17,9 @@
           editable>
           Representante
         </v-stepper-step>
+
         <v-stepper-content step="1">
+          
           <v-layout 
             row 
             wrap>
@@ -32,6 +34,13 @@
                 label="Nombre del titular"/>
             </v-flex>
           </v-layout>
+
+          <v-flex xs12>
+            <v-text-field 
+              v-model="representante.responsable"
+              label="Nombre de la persona de la cual depende la mayor parte del ingreso del hogar"/>
+          </v-flex>
+
           <h4>Domicilio</h4>
           <v-layout 
             row 
@@ -97,7 +106,6 @@
             <v-flex xs6>
               <v-radio-group 
                 v-model="representante.escolaridad.estado" 
-                :value="representante.escolaridad.estado" 
                 :mandatory="false">
                 <v-radio
                   label="Completa"
@@ -123,6 +131,7 @@
           editable>
           Datos generales
         </v-stepper-step>
+
         <v-stepper-content step="2">
 
           <v-layout 
@@ -266,6 +275,7 @@
           editable>
           Estructura familiar
         </v-stepper-step>
+
         <v-stepper-content step="3">
           <v-expansion-panel>
             <v-expansion-panel-content 
@@ -282,7 +292,6 @@
               <v-text-field 
                 v-model="estructuraFamiliar.segundoApellido"
                 placeholder="Segundo apellido"/>
-
               <h4>Fecha de nacimiento</h4>
               <v-layout 
                 row 
@@ -373,6 +382,7 @@
           editable>
           Seguridad social y salud
         </v-stepper-step>
+
         <v-stepper-content step="4">
           <v-expansion-panel>
             <v-expansion-panel-content 
@@ -383,9 +393,18 @@
               <v-text-field  
                 v-model="seguridadSocial.ocupacion"
                 placeholder="Ocupación"/>
-              <v-text-field 
+              <v-select 
                 v-model="seguridadSocial.tipoEmpleo"
-                placeholder="Tipo de empleo"/>
+                :items="tiposDeEmpleo"
+                label="Tipo de empleo"/>
+              <v-text-field 
+                v-if="seguridadSocial.tipoEmpleo === 'Otros'"
+                v-model="seguridadSocial.tiposDeEmpleoTxt"
+                placeholder="Indique el tipo de empleo"/>
+              
+              <v-text-field
+                v-model="seguridadSocial.oficios"
+                placeholder="Oficios conocidos"/>
 
               <h4>Prestaciones laborales</h4>
               <v-layout 
@@ -483,12 +502,17 @@
               <v-text-field 
                 v-model="seguridadSocial.motivoDerechohabiencia"
                 label="Motivo derechohabiencia"/>
+              <v-select 
+                v-model="seguridadSocial.discapacidades"
+                :items="discapacidades"
+                label="Discapacidades"/>
+              <v-text-field
+                v-if="seguridadSocial.discapacidades === 'Otros'"
+                v-model="seguridadSocial.discapacidadesTxt"
+                placeholder="Indique la discapacidad"/>                
               <v-text-field 
-                v-model="seguridadSocial.capacidadesDiferentes"
-                label="Capacidades diferentes"/>
-              <v-text-field 
-                v-model="seguridadSocial.condicionesSalud"
-                label="Condiciones de salud"/>
+                v-model="seguridadSocial.padecimientos"
+                label="Padecimientos crónicos"/>
               <v-text-field 
                 v-model="seguridadSocial.adiciones"
                 label="Adiciones"/>
@@ -546,6 +570,7 @@
           editable>
           Servicios
         </v-stepper-step>
+
         <v-stepper-content step="5">
 
           <h4>Luz</h4>
@@ -783,6 +808,7 @@
           editable>
           Infraestructura de vivenda
         </v-stepper-step>
+
         <v-stepper-content step="6">
           <h4>Tenencia</h4>
           <v-radio-group 
@@ -986,6 +1012,18 @@
             </v-flex>          
           </v-layout>        
 
+          <v-flex xs4>
+            <v-text-field 
+              v-model="infraestructuraVivienda.ventiladores"
+              type="number"
+              label="Cantidad de ventiladores en el hogar"/>
+          </v-flex>
+
+          <h4>Insumos para el trabajo o bienes productivos</h4>
+          <v-text-field 
+            v-model="infraestructuraVivienda.insumos"
+            label="Máquina de coser, herramientas de construcción, insumos de cocina u otros"/>
+
           <h4>Condiciones</h4>
           <v-radio-group 
             v-model="infraestructuraVivienda.condiciones" 
@@ -1013,13 +1051,14 @@
           editable>
           Condiciones económicas
         </v-stepper-step>
+
         <v-stepper-content step="7">
 
           <v-layout 
             row 
             wrap>
             <v-flex xs5>
-              <h4>Condiciones económicas</h4>
+              <h4>Gastos del hogar</h4>
               <v-text-field
                 v-model="condicionesEconomicas.vivienda"
                 label="Vivienda"
@@ -1180,6 +1219,7 @@
           editable>
           Alimentación
         </v-stepper-step>
+
         <v-stepper-content step="8">
           <h4>Alimentación (En los últimos meses por falta de dinero u otros recursos)</h4>
 
@@ -1309,11 +1349,47 @@
             color="primary" 
             @click.native="currentStep = 1">Continue</v-btn>
         </v-stepper-content>
+
+        <v-stepper-step 
+          :complete="currentStep > 9" 
+          step="9" 
+          editable>
+          Preguntas adicionales - Ahorro e inclusión financiera
+        </v-stepper-step>
+
+        <v-stepper-content step="9">
+
+          <h4>Inclusión financiera</h4>
+          <v-select 
+            v-model="adicionales.institucion"
+            :items="instituciones"
+            label="¿Trabaja para una institución de gobierno?"/>
+
+          <h4>Jornada laboral</h4>
+          <v-select 
+            v-model="adicionales.cantidadDeTrabajo"
+            :items="cantidadesDeTrabajo"
+            label=" La semana pasada, ¿tuvo poco trabajo que hacer?"/>
+
+          <h4>Ahorro</h4>
+          <v-select 
+            v-model="adicionales.ahorro"
+            :items="montosAhorro"
+            label=" Si ahorra ¿Cuál es el monto que tiene ahorrado actualmente?"/>
+
+          <v-select 
+            v-model="adicionales.frecuenciaAhorro"
+            :items="frecuenciasAhorro"
+            label=" Si ahorra ¿Usted ahorra al menos cada ...?"/>
+          <v-btn 
+            color="primary" 
+            @click.native="currentStep = 1">Continue</v-btn>
+        </v-stepper-content>        
       </v-stepper>
  
     </div>
 
-    <v-btn       
+    <v-btn
       fixed 
       fab 
       bottom 
@@ -1322,7 +1398,6 @@
       @click="saveBeneficiarie">
       <v-icon>save</v-icon>
     </v-btn>    
-
 
     <v-snackbar
       :timeout="timeout"
@@ -1342,6 +1417,7 @@
   </div>
 </template>
 
+
 <script>
 import axios from "axios";
 import toolbarHandler from "../toolbars/toolbarHandler";
@@ -1357,6 +1433,25 @@ export default {
 
       currentStep: 0,
       escolaridades: ["Preparatoria", "Secundaria", "Primaria"],
+
+      tiposDeEmpleo: [
+        "Preparación y venta de alimentos",
+        "Comercio de abarrotes",
+        "Comercio de textiles, accesorios y calzado",
+        "Fabricación de textiles y prendas de vestir ",
+        "Mantenimiento y reparación de maquinaria",
+        "Mantenimiento y reparación de automotres ",
+        "Otros"
+      ],
+
+      discapacidades: [
+        "Discapacidad para comunicarse",
+        "Discapacidad motriz",
+        "Discapacidad mental",
+        "Discapacidad múltiple",
+        "Se desconoce",
+        "Otros"
+      ],
 
       familyAmount: 1,
       familyAmountSocialSecurity: 1,
@@ -1376,7 +1471,9 @@ export default {
         { text: "Motocicleta", key: "motocicleta" },
         { text: "Computadora", key: "computadora" },
         { text: "Horno", key: "horno" },
-        { text: "Teléfono", key: "telefono" }
+        { text: "Teléfono", key: "telefono" },
+        { text: "Fregadero o tarja", key: "fregadero" },
+        { text: "Horno de microondas", key: "microondas" }
       ],
 
       enabledTag: "Sí",
@@ -1401,12 +1498,34 @@ export default {
         "¿Alguna vez algún menor de 18 años en su hogar sólo comió una vez al día o dejó de comer durante un día?"
       ],
 
-      //beneficiariesURL: "http://localhost:5000/api/usuarios",
+      instituciones: [
+        "Poder judicial o poder legislativo",
+        "Empresa pública o paraestatal",
+        "Escuelas,  hospitales,  clínicas  y  servicios asistenciales administrados por el gobierno",
+        "Gobierno o dependencias federales",
+        "Gobierno del estado (incluye Distrito Federal)",
+        "Gobierno del municipio (incluye delegaciones del Distrito Federal)",
+        "Ninguna de las anteriores",
+        "NS"
+      ],
+
+      cantidadesDeTrabajo: [
+        "Sí",
+        "No trabajó la semana pasada",
+        "No se encontró en esa situación",
+        "NS"
+      ],
+
+      montosAhorro: ["0-1500", "1501-4500", "4501-7500", "Más de 7500"],
+      frecuenciasAhorro: ["Semana", "Mes", "Seis meses", "Año"],
+
+      //usersURL: "http://localhost:5000/api/usuarios",
 
       // Step 1
       representante: {
         comunidad: "",
         nombre: "",
+        responsable: "",
 
         domicilio: {
           calle: "",
@@ -1474,6 +1593,8 @@ export default {
       seguridadSocial: {
         ocupacion: undefined,
         tipoEmpleo: undefined,
+        tiposDeEmpleoTxt: undefined,
+        oficios: undefined,
 
         prestaciones: {
           A: undefined,
@@ -1490,8 +1611,9 @@ export default {
         jubiladoPension: undefined,
         derechohabiencia: undefined,
         motivoDerechohabiencia: undefined,
-        capacidadesDiferentes: undefined,
-        condicionesSalud: undefined,
+        discapacidades: undefined,
+        discapacidadesTxt: undefined,
+        padecimientos: undefined,
         adiciones: undefined,
         etnia: undefined,
         peso: undefined,
@@ -1570,6 +1692,8 @@ export default {
           tiene: [],
           sirve: []
         },
+        ventiladores: undefined,
+        insumos: undefined,
         condiciones: undefined
       },
       // Step 7
@@ -1630,6 +1754,13 @@ export default {
 
         duracion: undefined
       },
+      // Step 9
+      adicionales: {
+        institucion: undefined,
+        cantidadDeTrabajo: undefined,
+        ahorro: undefined,
+        frecuenciaAhorro: undefined
+      },
 
       // Snackbar config
       snackbar: false,
@@ -1637,7 +1768,7 @@ export default {
       x: null,
       mode: "",
       timeout: 3000,
-      confirmationMessage: "El beneficiario ha sido creado"
+      confirmationMessage: "El beneficiario ha sido editado"
     };
   },
   created() {
@@ -1665,6 +1796,7 @@ export default {
           this.infraestructuraVivienda = data.infraestructuraVivienda;
           this.condicionesEconomicas = data.condicionesEconomicas;
           this.alimentacion = data.alimentacion;
+          this.adicionales = data.adicionales;
         })
         .catch(e => {
           this.errors.push(e);
@@ -1674,7 +1806,7 @@ export default {
       var vueInstance = this;
 
       axios
-        .post(this.beneficiariesURL, {
+        .post(this.usersURL, {
           representante: this.representante,
           datosGenerales: this.datosGenerales,
           estructuraFamiliar: this.estructuraFamiliar,
@@ -1682,7 +1814,8 @@ export default {
           servicios: this.servicios,
           infraestructuraVivienda: this.infraestructuraVivienda,
           condicionesEconomicas: this.condicionesEconomicas,
-          alimentacion: this.alimentacion
+          alimentacion: this.alimentacion,
+          adicionales: this.adicionales
         })
         .then(function(response) {
           vueInstance.snackbar = true;
@@ -1706,10 +1839,12 @@ export default {
       this.initializeStepSix();
       this.initializeStepSeven();
       this.initializeStepEight();
+      this.initializeStepNine();
     },
     initializeStepOne: function() {
       this.representante.comunidad = "";
       this.representante.nombre = "";
+      this.representante.representante = "";
 
       this.representante.domicilio.calle = "";
       this.representante.domicilio.colonia = "";
@@ -1764,6 +1899,8 @@ export default {
     initializeStepFour: function() {
       this.seguridadSocial.ocupacion = undefined;
       this.seguridadSocial.tipoEmpleo = undefined;
+      this.seguridadSocial.tiposDeEmpleoTxt = undefined;
+      this.seguridadSocial.oficios = undefined;
 
       this.seguridadSocial.prestaciones.A = undefined;
       this.seguridadSocial.prestaciones.B = undefined;
@@ -1778,8 +1915,9 @@ export default {
       this.seguridadSocial.jubiladoPension = undefined;
       this.seguridadSocial.derechohabiencia = undefined;
       this.seguridadSocial.motivoDerechohabiencia = undefined;
-      this.seguridadSocial.capacidadesDiferentes = undefined;
-      this.seguridadSocial.condicionesSalud = undefined;
+      this.seguridadSocial.discapacidades = undefined;
+      this.seguridadSocial.discapacidadesTxt = undefined;
+      this.seguridadSocial.padecimientos = undefined;
       this.seguridadSocial.adiciones = undefined;
       this.seguridadSocial.etnia = undefined;
       this.seguridadSocial.peso = undefined;
@@ -1839,6 +1977,8 @@ export default {
       }
       */
 
+      this.infraestructuraVivienda.caracteristicas.ventiladores = undefined;
+      this.infraestructuraVivienda.caracteristicas.insumos = undefined;
       this.infraestructuraVivienda.condiciones = undefined;
     },
     initializeStepSeven: function() {
@@ -1886,6 +2026,12 @@ export default {
       this.alimentacion.frecuencia.mensual = undefined;
 
       this.alimentacion.duracion = undefined;
+    },
+    initializeStepNine: function() {
+      this.adicionales.institucion = undefined;
+      this.adicionales.cantidadDeTrabajo = undefined;
+      this.adicionales.ahorro = undefined;
+      this.adicionales.frecuenciaAhorro = undefined;
     }
   }
 };
