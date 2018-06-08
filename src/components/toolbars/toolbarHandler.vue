@@ -1,22 +1,28 @@
 <template>
   <div>
     <v-toolbar
-      class="toolbar-container"    
+      class="toolbar-container"
       app>
 
-      <v-toolbar-title class="toolbar-title">{{ _data[keyName].title }}</v-toolbar-title>
+      <v-container>
+        <v-flex xs2>
+          <v-toolbar-title class="toolbar-title">{{ _data[keyName].title }}</v-toolbar-title>
+        </v-flex>
 
-      <v-toolbar-items class="hidden-sm-and-down">
-        <v-btn
-          v-for="(item, index) in _data[keyName].items"
-          :key="'top-toolbar-button-'+index"
-          :to="{ name: item.ref }"
-          class="toolbar-container toolbar-color"
-          active-class="active-button-toolbar"
-          flat>
-          {{ item.title }}
-        </v-btn>
-      </v-toolbar-items>
+        <v-layout
+          row
+          justify-center>
+          <v-btn
+            v-for="(item, index) in _data[keyName].items"
+            :key="'top-toolbar-button-'+index"
+            :to="{ name: item.ref }"
+            class="toolbar-button"
+            flat
+            active-class="toolbar-button active-button-toolbar">
+            {{ item.title }}
+          </v-btn>
+        </v-layout>
+      </v-container>
 
     </v-toolbar>
   </div>
@@ -72,25 +78,34 @@ export default {
   height: 4em !important;
 }
 
-.active-button-toolbar {
-  background-color: rgba(150, 150, 150, 0.87);
-}
-
 .toolbar-color {
   background-color: rgba(245, 245, 245, 0.87);
 }
 
 .toolbar-title {
-  margin-left: 5em;
-  padding-left: 5em;
+  margin-top: -0.2em;
+  margin-left: 4em;
   height: 2em !important;
 
-  /*
-  border-left: 1px solid rgba(0, 0, 0, 0.16);
-  */
   font-family: Roboto, sans-serif;
   color: rgba(0, 0, 0, 0.54);
   font-size: 20px;
-  font-weight: 500;
+}
+
+.toolbar-button {
+  margin-top: -3.7em;
+  height: 4em !important;
+  width: 160px;
+  color: rgba(0, 0, 0, 0.64);
+  background-color: rgba(245, 245, 245, 0.54) !important;
+}
+
+.toolbar-button :hover {
+  background-color: transparent !important;
+}
+
+.active-button-toolbar {
+  color: rgba(0, 0, 0, 1);
+  border-bottom: 2px solid rgba(71, 147, 89, 1);
 }
 </style>

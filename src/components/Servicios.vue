@@ -8,7 +8,7 @@
       wrap
       fluid>
       <v-flex 
-        xs6 
+        xs7
         m10  
         offset-xs0>
         <v-card>
@@ -152,9 +152,9 @@
           <v-icon>add</v-icon>
         </v-btn>
       </v-flex>
+
       <v-flex 
-        xs6 
-        m10  
+        xs5 
         offset-xs0>
         <gmap-map
           :center="{lat:mapCenter.latitude, lng:mapCenter.longitud}"

@@ -1,5 +1,7 @@
 <template>
-  <v-app id="inspire">
+  <v-app     
+    id="inspire"
+    class="app-background-color">
     <v-navigation-drawer
       v-model="drawer"
       :mini-variant.sync="drawerIsMini" 
@@ -11,14 +13,25 @@
       floating
       app>
       <div>
-        <div class="title-app">
-          <v-btn 
-            icon 
-            @click.native.stop="drawerIsMini = !drawerIsMini">
-            <v-toolbar-side-icon/>
-          </v-btn>
-          JSH MMT
-        </div>
+        <v-layout
+          align-center
+          class="title-app right-border">
+
+          <v-flex xs1/>
+
+          <v-flex xs3>
+            <v-btn
+              icon
+              align-center
+              @click.native.stop="drawerIsMini = !drawerIsMini">
+              <v-toolbar-side-icon/>
+            </v-btn>
+          </v-flex>
+
+          <v-flex>
+            <div>JSH-MMT</div>
+          </v-flex>
+        </v-layout>
 
         <v-list-tile-content>
           <v-list
@@ -69,14 +82,15 @@
       v-model="drawer"
       :mini-variant.sync="sidebarDrawerIsMini" 
       hide-overlay
-      mini-variant-width="80"
+      width="74"
+      mini-variant-width="74"
       class="transparent left-menu"
       fixed
       floating
       app>
 
       <v-list
-        mini-variant-width="80"
+        mini-variant-width="74"        
         class="left-nav-menu">
         <v-divider/>
         <v-list-tile 
@@ -94,10 +108,9 @@
                 row
                 wrap>
                 <v-flex
-                  xs12
-                  class="text-in-left-nav-menu">
+                  class="text-in-left-nav-menu left-nav-menu-item">
                   <v-icon>{{ item.icon }}</v-icon>
-                  {{ item.title }}
+                  <div style="padding-top: 6px">{{ item.title }}</div>
                 </v-flex>
               </v-layout>
             </v-container>
@@ -201,6 +214,10 @@ export default {
 </script>
 
 <style scoped>
+.app-background-color {
+  background-color: #f2f2f2;
+}
+
 .left-menu {
   margin-top: 5em !important;
 }
@@ -209,21 +226,27 @@ export default {
   padding-top: 7em !important;
 }
 
+.left-nav-menu :hover {
+  background-color: transparent !important;
+}
+
 .text-in-left-nav-menu {
   font-family: Roboto, sans-serif;
   color: rgba(0, 0, 0, 0.54);
-  font-size: 10px;
+  font-size: normal;
   line-height: 10px;
   text-align: center;
 }
 
 .title-app {
-  margin-top: 0.3em;
+  margin-top: 0.2em;
   opacity: 1;
   font-family: "Source Sans Pro", sans-serif;
   color: rgba(0, 0, 0, 0.54);
-  font-size: 22px;
-  font-weight: 500;
-  letter-spacing: 0px;
+  font-size: 20px;
+}
+
+.right-border {
+  border-right: 1px solid rgba(0, 0, 0, 0.16);
 }
 </style>
