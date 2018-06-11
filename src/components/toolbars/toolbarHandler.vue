@@ -84,7 +84,6 @@ export default {
 
 .toolbar-title {
   margin-top: -0.2em;
-  margin-left: 4em !important;
   height: 2em !important;
 
   font-family: Roboto, sans-serif;
@@ -97,11 +96,11 @@ export default {
   height: 4em !important;
   width: 160px;
   color: rgba(0, 0, 0, 0.64);
-  background-color: rgba(245, 245, 245, 0.54) !important;
+  background-color: rgba(245, 245, 245, 0.87) !important;
 }
 
 .toolbar-button :hover {
-  background-color: transparent !important;
+  background-color: rgba(245, 245, 245, 0.87) !important;
 }
 
 .active-button-toolbar {

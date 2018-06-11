@@ -95,7 +95,6 @@
         <v-divider/>
         <v-list-tile 
           v-for="(item, index) in items"
-          :to="{ name: item.ref }"
           :key="item.title"
           @click="selectIcon(index)">
           <v-list-tile-action>
@@ -109,7 +108,13 @@
                 wrap>
                 <v-flex
                   class="text-in-left-nav-menu left-nav-menu-item">
-                  <v-icon>{{ item.icon }}</v-icon>
+                  <v-btn
+                    :to="{ name: item.ref }"
+                    flat
+                    icon
+                    active-class="active-nav-menu">
+                    <v-icon>{{ item.icon }}</v-icon>
+                  </v-btn>
                   <div style="padding-top: 6px">{{ item.title }}</div>
                 </v-flex>
               </v-layout>
@@ -224,6 +229,10 @@ export default {
 
 .left-nav-menu {
   padding-top: 7em !important;
+}
+
+.active-nav-menu {
+  color: rgba(71, 147, 89, 1);
 }
 
 .left-nav-menu :hover {
