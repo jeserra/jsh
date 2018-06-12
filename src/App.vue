@@ -193,6 +193,12 @@ export default {
           icon: "assignment",
           active: false,
           ref: "cursos"
+        },
+        {
+          title: "Logística",
+          icon: "assignment",
+          active: false,
+          ref: "cursos"
         }
       ],
       drawerIsMini: true,
