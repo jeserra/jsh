@@ -1,6 +1,9 @@
 <template>
-  <v-container grid-list-xl>
-    <toolbar-handler/>
+  <v-container>
+
+    <toolbarHandler      
+      :key-name="'bancos'"/>
+
     <v-layout 
       row
       wrap

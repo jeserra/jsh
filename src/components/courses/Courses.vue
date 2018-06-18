@@ -1,7 +1,9 @@
 <template>
-  <v-container grid-list-xl >
+  <v-container>
+
     <toolbar-handler/>
-    <v-layout 
+
+    <v-layout
       row
       wrap
       fluid>

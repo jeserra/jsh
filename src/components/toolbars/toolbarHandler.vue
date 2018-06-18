@@ -42,6 +42,10 @@ export default {
         items: [],
         title: "Dashboard"
       },
+      bancos: {
+        items: [],
+        title: "Bancos"
+      },
       personas: {
         items: [
           { title: "Trabajadores", ref: "usuarios" },
