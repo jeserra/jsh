@@ -125,7 +125,7 @@
         <ul v-if="errors && errors.length">
           <li
             v-for="error of errors"
-            :key="error">  
+            :key="'error-' + error">  
             {{ error.message }}
           </li>
         </ul>

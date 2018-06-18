@@ -49,7 +49,7 @@
             <v-list-tile
               v-for="(item, index) in items"
               :to="{ name: item.ref }"
-              :key="item.title"
+              :key="'title-'+ item.title"
               @click="selectIcon(index)">
               <v-list-tile-action>
 
@@ -95,7 +95,7 @@
         <v-divider/>
         <v-list-tile 
           v-for="(item, index) in items"
-          :key="item.title"
+          :key="'left-title-' + item.title"
           @click="selectIcon(index)">
           <v-list-tile-action>
 

@@ -1,5 +1,5 @@
 <template>
-  <v-container grid-list-xl >
+  <v-container grid-list-xl>
     <toolbar-handler/>
     <v-layout 
       row
@@ -11,6 +11,7 @@
         offset-xs0 
         offset-md1>
         <v-card>
+
           <v-card-title>
             <v-icon>account_balance</v-icon>Banco de Alimentos
             <v-spacer/>
@@ -19,34 +20,36 @@
               append-icon="search"
               label="Buscar"
               single-line
-              hide-details
-            />
+              hide-details/>
           </v-card-title>
+
           <v-data-table
             :headers="headers"
             :items="items"
             :search="search"
             :loading="loading"
             class="elevation-2">
-            <template  
+
+            <template
               slot="items" 
               slot-scope="props">
-              <tr @click="props.expanded = !props.expanded">
+              <tr>
                 <td>
                   <v-icon 
                     :class="{
-                      'primary--text': props.item.habilitado,
-                      'error--text': !props.item.habilitado
+                      'primary--text': props.item.Habilitado,
+                      'error--text': !props.item.Habilitado
                   }">
                     fiber_manual_record
                   </v-icon>
                 </td>
-                <td>{{ props.item.nombre }}</td>
-                <td>{{ props.item.region.nombre }}</td>
-                <td>{{ props.item.direccion.estado }}</td>
-                <td>{{ props.item.direccion.ciudad }}</td>
+                <td>{{ props.item.Nombre }}</td>
+                <td>{{ props.item.Region.Nombre }}</td>
+                <td>{{ props.item.Direccion.Estado }}</td>
+                <td>{{ props.item.Direccion.Ciudad }}</td>
               </tr>
             </template>
+
             <template 
               slot="expand" 
               slot-scope="props">
@@ -61,9 +64,10 @@
                     xs12
                     lg6>
                     <v-list two-line>
+
                       <v-list-tile>
                         <v-list-tile-content>
-                          <v-list-tile-title>{{ props.item.razonSocial }}</v-list-tile-title>
+                          <v-list-tile-title>{{ props.item.RazonSocial }}</v-list-tile-title>
                           <v-list-tile-sub-title>Razón Social</v-list-tile-sub-title>
                         </v-list-tile-content>
                       </v-list-tile>
@@ -76,16 +80,17 @@
                               :read-only="true"
                               :increment="0.01"
                               :show-rating="false"
-                              v-model="props.item.calificacion"
+                              v-model="props.item.Calificacion"
                             />
                           </v-list-tile-title>
                           <v-list-tile-sub-title>Calificación</v-list-tile-sub-title>
                         </v-list-tile-content>
                       </v-list-tile>
+                      
                       <v-list-tile>
                         <v-list-tile-content>
                           <v-list-tile-title>
-                            {{ props.item.region.nombre }}
+                            {{ props.item.Region.Nombre }}
                           </v-list-tile-title>
                           <v-list-tile-sub-title>Región</v-list-tile-sub-title>
                         </v-list-tile-content>
@@ -94,33 +99,34 @@
                       <v-list-tile>
                         <v-list-tile-content>
                           <v-list-tile-title>
-                            {{ props.item.fechaRegistro | moment("calendar") }}
+                            {{ props.item.FechaRegistro | moment("calendar") }}
                           </v-list-tile-title>
                           <v-list-tile-sub-title>Fecha de Registro</v-list-tile-sub-title>
                         </v-list-tile-content>
                       </v-list-tile>
                     </v-list>
                   </v-flex>
+
                   <v-flex 
                     xs12
                     lg6>
                     <gmap-map
-                      :center="{lat:props.item.direccion.latitude, lng:props.item.direccion.longitud}"
+                      :center="{lat:props.item.Direccion.Latitud, lng:props.item.Direccion.Longitud}"
                       :zoom="14"
                       map-type-id="roadmap"
-                      style="width: 400px; height: 250px"
-                    >
+                      style="width: 400px; height: 250px">
+
                       <gmap-marker
-                        :position="{lat:props.item.direccion.latitude, lng:props.item.direccion.longitud}"
+                        :position="{lat:props.item.Direccion.Latitud, lng:props.item.Direccion.Longitud}"
                         :clickable="true"
-                        :draggable="true"
-                      />
+                        :draggable="true"/>
                     </gmap-map>
+                    
                     <blockquote class="subheading grey--text py-3" >
-                      {{ props.item.direccion.calle }} 
-                      #{{ props.item.direccion.numero }}. 
-                      {{ props.item.direccion.ciudad }},
-                      {{ props.item.direccion.estado }}.</blockquote>
+                      {{ props.item.Direccion.Calle }} 
+                      #{{ props.item.Direccion.Numero }}. 
+                      {{ props.item.Direccion.Ciudad }},
+                      {{ props.item.Direccion.Estado }}.</blockquote>
                   </v-flex>
                 </v-layout>
                 
@@ -176,18 +182,22 @@ export default {
   },
   data() {
     return {
-      banksURL: "http://localhost:5000/api/bancos",
+      banksURL: "http://localhost:5000/api/all/bancoalimentos",
+      addressesURL: "http://localhost:5000/api/direccion/IDDireccion",
+      regionsURL: "http://localhost:5000/api/region/IDRegion",
+
       loading: true,
       search: "",
+      Rawitems: [],
       items: [],
       markers: [],
       errors: [],
       headers: [
-        { text: "Estatus", value: "habilitado", sortable: false },
-        { text: "Nombre", value: "nombre" },
-        { text: "Región", value: "region.nombre" },
-        { text: "Estado", value: "direccion.estado" },
-        { text: "Ciudad", value: "direccion.ciudad" }
+        { text: "Estatus", value: "Habilitado", sortable: false },
+        { text: "Nombre", value: "Nombre" },
+        { text: "Región", value: "Region.Nombre" },
+        { text: "Estado", value: "Direccion.Estado" },
+        { text: "Ciudad", value: "Direccion.Ciudad" }
       ]
     };
   },
@@ -195,20 +205,64 @@ export default {
     $route(to, from) {
       // Call resizePreserveCenter() on all maps
       Vue.$gmapDefaultResizeBus.$emit("resize");
+    },
+    items() {
+      if (this.items.length == this.Rawitems.length) {
+        this.loading = false;
+      }
     }
   },
   created() {
     this.getData();
   },
   methods: {
+    initializeData() {
+      this.items = [];
+      var callbackFunctions = [this.getRegion];
+
+      for (var bank of this.Rawitems) {
+        this.getAddress(bank, callbackFunctions);
+      }
+    },
     getData() {
       axios({
         method: "GET",
         url: this.banksURL
       })
         .then(response => {
-          this.items = response.data.data;
-          this.loading = false;
+          var rawData = response.data.data;
+          this.Rawitems = rawData;
+          this.initializeData();
+        })
+        .catch(e => {
+          this.errors.push(e);
+        });
+    },
+    getAddress(bank, callbackFunctions) {
+      axios({
+        method: "GET",
+        url: this.addressesURL + "/" + bank.IDDireccion
+      })
+        .then(response => {
+          var rawData = response.data.data;
+
+          bank["Direccion"] = rawData[0];
+          bank = callbackFunctions[0](bank, callbackFunctions);
+        })
+        .catch(e => {
+          this.errors.push(e);
+        });
+    },
+    getRegion(bank, callbackFunctions) {
+      axios({
+        method: "GET",
+        url: this.regionsURL + "/" + bank.IdRegion
+      })
+        .then(response => {
+          var rawData = response.data.data;
+
+          bank["Region"] = rawData[0];
+          this.items.push(bank);
         })
         .catch(e => {
           this.errors.push(e);
