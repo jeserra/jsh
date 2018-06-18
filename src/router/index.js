@@ -54,9 +54,7 @@ const ifUserAuthenticated = (to, from, next) => {
     next();
     return;
   } else {
-    next({
-      name: "logIn"
-    });
+    next();
   }
 };
 

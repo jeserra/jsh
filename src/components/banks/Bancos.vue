@@ -28,23 +28,134 @@
 
           <v-data-table
             :headers="headers"
-            :items="desserts"
-            hide-actions
-            item-key="name">
-            <template slot="items" slot-scope="props">
+            :items="items"
+            :search="search"
+            :loading="loading"
+            item-key="IDBancoAlimentos"
+            class="elevation-2">
+
+            <template
+              slot="items" 
+              slot-scope="props">
               <tr @click="props.expanded = !props.expanded">
-                <td>{{ props.item.name }}</td>
-                <td class="text-xs-right">{{ props.item.calories }}</td>
-                <td class="text-xs-right">{{ props.item.fat }}</td>
-                <td class="text-xs-right">{{ props.item.carbs }}</td>
-                <td class="text-xs-right">{{ props.item.protein }}</td>
-                <td class="text-xs-right">{{ props.item.iron }}</td>
+                <td>
+                  <v-icon 
+                    :class="{
+                      'primary--text': props.item.Habilitado,
+                      'error--text': !props.item.Habilitado
+                  }">
+                    fiber_manual_record
+                  </v-icon>
+                </td>
+                <td>{{ props.item.Nombre }}</td>
+                <td>{{ props.item.Region.Nombre }}</td>
+                <td>{{ props.item.Direccion.Estado }}</td>
+                <td>{{ props.item.Direccion.Ciudad }}</td>
               </tr>
             </template>
-            <template slot="expand" slot-scope="props">
-              <v-card flat>
-                <v-card-text>Peek-a-boo!</v-card-text>
-              </v-card>
+
+            <template 
+              slot="expand" 
+              slot-scope="props">
+              <v-container 
+                fluid 
+                justify-space-between
+                grid-list-lg>
+                <v-layout 
+                  row 
+                  wrap>
+                  <v-flex 
+                    xs12
+                    lg6>
+                    <v-list two-line>
+
+                      <v-list-tile>
+                        <v-list-tile-content>
+                          <v-list-tile-title>{{ props.item.RazonSocial }}</v-list-tile-title>
+                          <v-list-tile-sub-title>Razón Social</v-list-tile-sub-title>
+                        </v-list-tile-content>
+                      </v-list-tile>
+
+                      <v-list-tile>
+                        <v-list-tile-content>
+                          <v-list-tile-title>
+                            <star-rating
+                              :star-size="20"
+                              :read-only="true"
+                              :max-rating="5"
+                              :increment="0.01"
+                              :show-rating="false"
+                              :rating="props.item.Calificacion * 1/20"
+                            />
+                          </v-list-tile-title>
+                          <v-list-tile-sub-title>Calificación</v-list-tile-sub-title>
+                        </v-list-tile-content>
+                      </v-list-tile>
+                      
+                      <v-list-tile>
+                        <v-list-tile-content>
+                          <v-list-tile-title>
+                            {{ props.item.Region.Nombre }}
+                          </v-list-tile-title>
+                          <v-list-tile-sub-title>Región</v-list-tile-sub-title>
+                        </v-list-tile-content>
+                      </v-list-tile>
+
+                      <v-list-tile>
+                        <v-list-tile-content>
+                          <v-list-tile-title>
+                            {{ props.item.FechaRegistro | moment("calendar") }}
+                          </v-list-tile-title>
+                          <v-list-tile-sub-title>Fecha de Registro</v-list-tile-sub-title>
+                        </v-list-tile-content>
+                      </v-list-tile>
+                    </v-list>
+                  </v-flex>
+
+                  <v-flex 
+                    xs12
+                    lg6>
+                    <gmap-map
+                      :center="{lat:props.item.Direccion.Latitud, lng:props.item.Direccion.Longitud}"
+                      :zoom="14"
+                      map-type-id="roadmap"
+                      style="width: 400px; height: 250px">
+
+                      <gmap-marker
+                        :position="{lat:props.item.Direccion.Latitud, lng:props.item.Direccion.Longitud}"
+                        :clickable="true"
+                        :draggable="true"/>
+                    </gmap-map>
+                    
+                    <blockquote class="subheading grey--text py-3" >
+                      {{ props.item.Direccion.Calle }} 
+                      #{{ props.item.Direccion.Numero }}. 
+                      {{ props.item.Direccion.Ciudad }},
+                      {{ props.item.Direccion.Estado }}.</blockquote>
+                  </v-flex>
+                </v-layout>
+                
+                <div class="text-xs-center">
+                  <v-btn
+                    outline 
+                    color="error">Eliminar</v-btn>
+                  <v-btn 
+                    :to="{ name: 'editorBanco', params: { id: props.item.IDBancoAlimentos }}"
+                    outline 
+                    color="success">Editar</v-btn>
+                </div>
+              
+              </v-container>
+            </template>
+            
+            <template slot="no-data">
+              <v-alert 
+                :value="true" 
+                outline 
+                color="grey" 
+                icon="info">
+                No hay datos disponibles
+              </v-alert>
             </template>
           </v-data-table>
           
@@ -92,98 +203,6 @@ export default {
         { text: "Región", value: "Region.Nombre" },
         { text: "Estado", value: "Direccion.Estado" },
         { text: "Ciudad", value: "Direccion.Ciudad" }
-      ],
-      desserts: [
-        {
-          value: false,
-          name: "Frozen Yogurt",
-          calories: 159,
-          fat: 6.0,
-          carbs: 24,
-          protein: 4.0,
-          iron: "1%"
-        },
-        {
-          value: false,
-          name: "Ice cream sandwich",
-          calories: 237,
-          fat: 9.0,
-          carbs: 37,
-          protein: 4.3,
-          iron: "1%"
-        },
-        {
-          value: false,
-          name: "Eclair",
-          calories: 262,
-          fat: 16.0,
-          carbs: 23,
-          protein: 6.0,
-          iron: "7%"
-        },
-        {
-          value: false,
-          name: "Cupcake",
-          calories: 305,
-          fat: 3.7,
-          carbs: 67,
-          protein: 4.3,
-          iron: "8%"
-        },
-        {
-          value: false,
-          name: "Gingerbread",
-          calories: 356,
-          fat: 16.0,
-          carbs: 49,
-          protein: 3.9,
-          iron: "16%"
-        },
-        {
-          value: false,
-          name: "Jelly bean",
-          calories: 375,
-          fat: 0.0,
-          carbs: 94,
-          protein: 0.0,
-          iron: "0%"
-        },
-        {
-          value: false,
-          name: "Lollipop",
-          calories: 392,
-          fat: 0.2,
-          carbs: 98,
-          protein: 0,
-          iron: "2%"
-        },
-        {
-          value: false,
-          name: "Honeycomb",
-          calories: 408,
-          fat: 3.2,
-          carbs: 87,
-          protein: 6.5,
-          iron: "45%"
-        },
-        {
-          value: false,
-          name: "Donut",
-          calories: 452,
-          fat: 25.0,
-          carbs: 51,
-          protein: 4.9,
-          iron: "22%"
-        },
-        {
-          value: false,
-          name: "KitKat",
-          calories: 518,
-          fat: 26.0,
-          carbs: 65,
-          protein: 7,
-          iron: "6%"
-        }
       ]
     };
   },
@@ -207,6 +226,7 @@ export default {
       var callbackFunctions = [this.getRegion];
 
       for (var bank of this.Rawitems) {
+        bank["Calificacion"] = Number(bank["Calificacion"]);
         this.getAddress(bank, callbackFunctions);
       }
     },
@@ -233,6 +253,12 @@ export default {
           var rawData = response.data.data;
 
           bank["Direccion"] = rawData[0];
+
+          var latNumber = Number(bank["Direccion"]["Latitud"]);
+          var lonNumber = Number(bank["Direccion"]["Longitud"]);
+
+          bank["Direccion"]["Latitud"] = latNumber;
+          bank["Direccion"]["Longitud"] = lonNumber;
           bank = callbackFunctions[0](bank, callbackFunctions);
         })
         .catch(e => {
