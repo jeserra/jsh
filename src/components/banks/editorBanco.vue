@@ -1,29 +1,158 @@
 <template>
   <div>
-    <toolbar-handler/>
 
-    <div class="data-visualization-container">
-      <p class="module-title">
-        <v-icon>account_balance</v-icon>Banco de Alimentos
-      </p>
-      <div class="table">
-        <v-client-table
-          :data="data"
-          :columns="columnNames"
-          :name="'myTable'"
-          class="table"/>
-      </div>
-    </div>
+    <toolbarHandler      
+      :key-name="'bancos'"/>
+
+    <v-container class="elements-container">
+      <v-layout
+        row
+        wrap>
+        <v-flex xs3/>
+
+        <v-flex xs2>
+          <h2>EDITAR BANCO</h2>
+        </v-flex>
+      </v-layout>
+
+      <v-layout
+        row
+        wrap>
+
+        <v-flex xs2>
+          <v-text-field
+            v-model="bankData.Nombre"
+            label="Nombre del Banco"
+            required/>
+        </v-flex>
+
+        <v-flex xs2>
+          <v-text-field
+            v-model="bankData.RazonSocial"
+            label="Razón social del banco"
+            required/>
+        </v-flex>
+
+        <v-flex xs1>
+          <v-text-field
+            v-model="bankData.Calificacion"
+            label="Calificación"
+            type="number"
+            required/>
+        </v-flex>
+
+        <v-checkbox
+          v-model="bankData.Habilitado"
+          label="Habilitado"/>
+      </v-layout>
+
+      <v-layout
+        row
+        wrap>
+
+        <v-flex xs4>
+          <h3>Fecha de Afiliación</h3>
+          <v-date-picker
+            v-if="!loading"
+            :landscape="true"
+            v-model="fechaAfiliacion"
+            locale="es"/>
+        </v-flex>
+
+        <v-flex xs4>
+          <h3>Fecha de Registro</h3>
+          <v-date-picker
+            v-if="!loading"        
+            :landscape="true"
+            v-model="fechaRegistro"
+            locale="es"/>
+        </v-flex>
+      </v-layout>
+
+      <v-layout
+        v-if="!loading"
+        row
+        wrap>
+
+        <h3>Dirección</h3>
+      </v-layout>
+
+      <v-layout
+        v-if="!loading"
+        row
+        wrap>
+
+        <v-flex xs1>
+          <v-text-field
+            v-model="bankData.Direccion.Estado"
+            label="Estado"/>
+        </v-flex>
+
+        <v-flex xs1>
+          <v-text-field
+            v-model="bankData.Direccion.Ciudad"
+            label="Ciudad"/>
+        </v-flex>
+
+        <v-flex xs1>
+          <v-text-field
+            v-model="bankData.Direccion.CP"
+            type="number"
+            label="C.P."/>
+        </v-flex>
+
+        <v-flex xs3>
+          <v-text-field
+            v-model="bankData.Direccion.Calle"
+            label="Calle"/>
+        </v-flex>
+
+        <v-flex xs1>
+          <v-text-field
+            v-model="bankData.Direccion.Numero"
+            label="Número"/>
+        </v-flex>
+      </v-layout>
+
+      <form v-if="!loading">
+        <h3>Región</h3>
+
+        <v-flex xs1>
+          <v-select
+            v-model="bankData.Region.Nombre"
+            :items="regiones"
+            label="Estado"/>
+        </v-flex>
+      </form>
+    </v-container>
 
     <v-btn
-      absolute
-      dark
+      fixed
       fab
       bottom
       right
-      color="green">
-      <v-icon>add</v-icon>
+      color="primary"
+      @click="saveBank()">
+      <v-icon>save</v-icon>
     </v-btn>
+
+    <v-snackbar
+      :timeout="timeout"
+      :top="y === 'top'"
+      :bottom="y === 'bottom'"
+      :right="x === 'right'"
+      :left="x === 'left'"
+      :multi-line="mode === 'multi-line'"
+      :vertical="mode === 'vertical'"
+      v-model="snackbar">
+      {{ confirmationMessage }}
+      <v-btn
+        flat
+        color="pink"
+        @click.native="snackbar = false">
+        Close
+      </v-btn>
+    </v-snackbar>
 
   </div>
 </template>
@@ -38,89 +167,152 @@ export default {
   },
   data() {
     return {
-      banksURL: "http://localhost:5000/api/bancos",
+      banksURL: "http://localhost:5000/api/bancoalimentos/IDBancoAlimentos",
+      addressesURL: "http://localhost:5000/api/direccion/IDDireccion",
+      regionsAllURL: "http://localhost:5000/api/all/region/",
+      regionsURL: "http://localhost:5000/api/region/IDRegion",
+      contactsURL: "http://localhost:5000/api/contacto/IDContacto",
 
-      dataUrl: undefined,
-      data: [],
-      columnNames: []
+      bankID: this.$route.params.id,
+      loading: true,
+      errors: [],
+      bankData: [],
+
+      fechaRegistro: "",
+      fechaAfiliacion: "",
+
+      //Región
+      regiones: [],
+      //
+
+      // Snackbar config
+      snackbar: false,
+      y: "bottom",
+      x: null,
+      mode: "",
+      timeout: 3000,
+      confirmationMessage: "El Banco ha sido editado"
     };
   },
   watch: {
-    dataUrl: function() {
-      this.data = [];
-
-      this.loadData();
+    loading() {
+      if (!this.loading) {
+        var tempRegions = [];
+        for (var region of this.regiones) {
+          tempRegions.push(region.Nombre);
+        }
+        this.regiones = tempRegions;
+      }
     }
   },
   mounted: function() {
-    this.getBanksInformation();
-    this.loadData();
+    this.getAllRegions();
+    this.getBankData();
   },
   methods: {
-    getBanksInformation: function() {
-      this.dataUrl = this.banksURL;
+    transformToClearDate(fullDateString) {
+      var registrationDate = new Date(fullDateString);
+
+      var year = registrationDate.getUTCFullYear();
+      var month = registrationDate.getUTCMonth() + 1;
+      var day = registrationDate.getUTCDate();
+      var cleanDate = "" + year + "-" + month + "-" + day;
+      return cleanDate;
     },
-    loadData: function() {
-      axios({ method: "GET", url: this.dataUrl }).then(
-        result => {
-          var rawData = result.request.response;
-          var parsedData = JSON.parse(rawData);
-          var cleanData = parsedData.data;
-          var dataKeys = [];
+    initializeData() {
+      var callbackFunctions = [this.getRegion, this.getContact];
 
-          var showAs = ["Nombre", "Región", "Estado", "Ciudad"];
-          var valuesToRecover = [
-            "nombre",
-            ["region", "nombre"],
-            ["direccion", "estado"],
-            ["direccion", "ciudad"]
-          ];
-
-          if (showAs.length != valuesToRecover.length) {
-            return "ERROR: Arrays 'showAs' and 'valuesToRecover' in method loadData() have different sizes";
-          }
-
-          this.data = [];
-          this.columnNames = showAs;
-
-          for (var i = 0; i < cleanData.length; i++) {
-            var elementInArray = cleanData[i];
-            var newBank = {};
-
-            for (var j = 0; j < valuesToRecover.length; j++) {
-              var key = valuesToRecover[j];
-              var saveKeyAs = showAs[j];
-              //Recover value
-              if (key instanceof Array) {
-                var value = elementInArray[key[0]][key[1]];
-              } else {
-                var value = elementInArray[key];
-              }
-
-              newBank[saveKeyAs] = value;
-            }
-            this.data.push(newBank);
-          }
-        },
-        error => {
-          console.error(error);
-        }
+      this.fechaRegistro = this.transformToClearDate(
+        this.bankData.FechaRegistro
       );
+
+      this.fechaAfiliacion = this.transformToClearDate(
+        this.bankData.FechaAfiliacion
+      );
+
+      this.getAddress(this.bankData, callbackFunctions);
+    },
+    getBankData() {
+      axios({
+        method: "GET",
+        url: this.banksURL + "/" + this.bankID
+      })
+        .then(response => {
+          var rawData = response.data.data;
+          this.bankData = rawData[0];
+
+          this.initializeData();
+        })
+        .catch(e => {
+          this.errors.push(e);
+        });
+    },
+    getAllRegions() {
+      axios({
+        method: "GET",
+        url: this.regionsAllURL
+      })
+        .then(response => {
+          this.regiones = response.data.data;
+        })
+        .catch(e => {
+          this.errors.push(e);
+        });
+    },
+    getAddress(bank, callbackFunctions) {
+      axios({
+        method: "GET",
+        url: this.addressesURL + "/" + bank.IDDireccion
+      })
+        .then(response => {
+          var rawData = response.data.data;
+
+          bank["Direccion"] = rawData[0];
+          bank = callbackFunctions[0](bank, callbackFunctions);
+        })
+        .catch(e => {
+          this.errors.push(e);
+        });
+    },
+    getRegion(bank, callbackFunctions) {
+      axios({
+        method: "GET",
+        url: this.regionsURL + "/" + bank.IdRegion
+      })
+        .then(response => {
+          var rawData = response.data.data;
+
+          bank["Region"] = rawData[0];
+          bank = callbackFunctions[1](bank, callbackFunctions);
+        })
+        .catch(e => {
+          this.errors.push(e);
+        });
+    },
+    getContact(bank, callbackFunctions) {
+      axios({
+        method: "GET",
+        url: this.contactsURL + "/" + bank.IdContacto
+      })
+        .then(response => {
+          var rawData = response.data.data;
+
+          bank["Contacto"] = rawData[0];
+          this.loading = false;
+        })
+        .catch(e => {
+          this.errors.push(e);
+        });
+    },
+    saveBank(bank, callbackFunctions) {
+      console.log("Se ha guardado");
     }
   }
 };
 </script>
 
-<style type="text/css">
-.module-title {
-  text-align: left !important;
-}
-
-.table {
-  width: 90%;
-}
-
-.data-visualization-container {
+<style scoped>
+.elements-container {
   margin-left: 5%;
 }
 </style>
