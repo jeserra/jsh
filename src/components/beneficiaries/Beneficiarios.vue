@@ -149,6 +149,8 @@
 <script>
 import axios from "axios";
 import toolbarHandler from "../toolbars/toolbarHandler";
+import { apiRoutes } from "../../configs/apiRoutes.js";
+var apiMode = "jsh";
 
 export default {
   components: {

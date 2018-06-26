@@ -124,6 +124,45 @@
             label="Estado"/>
         </v-flex>
       </form>
+
+      <form v-if="!loading">
+        <h3>Contacto</h3>
+        <v-layout
+          row
+          wrap>
+
+          <v-flex xs1>
+            <v-text-field
+              v-model="bankData.Direccion.Estado"
+              label="Estado"/>
+          </v-flex>
+
+          <v-flex xs1>
+            <v-text-field
+              v-model="bankData.Direccion.Ciudad"
+              label="Ciudad"/>
+          </v-flex>
+
+          <v-flex xs1>
+            <v-text-field
+              v-model="bankData.Direccion.CP"
+              type="number"
+              label="C.P."/>
+          </v-flex>
+
+          <v-flex xs3>
+            <v-text-field
+              v-model="bankData.Direccion.Calle"
+              label="Calle"/>
+          </v-flex>
+
+          <v-flex xs1>
+            <v-text-field
+              v-model="bankData.Direccion.Numero"
+              label="Número"/>
+          </v-flex>
+        </v-layout>
+      </form>
     </v-container>
 
     <v-btn
@@ -160,6 +199,8 @@
 <script>
 import axios from "axios";
 import toolbarHandler from "../toolbars/toolbarHandler";
+import { apiRoutes } from "../../configs/apiRoutes.js";
+var apiMode = "testing";
 
 export default {
   components: {
@@ -167,11 +208,11 @@ export default {
   },
   data() {
     return {
-      banksURL: "http://localhost:5000/api/bancoalimentos/IDBancoAlimentos",
-      addressesURL: "http://localhost:5000/api/direccion/IDDireccion",
-      regionsAllURL: "http://localhost:5000/api/all/region/",
-      regionsURL: "http://localhost:5000/api/region/IDRegion",
-      contactsURL: "http://localhost:5000/api/contacto/IDContacto",
+      allRegionsURL: apiRoutes[apiMode].allRegionsURL,
+      addressURL: apiRoutes[apiMode].addressURL,
+      bankURL: apiRoutes[apiMode].bankURL,
+      contactURL: apiRoutes[apiMode].contactURL,
+      regionURL: apiRoutes[apiMode].regionURL,
 
       bankID: this.$route.params.id,
       loading: true,
@@ -235,7 +276,7 @@ export default {
     getBankData() {
       axios({
         method: "GET",
-        url: this.banksURL + "/" + this.bankID
+        url: this.bankURL + "/" + this.bankID
       })
         .then(response => {
           var rawData = response.data.data;
@@ -250,7 +291,7 @@ export default {
     getAllRegions() {
       axios({
         method: "GET",
-        url: this.regionsAllURL
+        url: this.allRegionsURL
       })
         .then(response => {
           this.regiones = response.data.data;
@@ -262,7 +303,7 @@ export default {
     getAddress(bank, callbackFunctions) {
       axios({
         method: "GET",
-        url: this.addressesURL + "/" + bank.IDDireccion
+        url: this.addressURL + "/" + bank.IDDireccion
       })
         .then(response => {
           var rawData = response.data.data;
@@ -277,7 +318,7 @@ export default {
     getRegion(bank, callbackFunctions) {
       axios({
         method: "GET",
-        url: this.regionsURL + "/" + bank.IdRegion
+        url: this.regionURL + "/" + bank.IdRegion
       })
         .then(response => {
           var rawData = response.data.data;
@@ -292,7 +333,7 @@ export default {
     getContact(bank, callbackFunctions) {
       axios({
         method: "GET",
-        url: this.contactsURL + "/" + bank.IdContacto
+        url: this.contactURL + "/" + bank.IdContacto
       })
         .then(response => {
           var rawData = response.data.data;

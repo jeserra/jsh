@@ -31,7 +31,7 @@
             :items="items"
             :search="search"
             :loading="loading"
-            item-key="IDBancoAlimentos"
+            item-key="nombre"
             class="elevation-2">
 
             <template
@@ -41,16 +41,16 @@
                 <td>
                   <v-icon 
                     :class="{
-                      'primary--text': props.item.Habilitado,
-                      'error--text': !props.item.Habilitado
+                      'primary--text': props.item.habilitado,
+                      'error--text': !props.item.habilitado
                   }">
                     fiber_manual_record
                   </v-icon>
                 </td>
-                <td>{{ props.item.Nombre }}</td>
-                <td>{{ props.item.Region.Nombre }}</td>
-                <td>{{ props.item.Direccion.Estado }}</td>
-                <td>{{ props.item.Direccion.Ciudad }}</td>
+                <td>{{ props.item.nombre }}</td>
+                <td>{{ props.item.region.nombre }}</td>
+                <td>{{ props.item.direccion.estado }}</td>
+                <td>{{ props.item.direccion.ciudad }}</td>
               </tr>
             </template>
 
@@ -71,7 +71,7 @@
 
                       <v-list-tile>
                         <v-list-tile-content>
-                          <v-list-tile-title>{{ props.item.RazonSocial }}</v-list-tile-title>
+                          <v-list-tile-title>{{ props.item.razonSocial }}</v-list-tile-title>
                           <v-list-tile-sub-title>Razón Social</v-list-tile-sub-title>
                         </v-list-tile-content>
                       </v-list-tile>
@@ -85,7 +85,7 @@
                               :max-rating="5"
                               :increment="0.01"
                               :show-rating="false"
-                              :rating="props.item.Calificacion * 1/20"
+                              :rating="props.item.calificacion * 1/20"
                             />
                           </v-list-tile-title>
                           <v-list-tile-sub-title>Calificación</v-list-tile-sub-title>
@@ -95,7 +95,7 @@
                       <v-list-tile>
                         <v-list-tile-content>
                           <v-list-tile-title>
-                            {{ props.item.Region.Nombre }}
+                            {{ props.item.region.nombre }}
                           </v-list-tile-title>
                           <v-list-tile-sub-title>Región</v-list-tile-sub-title>
                         </v-list-tile-content>
@@ -104,7 +104,7 @@
                       <v-list-tile>
                         <v-list-tile-content>
                           <v-list-tile-title>
-                            {{ props.item.FechaRegistro | moment("calendar") }}
+                            {{ props.item.fechaRegistro | moment("calendar") }}
                           </v-list-tile-title>
                           <v-list-tile-sub-title>Fecha de Registro</v-list-tile-sub-title>
                         </v-list-tile-content>
@@ -116,22 +116,22 @@
                     xs12
                     lg6>
                     <gmap-map
-                      :center="{lat:props.item.Direccion.Latitud, lng:props.item.Direccion.Longitud}"
+                      :center="{lat:Number(props.item.direccion.latitud), lng:Number(props.item.direccion.longitud)}"
                       :zoom="14"
                       map-type-id="roadmap"
                       style="width: 400px; height: 250px">
 
                       <gmap-marker
-                        :position="{lat:props.item.Direccion.Latitud, lng:props.item.Direccion.Longitud}"
+                        :position="{lat:Number(props.item.direccion.latitud), lng:Number(props.item.direccion.longitud)}"
                         :clickable="true"
                         :draggable="true"/>
                     </gmap-map>
                     
                     <blockquote class="subheading grey--text py-3" >
-                      {{ props.item.Direccion.Calle }} 
-                      #{{ props.item.Direccion.Numero }}. 
-                      {{ props.item.Direccion.Ciudad }},
-                      {{ props.item.Direccion.Estado }}.</blockquote>
+                      {{ props.item.direccion.Calle }} 
+                      #{{ props.item.direccion.Numero }}. 
+                      {{ props.item.direccion.Ciudad }},
+                      {{ props.item.direccion.Estado }}.</blockquote>
                   </v-flex>
                 </v-layout>
                 
@@ -179,6 +179,8 @@
 import axios from "axios";
 import StarRating from "vue-star-rating";
 import toolbarHandler from "../toolbars/toolbarHandler";
+import { apiRoutes } from "../../configs/apiRoutes.js";
+var apiMode = "jsh";
 
 export default {
   components: {
@@ -187,9 +189,9 @@ export default {
   },
   data() {
     return {
-      banksURL: "http://localhost:5000/api/all/bancoalimentos",
-      addressesURL: "http://localhost:5000/api/direccion/IDDireccion",
-      regionsURL: "http://localhost:5000/api/region/IDRegion",
+      allBanksURL: apiRoutes[apiMode].allBanksURL,
+      addressesURL: apiRoutes[apiMode].addressesURL,
+      regionsURL: apiRoutes[apiMode].regionsURL,
 
       loading: true,
       search: "",
@@ -198,11 +200,11 @@ export default {
       markers: [],
       errors: [],
       headers: [
-        { text: "Estatus", value: "Habilitado", sortable: false },
-        { text: "Nombre", value: "Nombre" },
-        { text: "Región", value: "Region.Nombre" },
-        { text: "Estado", value: "Direccion.Estado" },
-        { text: "Ciudad", value: "Direccion.Ciudad" }
+        { text: "Estatus", value: "habilitado", sortable: false },
+        { text: "Nombre", value: "nombre" },
+        { text: "Región", value: "region.nombre" },
+        { text: "Estado", value: "direccion.estado" },
+        { text: "Ciudad", value: "direccion.ciudad" }
       ]
     };
   },
@@ -233,14 +235,23 @@ export default {
     getData() {
       axios({
         method: "GET",
-        url: this.banksURL
+        url: this.allBanksURL,
+        contentType: "application/x-www-form-urlencoded"
       })
         .then(response => {
-          var rawData = response.data.data;
-          this.Rawitems = rawData;
-          this.initializeData();
+          if (apiMode === "testing") {
+            //My api needs to projections
+            var rawData = response.data.data;
+            this.Rawitems = rawData;
+            this.initializeData();
+          } else {
+            //Api from amdocs has projections
+            var rawData = response.data._embedded.bancoalimentos;
+            this.items = rawData;
+          }
         })
         .catch(e => {
+          console.log(e);
           this.errors.push(e);
         });
     },
