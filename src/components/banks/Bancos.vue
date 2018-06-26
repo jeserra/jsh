@@ -235,8 +235,7 @@ export default {
     getData() {
       axios({
         method: "GET",
-        url: this.allBanksURL,
-        contentType: "application/x-www-form-urlencoded"
+        url: this.allBanksURL
       })
         .then(response => {
           if (apiMode === "testing") {
