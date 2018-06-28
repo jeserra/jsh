@@ -233,11 +233,15 @@ export default {
       }
     },
     getData() {
+      console.log("URL:");
+      console.log(this.allBanksURL);
+      console.log("----------------");
       axios({
         method: "GET",
         url: this.allBanksURL
       })
         .then(response => {
+          console.log("success");
           if (apiMode === "testing") {
             //My api needs to projections
             var rawData = response.data.data;
@@ -250,6 +254,7 @@ export default {
           }
         })
         .catch(e => {
+          console.log("error");
           console.log(e);
           this.errors.push(e);
         });
