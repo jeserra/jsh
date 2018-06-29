@@ -46,6 +46,10 @@ export default {
         items: [],
         title: "Bancos"
       },
+      centros: {
+        items: [],
+        title: "Centros"
+      },
       personas: {
         items: [
           { title: "Trabajadores", ref: "usuarios" },

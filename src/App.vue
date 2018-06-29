@@ -156,7 +156,7 @@ export default {
           title: "Centros",
           icon: "pin_drop",
           active: false,
-          ref: "bancos"
+          ref: "centros"
         },
         {
           title: "Grupos",

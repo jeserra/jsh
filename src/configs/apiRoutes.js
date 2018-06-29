@@ -22,7 +22,7 @@ export const apiRoutes = {
     contactURL: "",
     regionURL: "http://18.221.249.12:80/api/regiones/",
     /////////
-    comunitaryCentersURL: "http://18.221.249.12:80/api/comunitarios",
+    allCommunitaryCentersURL: "http://18.221.249.12:80/api/comunitarios",
     usuariosURL: "http://18.221.249.12:80/api/usuarios"
   }
 };

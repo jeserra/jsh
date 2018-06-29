@@ -11,6 +11,10 @@ import Bancos from "../components/banks/Bancos";
 import creadorBanco from "../components/banks/creadorBanco";
 import editorBanco from "../components/banks/editorBanco";
 
+import Centros from "../components/communitaryCenters/Centros";
+import creadorCentro from "../components/communitaryCenters/creadorCentro";
+import editorCentro from "../components/communitaryCenters/editorCentro";
+
 import Usuarios from "../components/users/Usuarios";
 import creadorUsuario from "../components/users/creadorUsuario";
 import editorUsuario from "../components/users/editorUsuario";
@@ -105,6 +109,26 @@ const routes = [
     path: "/nuevo-banco",
     component: creadorBanco,
     name: "nuevoBanco",
+    beforeEnter: ifWorkerAuthenticated
+  },
+
+  //centros
+  {
+    path: "/centros",
+    component: Centros,
+    name: "centros",
+    beforeEnter: ifUserAuthenticated
+  },
+  {
+    path: "/centros/:id",
+    component: editorCentro,
+    name: "editorCentro",
+    beforeEnter: ifWorkerAuthenticated
+  },
+  {
+    path: "/nuevo-centro",
+    component: creadorCentro,
+    name: "nuevoCentro",
     beforeEnter: ifWorkerAuthenticated
   },
 
