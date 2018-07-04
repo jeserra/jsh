@@ -233,9 +233,6 @@ export default {
       }
     },
     getData() {
-      console.log("URL:");
-      console.log(this.allBanksURL);
-      console.log("----------------");
       axios({
         method: "GET",
         url: this.allBanksURL
