@@ -5,6 +5,31 @@
     align-content-center>
 
     <toolbar-handler/>
+
+    <v-layout
+      row
+      wrap>
+
+      <v-flex 
+        xs4
+        class="simple-report">
+        <report-A/>
+      </v-flex>
+
+      <v-flex 
+        xs4
+        class="simple-report">
+        <report-B/>
+      </v-flex>
+
+      <v-flex 
+        xs4
+        class="simple-report">
+        <report-C/>
+      </v-flex>            
+
+    </v-layout>
+
     <v-layout
       row
       wrap>
@@ -56,6 +81,11 @@ import Vuex from "vuex";
 Vue.use(Vuex);
 
 import toolbarHandler from "./toolbars/toolbarHandler";
+
+import reportA from "./reports/reportA";
+import reportB from "./reports/reportB";
+import reportC from "./reports/reportC";
+
 import reportOne from "./reports/reportOne";
 import reportTwo from "./reports/reportTwo";
 import reportThree from "./reports/reportThree";
@@ -90,6 +120,9 @@ const store = new Vuex.Store({
 export default {
   components: {
     toolbarHandler,
+    reportA,
+    reportB,
+    reportC,
     reportOne,
     reportTwo,
     reportThree,
@@ -133,8 +166,12 @@ h2 {
   font-weight: normal;
 }
 
+.simple-report {
+  height: 90px;
+}
+
 .echarts {
-  height: 400px;
+  height: 365px;
   width: 100%;
 }
 
