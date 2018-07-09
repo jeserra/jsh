@@ -9,46 +9,41 @@
       row
       wrap>
       
-      <v-flex
-        class="image-bigger-landing-page"
-        xs12>
-        <router-link :to="{ name: 'logIn' }">
-          <img
-            src="../assets/logoJSH.svg"
-            class="image-bigger-landing-page">
-        </router-link>
+      <v-flex 
+        xs6
+        class="echarts">
+        <report-one/>
       </v-flex>
 
-      <v-flex
-        class="image-landing-page"
-        xs4>
-        <router-link :to="{ name: 'logIn' }">
-          <img 
-            src="../assets/logoJSH.svg"
-            class="image-landing-page">
-        </router-link>        
+      <v-flex 
+        xs6
+        class="echarts">
+        <report-two/>
       </v-flex>
+    </v-layout>
 
-      <v-flex
-        class="image-landing-page"
-        xs4>
-        <router-link :to="{ name: 'logIn' }">
-          <img 
-            src="../assets/logoJSH.svg"
-            class="image-landing-page">
-        </router-link>
+    <v-layout>
+      <v-flex 
+        xs12
+        class="echarts">
+        <report-three/>
       </v-flex>
+    </v-layout>
 
-      <v-flex
-        class="image-landing-page"
-        xs4>
-        <router-link :to="{ name: 'logIn' }">
-          <img 
-            src="../assets/logoJSH.svg"
-            class="image-landing-page">
-        </router-link>
+    <v-layout>
+      <v-flex 
+        xs12
+        class="echarts">
+        <report-four/>
       </v-flex>
+    </v-layout>  
 
+    <v-layout>
+      <v-flex 
+        xs12
+        class="echarts">
+        <report-five/>
+      </v-flex>
     </v-layout>
   </v-container>
 </template>
@@ -59,7 +54,13 @@ import "es6-promise/auto";
 import Vue from "vue";
 import Vuex from "vuex";
 Vue.use(Vuex);
+
 import toolbarHandler from "./toolbars/toolbarHandler";
+import reportOne from "./reports/reportOne";
+import reportTwo from "./reports/reportTwo";
+import reportThree from "./reports/reportThree";
+import reportFour from "./reports/reportFour";
+import reportFive from "./reports/reportFive";
 
 const store = new Vuex.Store({
   state: {
@@ -87,15 +88,17 @@ const store = new Vuex.Store({
 });
 
 export default {
-  name: "HelloWorld",
   components: {
-    toolbarHandler
+    toolbarHandler,
+    reportOne,
+    reportTwo,
+    reportThree,
+    reportFour,
+    reportFive
   },
   data() {
     return {
-      username: "Miku",
-      password: "xDD",
-      msg: "Welcome to Your Vue.js App"
+      loading: false
     };
   },
   computed: {
@@ -124,12 +127,17 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 h1,
 h2 {
   font-weight: normal;
 }
+
+.echarts {
+  height: 400px;
+  width: 100%;
+}
+
 ul {
   list-style-type: none;
   padding: 0;

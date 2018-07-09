@@ -8,6 +8,9 @@ import * as VueGoogleMaps from "vue2-google-maps";
 
 import "vuetify/dist/vuetify.min.css";
 
+//Vue-echarts-v3
+import IEcharts from "vue-echarts-v3/src/full.js";
+
 import router from "./router/";
 import Vuex from "vuex";
 Vue.use(Vuex);
