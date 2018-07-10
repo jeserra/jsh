@@ -24,6 +24,6 @@ export const apiRoutes = {
     /////////
     allCommunitaryCentersURL: "http://18.221.249.12:80/api/comunitarios",
     allUsersURL: "http://18.221.249.12:80/api/usuarios",
-    allDonatorsURL: "18.221.249.12:80/api/donadores"
+    allDonatorsURL: "http://18.221.249.12:80/api/donadores"
   }
 };

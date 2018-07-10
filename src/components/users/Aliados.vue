@@ -18,10 +18,9 @@
             slot-scope="props">
             <tr @click="props.expanded = !props.expanded">
               <td>{{ props.item.nombre }}</td>
-              <td>{{ props.item.tipoUsuario.tipo }}</td>
-              <td>{{ props.item.curso.nombre }}</td>
+              <td>{{ props.item.tipo }}</td>
               <td>{{ props.item.grupo }}</td>
-              <td>{{ props.item.direccion.ciudad }}</td>
+              <td>{{ props.item.bancoAlimentos.direccion.ciudad }}</td>
             </tr>          
           </template>
 
@@ -45,7 +44,7 @@
                         <v-list-tile-title>
                           {{ props.item.nombre }}
                         </v-list-tile-title>
-                        <v-list-tile-sub-title>{{ props.item.tipoUsuario.tipo }}</v-list-tile-sub-title>
+                        <v-list-tile-sub-title>{{ props.item.tipo }}</v-list-tile-sub-title>
                       </v-list-tile-content>
                     </v-list-tile>
 
@@ -78,29 +77,12 @@
                     <v-list-tile>
                       <v-list-tile-content>
                         <v-list-tile-title>
-                          Curso: {{ props.item.curso.nombre }}
-                        </v-list-tile-title>
-                        <v-list-tile-sub-title v-if="props.item.curso.calificacion">
-                          Calificación: {{ props.item.curso.calificacion }}/10
-                        </v-list-tile-sub-title>
-                        <v-list-tile-sub-title v-if="props.item.curso.descripcion">
-                          Descripción: {{ props.item.curso.descripcion }}
-                        </v-list-tile-sub-title>
-                        <v-list-tile-sub-title v-if="props.item.curso.observaciones">
-                          Observaciones: {{ props.item.curso.observaciones }}
-                        </v-list-tile-sub-title>
-                      </v-list-tile-content>
-                    </v-list-tile>
-
-                    <v-list-tile>
-                      <v-list-tile-content>
-                        <v-list-tile-title>
                           Dirección
                         </v-list-tile-title>
-                        <v-list-tile-sub-title>{{ props.item.direccion.estado }} </v-list-tile-sub-title>
-                        <v-list-tile-sub-title>{{ props.item.direccion.ciudad }} </v-list-tile-sub-title>
-                        <v-list-tile-sub-title>{{ props.item.direccion.cp }} </v-list-tile-sub-title>
-                        <v-list-tile-sub-title>{{ props.item.direccion.calle }} </v-list-tile-sub-title>                        
+                        <v-list-tile-sub-title>{{ props.item.bancoAlimentos.direccion.estado }} </v-list-tile-sub-title>
+                        <v-list-tile-sub-title>{{ props.item.bancoAlimentos.direccion.ciudad }} </v-list-tile-sub-title>
+                        <v-list-tile-sub-title>{{ props.item.bancoAlimentos.direccion.cp }} </v-list-tile-sub-title>
+                        <v-list-tile-sub-title>{{ props.item.bancoAlimentos.direccion.calle }} </v-list-tile-sub-title>                        
                       </v-list-tile-content>                      
                     </v-list-tile>
 
@@ -163,10 +145,9 @@ export default {
       errors: [],
       headers: [
         { text: "Nombre", value: "nombre" },
-        { text: "Tipo", value: "tipoUsuario.tipo" },
-        { text: "Curso Social", value: "curso.nombre" },
+        { text: "Tipo", value: "tipo" },
         { text: "Grupo", value: "grupo" },
-        { text: "Ciudad", value: "direccion.ciudad" }
+        { text: "Ciudad", value: "bancoAlimentos.direccion.ciudad" }
       ]
     };
   },
@@ -187,7 +168,7 @@ export default {
             this.initializeData();
           } else {
             //Api from amdocs has projections
-            var rawData = response.data._embedded.usuarios;
+            var rawData = response.data._embedded.donadores;
             this.items = rawData;
           }
         })

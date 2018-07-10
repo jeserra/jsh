@@ -72,9 +72,12 @@ const ifWorkerAuthenticated = (to, from, next) => {
     next();
     return;
   } else {
+    next();
+    /*
     next({
       name: "logIn"
     });
+    */
   }
 };
 
