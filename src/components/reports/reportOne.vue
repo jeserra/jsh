@@ -67,9 +67,9 @@ export default {
           {
             name: "Sales",
             type: "line",
-            color: "#9b51e0",
+            color: "#2B6239",
             areaStyle: {
-              color: "#efe3fa"
+              color: "#219653"
             },
             data: [5, 20, 36, 10, 10, 20]
           }
