@@ -4,19 +4,17 @@
     <toolbarHandler      
       :key-name="'centros'"/>
 
-    <v-layout 
+    <v-layout
       row
-      wrap
-      fluid>
+      justify-center>
+
       <v-flex 
-        xs12 
-        m10  
-        offset-xs0 
-        offset-md1>
+        xs8
+        m8>
         <v-card>
 
-          <v-card-title>
-            <v-icon>account_balance</v-icon>Centros Comunitarios
+          <v-card-title v-if="selected.length==0">
+            {{ items.length + ' ' }} Centros Comunitarios
             <v-spacer/>
             <v-text-field
               v-model="search"
@@ -26,128 +24,45 @@
               hide-details/>
           </v-card-title>
 
+          <v-card-title v-if="selected.length == 1">
+            {{ selected.length + ' ' }} elemento seleccionado
+            <v-spacer/>
+            <v-btn flat>Editar</v-btn>
+            <v-btn flat>Borrar</v-btn>
+          </v-card-title>
+
+          <v-card-title v-if="selected.length > 1">
+            {{ selected.length + ' ' }} elemento seleccionado
+            <v-spacer/>
+            <v-btn flat>Borrar</v-btn>
+          </v-card-title>
+
           <v-data-table
             :headers="headers"
             :items="items"
             :search="search"
             :loading="loading"
-            item-key="nombre"
+            v-model="selected"
+            item-key="nombre"                      
+            select-all
             class="elevation-2">
 
             <template
               slot="items" 
               slot-scope="props">
-              <tr @click="props.expanded = !props.expanded">
-                <td>
-                  <v-icon 
-                    :class="{
-                      'primary--text': props.item.habilitado,
-                      'error--text': !props.item.habilitado
-                  }">
-                    fiber_manual_record
-                  </v-icon>
-                </td>
-                <td>{{ props.item.nombre }}</td>
-                <td>{{ props.item.bancoAlimentos.nombre }}</td>
-                <td>{{ props.item.direccion.estado }}</td>
-                <td>{{ props.item.direccion.ciudad }}</td>
-              </tr>
+              <td>
+                <v-checkbox
+                  v-model="props.selected"
+                  color="green"
+                  primary
+                  hide-details/>
+              </td>                
+              <td>{{ String(props.item._links.self.href).slice(38) }}</td>
+              <td>{{ props.item.nombre }}</td>
+              <td>{{ props.item.direccion.ciudad }}</td>
+              <td>{{ props.item.direccion.numero }}</td>
             </template>
 
-            <template 
-              slot="expand" 
-              slot-scope="props">
-              <v-container 
-                fluid 
-                justify-space-between
-                grid-list-lg>
-                <v-layout 
-                  row 
-                  wrap>
-                  <v-flex 
-                    xs12
-                    lg6>
-                    <v-list two-line>
-
-                      <v-list-tile>
-                        <v-list-tile-content>
-                          <v-list-tile-title>{{ props.item.bancoAlimentos.razonSocial }}</v-list-tile-title>
-                          <v-list-tile-sub-title>Razón Social</v-list-tile-sub-title>
-                        </v-list-tile-content>
-                      </v-list-tile>
-
-                      <v-list-tile>
-                        <v-list-tile-content>
-                          <v-list-tile-title>
-                            <star-rating
-                              :star-size="20"
-                              :read-only="true"
-                              :max-rating="5"
-                              :increment="0.01"
-                              :show-rating="false"
-                              :rating="props.item.bancoAlimentos.calificacion * 1/20"
-                            />
-                          </v-list-tile-title>
-                          <v-list-tile-sub-title>Calificación</v-list-tile-sub-title>
-                        </v-list-tile-content>
-                      </v-list-tile>
-                      
-                      <v-list-tile>
-                        <v-list-tile-content>
-                          <v-list-tile-title>
-                            {{ props.item.bancoAlimentos.nombre }}
-                          </v-list-tile-title>
-                          <v-list-tile-sub-title>Banco de Alimentos</v-list-tile-sub-title>
-                        </v-list-tile-content>
-                      </v-list-tile>
-
-                      <v-list-tile>
-                        <v-list-tile-content>
-                          <v-list-tile-title>
-                            {{ props.item.fechaRegistro | moment("calendar") }}
-                          </v-list-tile-title>
-                          <v-list-tile-sub-title>Fecha de Registro</v-list-tile-sub-title>
-                        </v-list-tile-content>
-                      </v-list-tile>
-                    </v-list>
-                  </v-flex>
-
-                  <v-flex 
-                    xs12
-                    lg6>
-                    <gmap-map
-                      :center="{lat:Number(props.item.direccion.latitud), lng:Number(props.item.direccion.longitud)}"
-                      :zoom="14"
-                      map-type-id="roadmap"
-                      style="width: 400px; height: 250px">
-
-                      <gmap-marker
-                        :position="{lat:Number(props.item.direccion.latitud), lng:Number(props.item.direccion.longitud)}"
-                        :clickable="true"
-                        :draggable="true"/>
-                    </gmap-map>
-                    
-                    <blockquote class="subheading grey--text py-3" >
-                      {{ props.item.direccion.Calle }} 
-                      #{{ props.item.direccion.Numero }}. 
-                      {{ props.item.direccion.Ciudad }},
-                      {{ props.item.direccion.Estado }}.</blockquote>
-                  </v-flex>
-                </v-layout>
-                
-                <div class="text-xs-center">
-                  <v-btn
-                    outline 
-                    color="error">Eliminar</v-btn>
-                  <v-btn 
-                    :to="{ name: 'editorBanco', params: { id: props.item.IDBancoAlimentos }}"
-                    outline 
-                    color="success">Editar</v-btn>
-                </div>
-              
-              </v-container>
-            </template>
-            
             <template slot="no-data">
               <v-alert 
                 :value="true" 
@@ -160,17 +75,29 @@
           </v-data-table>
           
         </v-card>
-        <v-btn 
-          :to="{ name: 'nuevoCentro' }"
-          fixed 
-          fab 
-          bottom 
-          right 
-          color="primary">
-          <v-icon>add</v-icon>
-        </v-btn>
 
       </v-flex>
+
+      <v-flex 
+        xs4
+        m4>
+        <gmap-map
+          :center="{lat:gmapCenter.latitud, lng:gmapCenter.longitud}"
+          :zoom="10"
+          map-type-id="roadmap"
+          style="width: 100%; height: 100%">
+          
+          <gmap-marker
+            v-for="(center, index) in selected"
+            v-if="selected.length !=0"
+            :key="index+'-marker-id'"
+            :title="center.nombre"
+            :position="{lat:Number(center.direccion.latitud), lng:Number(center.direccion.longitud)}"
+            :clickable="true"
+            :draggable="false"/>
+        </gmap-map>
+      </v-flex>
+
     </v-layout>
   </v-container>
 </template>
@@ -195,17 +122,23 @@ export default {
 
       loading: true,
       search: "",
+      selected: [],
+
       Rawitems: [],
       items: [],
       markers: [],
       errors: [],
       headers: [
-        { text: "Estatus", value: "habilitado", sortable: false },
-        { text: "Nombre", value: "nombre" },
-        { text: "Banco de Alimentos", value: "bancoAlimentos.nombre" },
-        { text: "Estado", value: "direccion.estado" },
-        { text: "Ciudad", value: "direccion.ciudad" }
-      ]
+        { text: "ID", value: "_links.self.href", sortable: false },
+        { text: "Comunidad", value: "nombre" },
+        { text: "Municipio", value: "direccion.ciudad" },
+        { text: "Familias", value: "direccion.numero" }
+      ],
+
+      gmapCenter: {
+        latitud: 20.66682,
+        longitud: -103.39182
+      }
     };
   },
   watch: {
