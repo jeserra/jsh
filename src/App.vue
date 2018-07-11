@@ -189,12 +189,6 @@ export default {
           ref: "beneficiarios"
         },
         {
-          title: "Cursos",
-          icon: "assignment",
-          active: false,
-          ref: "cursos"
-        },
-        {
           title: "Logística",
           icon: "assignment",
           active: false,
