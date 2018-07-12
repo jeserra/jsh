@@ -8,7 +8,82 @@
 
     <v-layout
       row
-      wrap>
+      align-center
+      justify-space-between>
+
+      <v-container xs8>
+        <v-layout
+          justify-center
+          row
+          white>
+
+          <v-flex>
+            <fieldset>
+              <legend>Comunidad</legend>
+              <v-select
+                v-model="selectCommunities"
+                :items="itemsCommunities"
+                solo/>
+            </fieldset>
+          </v-flex>
+
+          <v-flex>
+            <fieldset>
+              <legend>Muestra</legend>
+              <v-select
+                v-model="selectSample"
+                :items="itemsSample"
+                solo/>
+            </fieldset>
+          </v-flex>
+
+          <v-flex>
+            <fieldset>
+              <legend>Tiempo en el modelo</legend>
+              <v-select
+                v-model="selectTime"
+                :items="itemsTime"
+                solo/>
+            </fieldset>
+          </v-flex>
+
+        </v-layout>
+      </v-container>
+
+      <v-container xs4>
+        <v-layout
+          justify-center
+          row
+          white>
+
+          <v-flex>
+            <fieldset>
+              <legend>Fecha inicial</legend>
+              <v-select
+                v-model="selectInitialDate"
+                :items="itemsInitialDate"
+                solo/>
+            </fieldset>
+          </v-flex>
+
+          <v-flex>
+            <fieldset>
+              <legend>Fecha final</legend>
+              <v-select
+                v-model="selectEndDate"
+                :items="itemsEndDate"
+                solo/>
+            </fieldset>
+          </v-flex>
+
+        </v-layout>
+      </v-container>
+    </v-layout>
+
+    <v-layout
+      row
+      wrap
+      style="margin-top:2em">
 
       <v-flex 
         xs4
@@ -32,7 +107,8 @@
 
     <v-layout
       row
-      wrap>
+      wrap
+      style="margin-top:10em">
       
       <v-flex 
         xs6
@@ -131,7 +207,22 @@ export default {
   },
   data() {
     return {
-      loading: false
+      loading: false,
+
+      selectCommunities: undefined,
+      itemsCommunities: ["Todas"],
+
+      selectSample: undefined,
+      itemsSample: ["Inscritos"],
+
+      selectTime: undefined,
+      itemsTime: ["18 meses"],
+
+      selectInitialDate: undefined,
+      itemsInitialDate: ["Fecha inicial"],
+
+      selectEndDate: undefined,
+      itemsEndDate: ["Fecha final"]
     };
   },
   computed: {

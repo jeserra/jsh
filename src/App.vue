@@ -162,7 +162,7 @@ export default {
           title: "Grupos",
           icon: "school",
           active: false,
-          ref: "usuarios"
+          ref: "grupos"
         },
         {
           title: "Personas",
@@ -180,7 +180,7 @@ export default {
           title: "Empleo",
           icon: "work",
           active: false,
-          ref: "beneficiarios"
+          ref: "empleos"
         },
         {
           title: "Activos",

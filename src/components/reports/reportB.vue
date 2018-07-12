@@ -3,30 +3,58 @@
     class="grey lighten-3">
 
     <v-card style="height:100%">
-      <v-layout>
-        <v-flex xs2>
-          
-          <v-container
-            grid-list-md
-            align-center
-            text-xs-center>
 
-            <v-icon
-              class="clickable-element"
-              x-large
-              @click="updateButton()">
-              update
-            </v-icon>
-            
-          </v-container>
+      <v-layout row>
+        <v-flex 
+          xs12
+          class="graph-title-margin-left graph-title-margin-top">
+          <h5 style="color:gray">{{ title }}</h5>
         </v-flex>
 
-        <v-flex xs12>
-          <b><font size="5">{{ value }}</font></b> {{ title }}
-          <br>
-          {{ description }}
+        <v-flex
+          xs2
+          class="graph-title-margin-top">
+          <v-icon            
+            class="clickable-element"
+            @click="optionsButton()">
+            more_vert
+          </v-icon>
         </v-flex>
       </v-layout>
+
+      <v-layout>
+
+        <v-flex
+          xs12
+          class="graph-title-margin-left">
+          <b><font size="5">{{ value }}%</font></b>
+          <br>
+          <h5 style="color:gray">Meta {{ goalValue }}</h5>
+        </v-flex>        
+      </v-layout>
+
+      <v-layout>
+        <v-flex
+          xs12
+          class="graph-title-margin-left">
+          <v-progress-linear
+            v-model="value"
+            class="progress-bar-width"/>
+        </v-flex>
+      </v-layout>
+
+      <v-layout>
+        <v-flex
+          xs12
+          class="graph-title-margin-left">
+          <v-btn
+            flat
+            color="green">
+            Ver reporte
+          </v-btn>
+        </v-flex>
+      </v-layout>
+
     </v-card>
   </div>
 </template>
@@ -41,9 +69,9 @@ export default {
   data() {
     return {
       loading: false,
-      value: "90%",
-      title: "Beneficiarios2",
-      description: "Encima de 4x linea de bienestar"
+      value: "30",
+      goalValue: "35%",
+      title: "Incremento en el consumo familiar"
     };
   },
   methods: {
@@ -70,5 +98,9 @@ export default {
 
 .clickable-element {
   cursor: pointer;
+}
+
+.progress-bar-width {
+  width: 95%;
 }
 </style>

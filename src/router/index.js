@@ -15,6 +15,8 @@ import Centros from "../components/communitaryCenters/Centros";
 import creadorCentro from "../components/communitaryCenters/creadorCentro";
 import editorCentro from "../components/communitaryCenters/editorCentro";
 
+import Grupos from "../components/groups/Grupos";
+
 import Usuarios from "../components/users/Usuarios";
 import creadorUsuario from "../components/users/creadorUsuario";
 import editorUsuario from "../components/users/editorUsuario";
@@ -29,7 +31,13 @@ import Courses from "../components/courses/Courses";
 import creadorCurso from "../components/courses/creadorCurso";
 import editorCursos from "../components/courses/editorCursos";
 
-import Servicios from "../components/Servicios";
+import Servicios from "../components/services/Servicios";
+import creadorServicio from "../components/services/creadorServicio";
+import editorServicio from "../components/services/editorServicio";
+
+import Empleos from "../components/jobs/Empleos";
+import creadorEmpleo from "../components/jobs/creadorEmpleo";
+import editorEmpleo from "../components/jobs/editorEmpleo";
 
 const userRoleTag = "Student";
 const workerRoleTag = "Worker";
@@ -137,6 +145,26 @@ const routes = [
     beforeEnter: ifWorkerAuthenticated
   },
 
+  //grupos
+  {
+    path: "/grupos",
+    component: Grupos,
+    name: "grupos",
+    beforeEnter: ifUserAuthenticated
+  },
+  {
+    path: "/centros/:id",
+    component: editorCentro,
+    name: "editorGrupo",
+    beforeEnter: ifWorkerAuthenticated
+  },
+  {
+    path: "/nuevo-grupo",
+    component: creadorCentro,
+    name: "nuevoGrupo",
+    beforeEnter: ifWorkerAuthenticated
+  },
+
   //usuarios
   {
     path: "/usuarios",
@@ -207,6 +235,38 @@ const routes = [
     component: Servicios,
     name: "servicios",
     beforeEnter: ifUserAuthenticated
+  },
+  {
+    path: "/servicios/:id",
+    component: editorServicio,
+    name: "editorServicio",
+    beforeEnter: ifWorkerAuthenticated
+  },
+  {
+    path: "/nuevo-servicio",
+    component: creadorServicio,
+    name: "nuevoServicio",
+    beforeEnter: ifWorkerAuthenticated
+  },
+
+  //empleos
+  {
+    path: "/empleos",
+    component: Empleos,
+    name: "empleos",
+    beforeEnter: ifUserAuthenticated
+  },
+  {
+    path: "/empleos/:id",
+    component: editorEmpleo,
+    name: "editorEmpleo",
+    beforeEnter: ifWorkerAuthenticated
+  },
+  {
+    path: "/nuevo-empleo",
+    component: creadorEmpleo,
+    name: "nuevoEmpleo",
+    beforeEnter: ifWorkerAuthenticated
   },
 
   //cursos

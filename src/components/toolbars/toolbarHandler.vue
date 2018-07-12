@@ -50,15 +50,30 @@ export default {
         items: [],
         title: "Centros"
       },
+      grupos: {
+        items: [
+          { title: "Pasados", ref: "gruposPasados" },
+          { title: "Actuales", ref: "gruposActuales" }
+        ],
+        title: "Grupos"
+      },
       personas: {
         items: [
           { title: "Trabajadores", ref: "usuarios" },
           { title: "Mentores", ref: "mentores" },
-          { title: "Tutores", ref: "tutores" },
+          { title: "Tuto  res", ref: "tutores" },
           { title: "Beneficiarios", ref: "beneficiarios" },
           { title: "Aliados", ref: "aliados" }
         ],
         title: "Personas"
+      },
+      servicios: {
+        items: [],
+        title: "Servicios"
+      },
+      empleos: {
+        items: [],
+        title: "Empleos"
       },
       activos: {
         items: [
@@ -68,13 +83,6 @@ export default {
           { title: "Asignados", ref: "asignados" }
         ],
         title: "Activos"
-      },
-      servicios: {
-        items: [
-          { title: "Consultar", ref: "consultar" },
-          { title: "Administrar", ref: "administrar" }
-        ],
-        title: "Servicios"
       }
     };
   }
