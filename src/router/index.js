@@ -7,6 +7,8 @@ Vue.use(Router);
 import Home from "../components/Home";
 import LogIn from "../components/LogIn";
 
+import DashboardProcess from "../components/dashboard/process";
+
 import Bancos from "../components/banks/Bancos";
 import creadorBanco from "../components/banks/creadorBanco";
 import editorBanco from "../components/banks/editorBanco";
@@ -103,6 +105,20 @@ const routes = [
     path: "/iniciar-sesion",
     component: LogIn,
     name: "logIn"
+  },
+
+  //dashboard
+  {
+    path: "/dashboard-intermedio",
+    component: DashboardProcess,
+    name: "dashboardIntermedio",
+    beforeEnter: ifWorkerAuthenticated
+  },
+  {
+    path: "/dashboard-proceso",
+    component: DashboardProcess,
+    name: "dashboardProceso",
+    beforeEnter: ifWorkerAuthenticated
   },
 
   //bancos

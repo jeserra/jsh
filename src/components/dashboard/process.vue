@@ -84,69 +84,127 @@
     <v-layout
       row
       wrap
-      style="margin-top:2em">
+      style="margin-top:1em">
 
       <v-flex 
-        xs4
+        xs3
         class="simple-report">
-        <report-A/>
+        <process-A/>
       </v-flex>
 
       <v-flex 
-        xs4
+        xs3
         class="simple-report">
-        <report-B/>
+        <process-B/>
       </v-flex>
 
       <v-flex 
-        xs4
+        xs3
         class="simple-report">
-        <report-C/>
-      </v-flex>            
+        <process-C/>
+      </v-flex>
+
+      <v-flex 
+        xs3
+        class="simple-report">
+        <process-D/>
+      </v-flex>
 
     </v-layout>
 
     <v-layout
       row
       wrap
-      style="margin-top:10em">
-      
+      style="margin-top:7em">
+
       <v-flex 
-        xs6
-        class="echarts">
-        <report-one/>
+        xs3
+        class="simple-report">
+        <process-A/>
       </v-flex>
 
       <v-flex 
-        xs6
-        class="echarts">
-        <report-two/>
+        xs3
+        class="simple-report">
+        <process-B/>
       </v-flex>
+
+      <v-flex 
+        xs3
+        class="simple-report">
+        <process-C/>
+      </v-flex>
+
+      <v-flex 
+        xs3
+        class="simple-report">
+        <process-D/>
+      </v-flex>
+
     </v-layout>
 
-    <v-layout>
+    <v-layout
+      row
+      wrap
+      style="margin-top:7em">
+
       <v-flex 
-        xs12
-        class="echarts">
-        <report-three/>
+        xs3
+        class="simple-report">
+        <process-A/>
       </v-flex>
+
+      <v-flex 
+        xs3
+        class="simple-report">
+        <process-B/>
+      </v-flex>
+
+      <v-flex 
+        xs3
+        class="simple-report">
+        <process-C/>
+      </v-flex>
+
+      <v-flex 
+        xs3
+        class="simple-report">
+        <process-D/>
+      </v-flex>
+
     </v-layout>
 
-    <v-layout>
-      <v-flex 
-        xs12
-        class="echarts">
-        <report-four/>
-      </v-flex>
-    </v-layout>  
+    <v-layout
+      row
+      wrap
+      style="margin-top:7em">
 
-    <v-layout>
       <v-flex 
-        xs12
-        class="echarts">
-        <report-five/>
+        xs3
+        class="simple-report">
+        <process-A/>
       </v-flex>
+
+      <v-flex 
+        xs3
+        class="simple-report">
+        <process-B/>
+      </v-flex>
+
+      <v-flex 
+        xs3
+        class="simple-report">
+        <process-C/>
+      </v-flex>
+
+      <v-flex 
+        xs3
+        class="simple-report">
+        <process-D/>
+      </v-flex>
+
     </v-layout>
+
   </v-container>
 </template>
 
@@ -157,17 +215,12 @@ import Vue from "vue";
 import Vuex from "vuex";
 Vue.use(Vuex);
 
-import toolbarHandler from "./toolbars/toolbarHandler";
+import toolbarHandler from "../toolbars/toolbarHandler";
 
-import reportA from "./reports/reportA";
-import reportB from "./reports/reportB";
-import reportC from "./reports/reportC";
-
-import reportOne from "./reports/reportOne";
-import reportTwo from "./reports/reportTwo";
-import reportThree from "./reports/reportThree";
-import reportFour from "./reports/reportFour";
-import reportFive from "./reports/reportFive";
+import processA from "../reports/processA";
+import processB from "../reports/processB";
+import processC from "../reports/processC";
+import processD from "../reports/processD";
 
 const store = new Vuex.Store({
   state: {
@@ -197,14 +250,10 @@ const store = new Vuex.Store({
 export default {
   components: {
     toolbarHandler,
-    reportA,
-    reportB,
-    reportC,
-    reportOne,
-    reportTwo,
-    reportThree,
-    reportFour,
-    reportFive
+    processA,
+    processB,
+    processC,
+    processD
   },
   data() {
     return {
@@ -267,17 +316,6 @@ h2 {
   width: 100%;
 }
 
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
 .image-landing-page {
   height: 20em !important;
   max-height: 20em !important;

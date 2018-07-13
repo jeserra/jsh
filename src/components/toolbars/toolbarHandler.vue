@@ -42,6 +42,14 @@ export default {
         items: [],
         title: "Dashboard"
       },
+      reportes: {
+        items: [
+          { title: "Impacto", ref: "inicio" },
+          { title: "Intermedio", ref: "dashboardIntermedio" },
+          { title: "Proceso", ref: "dashboardProceso" }
+        ],
+        title: "Dashboard"
+      },
       bancos: {
         items: [],
         title: "Bancos"
