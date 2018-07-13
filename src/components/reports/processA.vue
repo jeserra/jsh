@@ -22,7 +22,7 @@
               :rating="stars"
               active-color="green"
               class="stars-margin-left"
-            />  {{ stars }} ({{ totalVotes }})
+            />  <h5 style="color:gray">{{ stars }} ({{ totalVotes }})</h5>
           </v-layout>
         </v-flex>
 
@@ -45,18 +45,26 @@
           align-content-center
           text-xs-center
           xs6>
-          <b><font size="7">{{ valueA }}</font></b>/{{ totalA }}
+          <b><font size="7">{{ valueA }}</font></b><font style="color:gray">/{{ totalA }}</font>
           <br>
-          <font size="3">{{ descriptionA }}</font>
+          <font
+            size="3"
+            style="color:gray">
+            {{ descriptionA }}
+          </font>
         </v-flex>
 
         <v-flex
           align-content-center
           text-xs-center
           xs6>
-          <b><font size="7">{{ valueB }}</font></b>/{{ totalB }}
+          <b><font size="7">{{ valueB }}</font></b><font style="color:gray">/{{ totalB }}</font>
           <br>
-          <font size="3">{{ descriptionB }}</font>
+          <font
+            size="3"
+            style="color:gray">
+            {{ descriptionB }}
+          </font>
         </v-flex>
       </v-layout>
 
