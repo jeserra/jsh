@@ -64,7 +64,6 @@
               <td>{{ String(props.item[headers[1]["value"]]) }}</td>
               <td>{{ String(props.item[headers[2]["value"]]) }}</td>
               <td>{{ String(props.item[headers[3]["value"]]) }}</td>
-              <td>{{ String(props.item[headers[4]["value"]]) }}</td>
             </template>
 
             <template slot="no-data">
@@ -102,7 +101,7 @@ export default {
       //var apiMode = "jsh";
       apiMode: "testing",
 
-      allTrabajadoresURL: apiRoutes[apiMode].allTrabajadoresURL,
+      allMentoresURL: apiRoutes[apiMode].allMentoresURL,
 
       loading: true,
       search: "",
@@ -120,18 +119,16 @@ export default {
       if (apiMode === "testing") {
         return [
           { text: "Nombre", value: "nombre" },
-          { text: "Puesto", value: "puesto" },
-          { text: "Correo", value: "correo" },
-          { text: "Comunidades Asignadas", value: "comunidades" },
-          { text: "Grupos Asignados", value: "grupos" }
+          { text: "Comunidad", value: "comunidad" },
+          { text: "Familias", value: "familias" },
+          { text: "Contacto", value: "contacto" }
         ];
       } else if (apiMode === "jsh") {
         return [
           { text: "Nombre", value: "nombre" },
-          { text: "Puesto", value: "puesto" },
-          { text: "Correo", value: "correo" },
-          { text: "Comunidades Asignadas", value: "comunidades" },
-          { text: "Grupos Asignados", value: "grupos" }
+          { text: "Comunidad", value: "comunidad" },
+          { text: "Familias", value: "familias" },
+          { text: "Contacto", value: "contacto" }
         ];
       }
     }
@@ -165,7 +162,7 @@ export default {
     deleteWorker(jobID) {
       axios({
         method: "DELETE",
-        url: this.allTrabajadoresURL + "/" + jobID
+        url: this.allMentoresURL + "/" + jobID
       })
         .then(response => {
           console.log(response);
@@ -180,7 +177,7 @@ export default {
     getData() {
       axios({
         method: "GET",
-        url: this.allTrabajadoresURL
+        url: this.allMentoresURL
       })
         .then(response => {
           if (apiMode === "testing") {

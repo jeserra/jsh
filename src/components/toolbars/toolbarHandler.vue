@@ -69,9 +69,9 @@ export default {
         items: [
           { title: "Trabajadores", ref: "usuarios" },
           { title: "Mentores", ref: "mentores" },
-          { title: "Tuto  res", ref: "tutores" },
-          { title: "Beneficiarios", ref: "beneficiarios" },
-          { title: "Aliados", ref: "aliados" }
+          { title: "Familias", ref: "familias" },
+          { title: "Aliados", ref: "aliados" },
+          { title: "Tutores", ref: "tutores" }
         ],
         title: "Personas"
       },

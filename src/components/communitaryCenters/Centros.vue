@@ -24,17 +24,20 @@
               hide-details/>
           </v-card-title>
 
-          <v-card-title v-if="selected.length == 1">
-            {{ selected.length + ' ' }} elemento seleccionado
+          <v-card-title v-if="selected.length > 0">
+            {{ selected.length + ' ' }} elementos seleccionados
             <v-spacer/>
-            <v-btn flat>Editar</v-btn>
-            <v-btn flat>Borrar</v-btn>
-          </v-card-title>
-
-          <v-card-title v-if="selected.length > 1">
-            {{ selected.length + ' ' }} elemento seleccionado
-            <v-spacer/>
-            <v-btn flat>Borrar</v-btn>
+            <v-btn 
+              v-if="selected.length == 1"
+              flat
+              @click="editCenter()">
+              Editar
+            </v-btn>
+            <v-btn 
+              flat
+              @click="deleteSelectedCenters()">
+              Borrar
+            </v-btn>
           </v-card-title>
 
           <v-data-table
@@ -43,7 +46,7 @@
             :search="search"
             :loading="loading"
             v-model="selected"
-            item-key="nombre"                      
+            item-key="id"                      
             select-all
             class="elevation-2">
 
@@ -56,11 +59,11 @@
                   color="green"
                   primary
                   hide-details/>
-              </td>                
-              <td>{{ String(props.item._links.self.href).slice(38) }}</td>
-              <td>{{ props.item.nombre }}</td>
-              <td>{{ props.item.direccion.ciudad }}</td>
-              <td>{{ props.item.direccion.numero }}</td>
+              </td>
+              <td>{{ String(props.item[headers[0]["value"]]) }}</td>
+              <td>{{ String(props.item[headers[1]["value"]]) }}</td>
+              <td>{{ String(props.item[headers[2]["value"]]) }}</td>
+              <td>{{ String(props.item[headers[3]["value"]]) }}</td>
             </template>
 
             <template slot="no-data">
@@ -78,9 +81,10 @@
 
       </v-flex>
 
-      <v-flex 
+      <v-flex
         xs4
         m4>
+
         <gmap-map
           :center="{lat:gmapCenter.latitud, lng:gmapCenter.longitud}"
           :zoom="10"
@@ -104,21 +108,21 @@
 
 <script>
 import axios from "axios";
-import StarRating from "vue-star-rating";
 import toolbarHandler from "../toolbars/toolbarHandler";
 import { apiRoutes } from "../../configs/apiRoutes.js";
-var apiMode = "jsh";
+//var apiMode = "jsh";
+var apiMode = "testing";
 
 export default {
   components: {
-    StarRating,
     toolbarHandler
   },
   data() {
     return {
+      //var apiMode = "jsh";
+      apiMode: "testing",
+
       allCommunitaryCentersURL: apiRoutes[apiMode].allCommunitaryCentersURL,
-      addressesURL: apiRoutes[apiMode].addressesURL,
-      regionsURL: apiRoutes[apiMode].regionsURL,
 
       loading: true,
       search: "",
@@ -128,18 +132,31 @@ export default {
       items: [],
       markers: [],
       errors: [],
-      headers: [
-        { text: "ID", value: "_links.self.href", sortable: false },
-        { text: "Comunidad", value: "nombre" },
-        { text: "Municipio", value: "direccion.ciudad" },
-        { text: "Familias", value: "direccion.numero" }
-      ],
-
       gmapCenter: {
         latitud: 20.66682,
         longitud: -103.39182
       }
     };
+  },
+  computed: {
+    headers: function() {
+      console.log("El API seleccionado será " + apiMode);
+      if (apiMode === "testing") {
+        return [
+          { text: "ID", value: "id", sortable: false },
+          { text: "Comunidad", value: "comunidad" },
+          { text: "Municipio", value: "municipio" },
+          { text: "Familias", value: "familias" }
+        ];
+      } else if (apiMode === "jsh") {
+        return [
+          { text: "ID", value: "_links.self.href", sortable: false },
+          { text: "Comunidad", value: "nombre" },
+          { text: "Municipio", value: "direccion.ciudad" },
+          { text: "Familias", value: "direccion.numero" }
+        ];
+      }
+    }
   },
   watch: {
     $route(to, from) {
@@ -165,6 +182,32 @@ export default {
         //this.getAddress(center, callbackFunctions);
       }
     },
+    editCenter() {
+      var selectedID = this.selected[0].id;
+      this.$router.push({ name: "editorCentro", params: { id: selectedID } });
+    },
+    deleteSelectedCenters() {
+      for (var i = 0; i < this.selected.length; i++) {
+        this.deleteCenter(this.selected[i].id);
+      }
+
+      this.selected = [];
+    },
+    deleteCenter(centerID) {
+      axios({
+        method: "DELETE",
+        url: this.allCommunitaryCentersURL + "/" + centerID
+      })
+        .then(response => {
+          console.log(response);
+          this.getData();
+        })
+        .catch(e => {
+          console.log("error");
+          console.log(e);
+          this.errors.push(e);
+        });
+    },
     getData() {
       axios({
         method: "GET",
@@ -174,8 +217,8 @@ export default {
           if (apiMode === "testing") {
             //My api needs to projections
             var rawData = response.data.data;
-            this.Rawitems = rawData;
-            this.initializeData();
+            this.items = rawData;
+            //this.initializeData();
           } else {
             //Api from amdocs has projections
             //console.log(response.data._embedded.comunitarios);

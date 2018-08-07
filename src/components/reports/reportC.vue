@@ -2,13 +2,15 @@
   <div
     class="grey lighten-3">
 
-    <v-card style="height:100%">
+    <v-card
+      :class="'color-border-'+color">
 
-      <v-layout row>
+      <v-layout 
+        row>
         <v-flex 
           xs12
           class="graph-title-margin-left graph-title-margin-top">
-          <h5 style="color:gray">{{ title }}</h5>
+          {{ title }}
         </v-flex>
 
         <v-flex
@@ -22,39 +24,30 @@
         </v-flex>
       </v-layout>
 
-      <v-layout>
+      <v-divider/>
+
+
+
+      <v-layout
+        class="container-height"
+        align-center 
+        justify-center 
+        fill-height
+        row>
 
         <v-flex
           xs12
-          class="graph-title-margin-left">
-          <b><font size="5">{{ value }}%</font></b>
+          text-xs-center>
+          <font size="6">{{ value }}</font>
           <br>
-          <h5 style="color:gray">Meta {{ goalValue }}</h5>
-        </v-flex>        
-      </v-layout>
-
-      <v-layout>
-        <v-flex
-          xs12
-          class="graph-title-margin-left">
-          <v-progress-linear
-            v-model="value"
-            class="progress-bar-width"/>
+          <font
+            size="2"
+            style="color:gray">
+            {{ description }}
+          </font>
         </v-flex>
       </v-layout>
-
-      <v-layout>
-        <v-flex
-          xs12
-          class="graph-title-margin-left">
-          <v-btn
-            flat
-            color="green">
-            Ver reporte
-          </v-btn>
-        </v-flex>
-      </v-layout>
-
+      
     </v-card>
   </div>
 </template>
@@ -69,14 +62,16 @@ export default {
   data() {
     return {
       loading: false,
-      value: "50",
-      goalValue: "sin fijar",
-      title: "Incremento en escolaridad"
+      value: "50%",
+      goalValue: "35%",
+      title: "Escolaridad",
+      description: "Incremento",
+      color: "green"
     };
   },
   methods: {
-    updateButton() {
-      console.log("update");
+    optionsButton() {
+      console.log("options");
     }
   }
 };
@@ -91,16 +86,25 @@ export default {
   margin-top: 1em;
 }
 
-.graph-container {
-  width: 100%;
-  height: 20em;
-}
-
 .clickable-element {
   cursor: pointer;
 }
 
-.progress-bar-width {
-  width: 95%;
+.color-border-gray {
+  border-bottom: 1px solid rgb(100, 100, 100, 0.2);
+}
+
+.container-height {
+  height: 10em;
+}
+
+.color-border-green {
+  width: 90% !important;
+  border-bottom: 4px solid rgba(71, 147, 89, 1);
+}
+
+.color-border-orange {
+  width: 90% !important;
+  border-bottom: 4px solid rgba(242, 153, 74, 1);
 }
 </style>

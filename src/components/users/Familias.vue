@@ -65,6 +65,7 @@
               <td>{{ String(props.item[headers[2]["value"]]) }}</td>
               <td>{{ String(props.item[headers[3]["value"]]) }}</td>
               <td>{{ String(props.item[headers[4]["value"]]) }}</td>
+              <td>{{ String(props.item[headers[5]["value"]]) }}</td>
             </template>
 
             <template slot="no-data">
@@ -102,7 +103,7 @@ export default {
       //var apiMode = "jsh";
       apiMode: "testing",
 
-      allTrabajadoresURL: apiRoutes[apiMode].allTrabajadoresURL,
+      allFamiliasURL: apiRoutes[apiMode].allFamiliasURL,
 
       loading: true,
       search: "",
@@ -119,19 +120,21 @@ export default {
       console.log("El API seleccionado será " + apiMode);
       if (apiMode === "testing") {
         return [
-          { text: "Nombre", value: "nombre" },
-          { text: "Puesto", value: "puesto" },
-          { text: "Correo", value: "correo" },
-          { text: "Comunidades Asignadas", value: "comunidades" },
-          { text: "Grupos Asignados", value: "grupos" }
+          { text: "Apellido", value: "apellido" },
+          { text: "ID", value: "id" },
+          { text: "Representante", value: "representante" },
+          { text: "Integrantes", value: "integrantes" },
+          { text: "Comunidad", value: "comunidad" },
+          { text: "Contacto", value: "contacto" }
         ];
       } else if (apiMode === "jsh") {
         return [
-          { text: "Nombre", value: "nombre" },
-          { text: "Puesto", value: "puesto" },
-          { text: "Correo", value: "correo" },
-          { text: "Comunidades Asignadas", value: "comunidades" },
-          { text: "Grupos Asignados", value: "grupos" }
+          { text: "Apellido", value: "apellido" },
+          { text: "ID", value: "id" },
+          { text: "Representante", value: "representante" },
+          { text: "Integrantes", value: "integrantes" },
+          { text: "Comunidad", value: "comunidad" },
+          { text: "Contacto", value: "contacto" }
         ];
       }
     }
@@ -165,7 +168,7 @@ export default {
     deleteWorker(jobID) {
       axios({
         method: "DELETE",
-        url: this.allTrabajadoresURL + "/" + jobID
+        url: this.allFamiliasURL + "/" + jobID
       })
         .then(response => {
           console.log(response);
@@ -180,7 +183,7 @@ export default {
     getData() {
       axios({
         method: "GET",
-        url: this.allTrabajadoresURL
+        url: this.allFamiliasURL
       })
         .then(response => {
           if (apiMode === "testing") {

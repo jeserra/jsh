@@ -23,11 +23,15 @@ import Usuarios from "../components/users/Usuarios";
 import creadorUsuario from "../components/users/creadorUsuario";
 import editorUsuario from "../components/users/editorUsuario";
 
+import Mentores from "../components/users/Mentores";
+import Familias from "../components/users/Familias";
+
 import Beneficiarios from "../components/beneficiaries/Beneficiarios";
 import creadorBeneficiario from "../components/beneficiaries/creadorBeneficiario";
 import editorBeneficiario from "../components/beneficiaries/editorBeneficiario";
 
 import Aliados from "../components/users/Aliados";
+import Tutores from "../components/users/Tutores";
 
 import Courses from "../components/courses/Courses";
 import creadorCurso from "../components/courses/creadorCurso";
@@ -204,15 +208,23 @@ const routes = [
   //mentores
   {
     path: "/mentores",
-    component: Home,
+    component: Mentores,
     name: "mentores",
+    beforeEnter: ifUserAuthenticated
+  },
+
+  //familias
+  {
+    path: "/familias",
+    component: Familias,
+    name: "familias",
     beforeEnter: ifUserAuthenticated
   },
 
   //tutores
   {
     path: "/tutores",
-    component: Home,
+    component: Tutores,
     name: "tutores",
     beforeEnter: ifUserAuthenticated
   },

@@ -43,6 +43,21 @@ module.exports = {
 	},
 
 	delete: function(req, res, next) {
+		var resource = req.params.resource,
+			itemArg = req.params[0] || req.query.id || null;
+
+		if(itemArg !== null){
+
+			for(var i=0; i<data[resource].length; i++){
+				if(itemArg == data[resource][i].id){
+					console.log("Element deleted:");
+					console.log(data[resource][i]);
+					console.log("-----------------------------");
+					data[resource].splice(i, 1);
+					break;
+				}
+			}			
+		}
 		return res.status(204).send({});
 	},
 

@@ -11,7 +11,18 @@ export const apiRoutes = {
     addressURL: "http://localhost:5000/api/direccion/IDDireccion",
     bankURL: "http://localhost:5000/api/bancoalimentos/IDBancoAlimentos",
     contactURL: "http://localhost:5000/api/contacto/IDContacto",
-    regionURL: "http://localhost:5000/api/region/IDRegion"
+    regionURL: "http://localhost:5000/api/region/IDRegion",
+
+    allCommunitaryCentersURL: "http://localhost:5000/api/centros",
+    allJobsURL: "http://localhost:5000/api/empleos",
+    allServicesURL: "http://localhost:5000/api/servicios",
+
+    //Personas
+    allTrabajadoresURL: "http://localhost:5000/api/trabajadores",
+    allMentoresURL: "http://localhost:5000/api/mentores",
+    allFamiliasURL: "http://localhost:5000/api/familias",
+    allAliadosURL: "http://localhost:5000/api/aliados",
+    allTutoresURL: "http://localhost:5000/api/tutores"
   },
   jsh: {
     allBanksURL: "http://18.221.249.12:80/api/bancoalimentos",

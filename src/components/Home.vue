@@ -111,41 +111,46 @@
       wrap
       style="margin-top:10em">
       
-      <v-flex 
-        xs6
-        class="echarts">
-        <report-one/>
-      </v-flex>
+      <v-layout
+        wrap>
+        <v-flex 
+          xs6
+          class="echarts">
+          <report-one/>
+        </v-flex>
 
-      <v-flex 
-        xs6
-        class="echarts">
-        <report-two/>
-      </v-flex>
-    </v-layout>
+        <v-flex 
+          xs6
+          class="echarts">
+          <report-one/>
+        </v-flex>
 
-    <v-layout>
-      <v-flex 
-        xs12
-        class="echarts">
-        <report-three/>
-      </v-flex>
-    </v-layout>
+        <v-layout
+          row
+          wrap>
+          <v-flex 
+            xs3
+            class="echarts">
+            <report-A/>
+          </v-flex>
+          <v-flex 
+            xs3
+            class="echarts">
+            <report-A/>
+          </v-flex>
 
-    <v-layout>
-      <v-flex 
-        xs12
-        class="echarts">
-        <report-four/>
-      </v-flex>
-    </v-layout>  
-
-    <v-layout>
-      <v-flex 
-        xs12
-        class="echarts">
-        <report-five/>
-      </v-flex>
+          <v-flex 
+            xs3
+            class="echarts">
+            <report-A/>
+          </v-flex>
+          <v-flex 
+            xs3
+            class="echarts">
+            <report-A/>
+          </v-flex>
+        </v-layout>
+      </v-layout>
     </v-layout>
   </v-container>
 </template>

@@ -61,7 +61,12 @@
                   hide-details/>
               </td>
               <td>{{ String(props.item[headers[0]["value"]]) }}</td>
-              <td>{{ String(props.item[headers[1]["value"]]) }}</td>
+              <td v-if="Boolean(props.item[headers[1]['value']])">
+                Sí
+              </td>
+              <td v-else>
+                No
+              </td>
               <td>{{ String(props.item[headers[2]["value"]]) }}</td>
               <td>{{ String(props.item[headers[3]["value"]]) }}</td>
               <td>{{ String(props.item[headers[4]["value"]]) }}</td>
@@ -102,7 +107,7 @@ export default {
       //var apiMode = "jsh";
       apiMode: "testing",
 
-      allTrabajadoresURL: apiRoutes[apiMode].allTrabajadoresURL,
+      allTutoresURL: apiRoutes[apiMode].allTutoresURL,
 
       loading: true,
       search: "",
@@ -120,18 +125,18 @@ export default {
       if (apiMode === "testing") {
         return [
           { text: "Nombre", value: "nombre" },
-          { text: "Puesto", value: "puesto" },
-          { text: "Correo", value: "correo" },
-          { text: "Comunidades Asignadas", value: "comunidades" },
-          { text: "Grupos Asignados", value: "grupos" }
+          { text: "Disponible", value: "disponible" },
+          { text: "Comunidad", value: "comunidad" },
+          { text: "Tipo de curso", value: "tipo" },
+          { text: "Contacto", value: "contacto" }
         ];
       } else if (apiMode === "jsh") {
         return [
           { text: "Nombre", value: "nombre" },
-          { text: "Puesto", value: "puesto" },
-          { text: "Correo", value: "correo" },
-          { text: "Comunidades Asignadas", value: "comunidades" },
-          { text: "Grupos Asignados", value: "grupos" }
+          { text: "Disponible", value: "disponible" },
+          { text: "Comunidad", value: "comunidad" },
+          { text: "Tipo de curso", value: "tipo" },
+          { text: "Contacto", value: "contacto" }
         ];
       }
     }
@@ -165,7 +170,7 @@ export default {
     deleteWorker(jobID) {
       axios({
         method: "DELETE",
-        url: this.allTrabajadoresURL + "/" + jobID
+        url: this.allTutoresURL + "/" + jobID
       })
         .then(response => {
           console.log(response);
@@ -180,7 +185,7 @@ export default {
     getData() {
       axios({
         method: "GET",
-        url: this.allTrabajadoresURL
+        url: this.allTutoresURL
       })
         .then(response => {
           if (apiMode === "testing") {

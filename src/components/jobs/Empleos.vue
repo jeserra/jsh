@@ -14,7 +14,7 @@
         <v-card>
 
           <v-card-title v-if="selected.length==0">
-            {{ items.length + ' ' }} Servicios registrados
+            {{ items.length + ' ' }} Empleos Registrados
             <v-spacer/>
             <v-text-field
               v-model="search"
@@ -22,24 +22,22 @@
               label="Buscar"
               single-line
               hide-details/>
-            <v-btn
-              color="green"
-              flat>
-              Agregar
+          </v-card-title>
+
+          <v-card-title v-if="selected.length > 0">
+            {{ selected.length + ' ' }} elementos seleccionados
+            <v-spacer/>
+            <v-btn 
+              v-if="selected.length == 1"
+              flat
+              @click="editJob()">
+              Editar
             </v-btn>
-          </v-card-title>
-
-          <v-card-title v-if="selected.length == 1">
-            {{ selected.length + ' ' }} elemento seleccionado
-            <v-spacer/>
-            <v-btn flat>Editar</v-btn>
-            <v-btn flat>Borrar</v-btn>
-          </v-card-title>
-
-          <v-card-title v-if="selected.length > 1">
-            {{ selected.length + ' ' }} elemento seleccionado
-            <v-spacer/>
-            <v-btn flat>Borrar</v-btn>
+            <v-btn 
+              flat
+              @click="deleteSelectedJobs()">
+              Borrar
+            </v-btn>
           </v-card-title>
 
           <v-data-table
@@ -48,7 +46,7 @@
             :search="search"
             :loading="loading"
             v-model="selected"
-            item-key="nombre"                      
+            item-key="id"                      
             select-all
             class="elevation-2">
 
@@ -61,11 +59,11 @@
                   color="green"
                   primary
                   hide-details/>
-              </td>                
-              <td>{{ String(props.item._links.self.href).slice(38) }}</td>
-              <td>{{ props.item.nombre }}</td>
-              <td>{{ props.item.direccion.ciudad }}</td>
-              <td>{{ props.item.direccion.numero }}</td>
+              </td>
+              <td>{{ String(props.item[headers[0]["value"]]) }}</td>
+              <td>{{ '$' + String(props.item[headers[1]["value"]]) }}</td>
+              <td>{{ String(props.item[headers[2]["value"]]) }}</td>
+              <td>{{ String(props.item.direccion.ciudad) }}</td>
             </template>
 
             <template slot="no-data">
@@ -83,9 +81,10 @@
 
       </v-flex>
 
-      <v-flex 
+      <v-flex
         xs4
         m4>
+
         <gmap-map
           :center="{lat:gmapCenter.latitud, lng:gmapCenter.longitud}"
           :zoom="10"
@@ -93,11 +92,11 @@
           style="width: 100%; height: 100%">
           
           <gmap-marker
-            v-for="(center, index) in selected"
+            v-for="(job, index) in selected"
             v-if="selected.length !=0"
             :key="index+'-marker-id'"
-            :title="center.nombre"
-            :position="{lat:Number(center.direccion.latitud), lng:Number(center.direccion.longitud)}"
+            :title="job.nombre"
+            :position="{lat:Number(job.direccion.latitud), lng:Number(job.direccion.longitud)}"
             :clickable="true"
             :draggable="false"/>
         </gmap-map>
@@ -109,21 +108,21 @@
 
 <script>
 import axios from "axios";
-import StarRating from "vue-star-rating";
 import toolbarHandler from "../toolbars/toolbarHandler";
 import { apiRoutes } from "../../configs/apiRoutes.js";
-var apiMode = "jsh";
+//var apiMode = "jsh";
+var apiMode = "testing";
 
 export default {
   components: {
-    StarRating,
     toolbarHandler
   },
   data() {
     return {
-      allCommunitaryCentersURL: apiRoutes[apiMode].allCommunitaryCentersURL,
-      addressesURL: apiRoutes[apiMode].addressesURL,
-      regionsURL: apiRoutes[apiMode].regionsURL,
+      //var apiMode = "jsh";
+      apiMode: "testing",
+
+      allJobsURL: apiRoutes[apiMode].allJobsURL,
 
       loading: true,
       search: "",
@@ -133,22 +132,31 @@ export default {
       items: [],
       markers: [],
       errors: [],
-      headers: [
-        { text: "Tipo de empleo", value: "nombre" },
-        {
-          text: "Oferta Economica",
-          value: "_links.self.href",
-          sortable: false
-        },
-        { text: "Vigencia", value: "direccion.ciudad" },
-        { text: "Ubicación", value: "direccion.numero" }
-      ],
-
       gmapCenter: {
         latitud: 20.66682,
         longitud: -103.39182
       }
     };
+  },
+  computed: {
+    headers: function() {
+      console.log("El API seleccionado será " + apiMode);
+      if (apiMode === "testing") {
+        return [
+          { text: "Tipo de empleo", value: "tipo" },
+          { text: "Oferta Economica", value: "oferta" },
+          { text: "Vigencia", value: "vigencia" },
+          { text: "Ubicación", value: "direccion.ciudad" }
+        ];
+      } else if (apiMode === "jsh") {
+        return [
+          { text: "Tipo de empleo", value: "tipo" },
+          { text: "Oferta Economica", value: "oferta" },
+          { text: "Vigencia", value: "vigencia" },
+          { text: "Ubicación", value: "direccion.ciudad" }
+        ];
+      }
+    }
   },
   watch: {
     $route(to, from) {
@@ -165,26 +173,42 @@ export default {
     this.getData();
   },
   methods: {
-    initializeData() {
-      this.items = [];
-      var callbackFunctions = [];
-
-      for (var center of this.Rawitems) {
-        center["Calificacion"] = Number(center["Calificacion"]);
-        //this.getAddress(center, callbackFunctions);
+    editJob() {
+      var selectedID = this.selected[0].id;
+      this.$router.push({ name: "editorEmpleo", params: { id: selectedID } });
+    },
+    deleteSelectedJobs() {
+      for (var i = 0; i < this.selected.length; i++) {
+        this.deleteJob(this.selected[i].id);
       }
+
+      this.selected = [];
+    },
+    deleteJob(jobID) {
+      axios({
+        method: "DELETE",
+        url: this.allJobsURL + "/" + jobID
+      })
+        .then(response => {
+          console.log(response);
+          this.getData();
+        })
+        .catch(e => {
+          console.log("error");
+          console.log(e);
+          this.errors.push(e);
+        });
     },
     getData() {
       axios({
         method: "GET",
-        url: this.allCommunitaryCentersURL
+        url: this.allJobsURL
       })
         .then(response => {
           if (apiMode === "testing") {
             //My api needs to projections
             var rawData = response.data.data;
-            this.Rawitems = rawData;
-            this.initializeData();
+            this.items = rawData;
           } else {
             //Api from amdocs has projections
             //console.log(response.data._embedded.comunitarios);

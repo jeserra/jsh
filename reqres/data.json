@@ -1,4 +1,287 @@
 {
+  "centros": [
+  	{
+  		"id": 1,
+  		"nombre": "Centro de Daciano",
+  		"fechaRegistro": "2018-05-11T07:06:12.000+0000",
+  		"comunidad": "Daciano",
+  		"municipio": "Poncitlán",
+  		"familias": 54,
+  		"direccion": 
+  		{
+	        "calle": "calle 1",
+	        "numero": "32",
+	        "cp": "45123",
+	        "ciudad": "Guadalajara",
+	        "estado": "Jalisco",
+	        "latitud": 20.6596,
+	        "longitud": -103.3496
+	    }
+	},
+  	{
+  		"id": 2,
+  		"nombre": "Centro de San Mateos",
+  		"fechaRegistro": "2018-05-11T07:06:12.000+0000",
+  		"comunidad": "San Mateos",
+  		"municipio": "Poncitlán",
+  		"familias": 57,
+  		"direccion": 
+  		{
+	        "calle": "calle 1",
+	        "numero": "32",
+	        "cp": "45123",
+	        "ciudad": "Guadalajara",
+	        "estado": "Jalisco",
+	        "latitud": 20.6896,
+	        "longitud": -103.3996
+	    }
+	},
+  	{
+  		"id": 3,
+  		"nombre": "Centro de Domingo",
+  		"fechaRegistro": "2018-05-11T07:06:12.000+0000",
+  		"comunidad": "Domingo",
+  		"municipio": "Cocula",
+  		"familias": 72,
+  		"direccion": 
+  		{
+	        "calle": "calle 1",
+	        "numero": "32",
+	        "cp": "45123",
+	        "ciudad": "Guadalajara",
+	        "estado": "Jalisco",
+	        "latitud": 20.6096,
+	        "longitud": -103.2996
+	    }
+	}
+  ],
+  "empleos": [
+  	{
+  		"id": 1,
+  		"tipo": "perita perita",
+  		"oferta": 5900.00,
+  		"vigencia": "24/10/2018",
+  		"direccion" :
+  		{
+	        "calle": "calle 1",
+	        "numero": "32",
+	        "cp": "45123",
+	        "ciudad": "Poncitlán",
+	        "estado": "Jalisco",
+	        "latitud": 20.7596,
+	        "longitud": -103.3496
+	    }
+	},
+  	{
+  		"id": 2,
+  		"tipo": "aceril",
+  		"oferta": 9100.00,
+  		"vigencia": "10/10/2018",
+  		"direccion" :
+  		{
+	        "calle": "calle 1",
+	        "numero": "32",
+	        "cp": "45123",
+	        "ciudad": "Cocula",
+	        "estado": "Jalisco",
+	        "latitud": 20.5596,
+	        "longitud": -103.3196
+	    }
+	},
+  	{
+  		"id": 3,
+  		"tipo": "Angel Solutions",
+  		"oferta": 7000.00,
+  		"vigencia": "13/08/2018",
+  		"direccion" :
+  		{
+	        "calle": "calle 1",
+	        "numero": "32",
+	        "cp": "45123",
+	        "ciudad": "Quitupan",
+	        "estado": "Jalisco",
+	        "latitud": 20.8196,
+	        "longitud": -103.4496
+	    }
+	}
+  ],
+  "servicios": [
+  	{
+  		"id": 1,
+		"nombre": "Openlane",
+		"tipo": "Cultura",
+		"beneficio": "Horas Gratis",
+		"telefono": "(175) 395 7553",
+  		"direccion" :
+  		{
+	        "calle": "calle 1",
+	        "numero": "32",
+	        "cp": "45123",
+	        "ciudad": "Poncitlán",
+	        "estado": "Jalisco",
+	        "latitud": 20.7596,
+	        "longitud": -103.3496
+	    }
+	},
+  	{
+  		"id": 2,
+		"nombre": "Yearin",
+		"tipo": "Salud",
+		"beneficio": "Consultas gratis",
+		"telefono": "(819) 2158295",
+  		"direccion" :
+  		{
+	        "calle": "calle 1",
+	        "numero": "32",
+	        "cp": "45123",
+	        "ciudad": "Poncitlán",
+	        "estado": "Jalisco",
+	        "latitud": 20.6596,
+	        "longitud": -103.2196
+	    }
+	},
+  	{
+  		"id": 3,
+		"nombre": "Goodsilron",
+		"tipo": "Deporte",
+		"beneficio": "Un juego gratis",
+		"telefono": "(171) 382 2006",
+  		"direccion" :
+  		{
+	        "calle": "calle 1",
+	        "numero": "32",
+	        "cp": "45123",
+	        "ciudad": "Poncitlán",
+	        "estado": "Jalisco",
+	        "latitud": 20.5996,
+	        "longitud": -103.4696
+	    }
+	}
+  ],
+  "trabajadores": [
+  	{
+  		"id": 1,
+		"nombre": "Luis Castañeda",
+		"puesto": "Trabajador Social",
+		"correo": "luis-84@example.com",
+		"comunidades": 12,
+		"grupos": 1
+	},
+  	{
+  		"id": 2,
+		"nombre": "Fernando Ávalos",
+		"puesto": "Trabajador Social",
+		"correo": "fernando-88@example.com",
+		"comunidades": 2,
+		"grupos": 2
+	},
+  	{
+  		"id": 3,
+		"nombre": "Sofía May",
+		"puesto": "Capturista",
+		"correo": "sofía_may@example.com",
+		"comunidades": 13,
+		"grupos": 5
+	}
+  ],
+  "mentores": [
+  	{
+  		"id": 1,
+		"nombre": "José Guadalupe Díaz",
+		"comunidad": "Daciano",
+		"familias": 5,
+		"contacto": "(706) 646 4878"
+	},
+  	{
+  		"id": 2,
+		"nombre": "José Alberto Palma",
+		"comunidad": "San Mateos",
+		"familias": 2,
+		"contacto": "(923) 225 3890"
+	},
+  	{
+  		"id": 3,
+		"nombre": "Carlos Monroy",
+		"comunidad": "Domingo",
+		"familias": 4,
+		"contacto": "(563) 664 1170"
+	}
+  ],
+  "familias": [
+  	{
+  		"id": 1,
+		"apellido": "Juan Sierra",
+		"representante": "Mario",
+		"integrantes": 5,
+		"comunidad": "San Mateos",
+		"contacto": "(759) 752 9714"
+	},
+  	{
+  		"id": 2,
+		"apellido": "Peña",
+		"representante": "Juana",
+		"integrantes": 2,
+		"comunidad": "Zareni",
+		"contacto": "(784) 168 9499"
+	},
+  	{
+  		"id": 3,
+		"apellido": "Trejo",
+		"representante": "Roberto",
+		"integrantes": 4,
+		"comunidad": "Moctezuma el Grande",
+		"contacto": "(689) 383 2905"
+	}
+  ],
+  "aliados": [
+  	{
+  		"id": 1,
+		"nombre": "perita perita",
+		"tipo": "Empleador",
+		"descripcion": "Equipo de Ventas",
+		"contacto": "202-55-0109"
+	},
+  	{
+  		"id": 2,
+		"nombre": "aceril",
+		"tipo": "Empleador",
+		"descripcion": "Distribuidora de acerrin",
+		"contacto": "202-555-0181"
+	},
+  	{
+  		"id": 3,
+		"nombre": "autovu",
+		"tipo": "Activos Productivos",
+		"descripcion": "Maquinaria de Mecanica Automotriz",
+		"contacto": "202-555-0105"
+	}
+  ],
+  "tutores": [
+  	{
+  		"id": 1,
+		"nombre": "Consuelo Aguirre",
+		"disponible": false,
+		"comunidad": "Domingo",
+		"tipo": "Empleador",
+		"contacto": "(384) 658 8036"
+	},
+  	{
+  		"id": 2,
+		"nombre": "José Ángel Montoya",
+		"disponible": true,
+		"comunidad": "Moctezuma el Grande",
+		"tipo": "Desarrollo humano",
+		"contacto": "(759) 142 3237"
+	},
+  	{
+  		"id": 3,
+		"nombre": "Edith Guerra",
+		"disponible": false,
+		"comunidad": "Edmundo",
+		"tipo": "Desarrollo humano",
+		"contacto": "(765) 124 8065"
+	}
+  ],
   "bancos": [
     {
       "id": 1,
@@ -14,7 +297,7 @@
         "cp": "45123",
         "ciudad": "Guadalajara",
         "estado": "Jalisco",
-        "latitude": 20.6596,
+        "latitud": 20.6596,
         "longitud": -103.3496
       },
       "region": {
@@ -39,7 +322,7 @@
         "cp": "45123",
         "ciudad": "Guadalajara",
         "estado": "Jalisco",
-        "latitude": 20.6596,
+        "latitud": 20.6596,
         "longitud": -103.3496
       },
       "region": {
@@ -64,7 +347,7 @@
         "cp": "45123",
         "ciudad": "Guadalajara",
         "estado": "Jalisco",
-        "latitude": 20.6596,
+        "latitud": 20.6596,
         "longitud": -103.3496
       },
       "region": {
@@ -99,7 +382,7 @@
         "cp": 12345,
         "ciudad": "Guadalajara",
         "estado": "Jalisco",
-        "latitude": 23.223423,
+        "latitud": 23.223423,
         "longitud": 25.23455
       },
       "curso": {
@@ -132,7 +415,7 @@
         "cp": 12345,
         "ciudad": "Guadalajara",
         "estado": "Jalisco",
-        "latitude": 23.223423,
+        "latitud": 23.223423,
         "longitud": 25.23455
       },
       "curso": {
@@ -165,7 +448,7 @@
         "cp": 12345,
         "ciudad": "Guadalajara",
         "estado": "Jalisco",
-        "latitude": 23.223423,
+        "latitud": 23.223423,
         "longitud": 25.23455
       },
       "curso": {
@@ -193,7 +476,7 @@
         "cp": 25252,
         "ciudad": "Guadalajara",
         "estado": "Jalisco",
-        "latitude": 20.639840,
+        "latitud": 20.639840,
         "longitud": -103.240645
       },
       "centro_com": "Tonalá"
@@ -213,7 +496,7 @@
         "cp": 25252,
         "ciudad": "Guadalajara",
         "estado": "Jalisco",
-        "latitude": 20.670889,
+        "latitud": 20.670889,
         "longitud": -103.368741
       },
       "centro_com": "Chapultepec"
@@ -233,7 +516,7 @@
         "cp": 25252,
         "ciudad": "Guadalajara",
         "estado": "Jalisco",
-        "latitude": 20.696114,
+        "latitud": 20.696114,
         "longitud": -103.295559
       },
       "centro_com": "Oblatos"
