@@ -168,7 +168,7 @@ export default {
           title: "Personas",
           icon: "group",
           active: false,
-          ref: "beneficiarios"
+          ref: "usuarios"
         },
         {
           title: "Servicios",
