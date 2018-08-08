@@ -19,19 +19,29 @@ import editorCentro from "../components/communitaryCenters/editorCentro";
 
 import Grupos from "../components/groups/Grupos";
 
-import Usuarios from "../components/users/Usuarios";
-import creadorUsuario from "../components/users/creadorUsuario";
-import editorUsuario from "../components/users/editorUsuario";
+import Usuarios from "../components/users/usuarios/Usuarios";
+import creadorUsuario from "../components/users/usuarios/creadorUsuario";
+import editorUsuario from "../components/users/usuarios/editorUsuario";
 
-import Mentores from "../components/users/Mentores";
-import Familias from "../components/users/Familias";
+import Mentores from "../components/users/mentores/Mentores";
+import creadorMentor from "../components/users/mentores/creadorMentor";
+import editorMentor from "../components/users/mentores/editorMentor";
+
+import Familias from "../components/users/familias/Familias";
+import creadorFamilia from "../components/users/familias/creadorFamilia";
+import editorFamilia from "../components/users/familias/editorFamilia";
 
 import Beneficiarios from "../components/beneficiaries/Beneficiarios";
 import creadorBeneficiario from "../components/beneficiaries/creadorBeneficiario";
 import editorBeneficiario from "../components/beneficiaries/editorBeneficiario";
 
-import Aliados from "../components/users/Aliados";
-import Tutores from "../components/users/Tutores";
+import Aliados from "../components/users/aliados/Aliados";
+import creadorAliado from "../components/users/aliados/creadorAliado";
+import editorAliado from "../components/users/aliados/editorAliado";
+
+import Tutores from "../components/users/tutores/Tutores";
+import creadorTutor from "../components/users/tutores/creadorTutor";
+import editorTutor from "../components/users/tutores/editorTutor";
 
 import Courses from "../components/courses/Courses";
 import creadorCurso from "../components/courses/creadorCurso";
@@ -141,7 +151,7 @@ const routes = [
   {
     path: "/nuevo-banco",
     component: creadorBanco,
-    name: "nuevoBanco",
+    name: "creadorBanco",
     beforeEnter: ifWorkerAuthenticated
   },
 
@@ -161,7 +171,7 @@ const routes = [
   {
     path: "/nuevo-centro",
     component: creadorCentro,
-    name: "nuevoCentro",
+    name: "creadorCentro",
     beforeEnter: ifWorkerAuthenticated
   },
 
@@ -201,7 +211,7 @@ const routes = [
   {
     path: "/nuevo-usuario",
     component: creadorUsuario,
-    name: "nuevoUsuario",
+    name: "creadorUsuario",
     beforeEnter: ifWorkerAuthenticated
   },
 
@@ -212,6 +222,18 @@ const routes = [
     name: "mentores",
     beforeEnter: ifUserAuthenticated
   },
+  {
+    path: "/mentores/:id",
+    component: editorMentor,
+    name: "editorMentor",
+    beforeEnter: ifWorkerAuthenticated
+  },
+  {
+    path: "/nuevo-mentor",
+    component: creadorMentor,
+    name: "creadorMentor",
+    beforeEnter: ifWorkerAuthenticated
+  },
 
   //familias
   {
@@ -220,6 +242,18 @@ const routes = [
     name: "familias",
     beforeEnter: ifUserAuthenticated
   },
+  {
+    path: "/familia/:id",
+    component: editorFamilia,
+    name: "editorFamilia",
+    beforeEnter: ifWorkerAuthenticated
+  },
+  {
+    path: "/nueva-familia",
+    component: creadorFamilia,
+    name: "creadorFamilia",
+    beforeEnter: ifWorkerAuthenticated
+  },
 
   //tutores
   {
@@ -227,6 +261,18 @@ const routes = [
     component: Tutores,
     name: "tutores",
     beforeEnter: ifUserAuthenticated
+  },
+  {
+    path: "/tutor/:id",
+    component: editorTutor,
+    name: "editorTutor",
+    beforeEnter: ifWorkerAuthenticated
+  },
+  {
+    path: "/nuevo-tutor",
+    component: creadorTutor,
+    name: "creadorTutor",
+    beforeEnter: ifWorkerAuthenticated
   },
 
   //beneficiarios
@@ -245,7 +291,7 @@ const routes = [
   {
     path: "/nuevo-beneficiario",
     component: creadorBeneficiario,
-    name: "nuevoBeneficiario",
+    name: "creadorBeneficiario",
     beforeEnter: ifWorkerAuthenticated
   },
 
@@ -255,6 +301,18 @@ const routes = [
     component: Aliados,
     name: "aliados",
     beforeEnter: ifUserAuthenticated
+  },
+  {
+    path: "/aliado/:id",
+    component: editorAliado,
+    name: "editorAliado",
+    beforeEnter: ifWorkerAuthenticated
+  },
+  {
+    path: "/nuevo-aliado",
+    component: creadorAliado,
+    name: "creadorAliado",
+    beforeEnter: ifWorkerAuthenticated
   },
 
   //servicios
@@ -273,7 +331,7 @@ const routes = [
   {
     path: "/nuevo-servicio",
     component: creadorServicio,
-    name: "nuevoServicio",
+    name: "creadorServicio",
     beforeEnter: ifWorkerAuthenticated
   },
 
@@ -293,7 +351,7 @@ const routes = [
   {
     path: "/nuevo-empleo",
     component: creadorEmpleo,
-    name: "nuevoEmpleo",
+    name: "creadorEmpleo",
     beforeEnter: ifWorkerAuthenticated
   },
 

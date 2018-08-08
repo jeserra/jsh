@@ -22,7 +22,9 @@ export const apiRoutes = {
     allMentoresURL: "http://localhost:5000/api/mentores",
     allFamiliasURL: "http://localhost:5000/api/familias",
     allAliadosURL: "http://localhost:5000/api/aliados",
-    allTutoresURL: "http://localhost:5000/api/tutores"
+    allTutoresURL: "http://localhost:5000/api/tutores",
+
+    allBeneficiariosURL: "http://localhost:5000/api/beneficiarios"
   },
   jsh: {
     allBanksURL: "http://18.221.249.12:80/api/bancoalimentos",
