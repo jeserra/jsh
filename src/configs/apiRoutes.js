@@ -13,6 +13,9 @@ export const apiRoutes = {
     contactURL: "http://localhost:5000/api/contacto/IDContacto",
     regionURL: "http://localhost:5000/api/region/IDRegion",
 
+    allGruposURL: "http://localhost:5000/api/grupos",
+    allGruposGraduadosURL: "http://localhost:5000/api/gruposGraduados",
+
     allCommunitaryCentersURL: "http://localhost:5000/api/centros",
     allJobsURL: "http://localhost:5000/api/empleos",
     allServicesURL: "http://localhost:5000/api/servicios",

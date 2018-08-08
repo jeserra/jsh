@@ -18,6 +18,9 @@ import creadorCentro from "../components/communitaryCenters/creadorCentro";
 import editorCentro from "../components/communitaryCenters/editorCentro";
 
 import Grupos from "../components/groups/Grupos";
+import GruposPasados from "../components/groups/GruposPasados";
+import creadorGrupo from "../components/groups/creadorGrupo";
+import editorGrupo from "../components/groups/editorGrupo";
 
 import Usuarios from "../components/users/usuarios/Usuarios";
 import creadorUsuario from "../components/users/usuarios/creadorUsuario";
@@ -183,15 +186,21 @@ const routes = [
     beforeEnter: ifUserAuthenticated
   },
   {
-    path: "/centros/:id",
-    component: editorCentro,
+    path: "/grupos-pasados",
+    component: GruposPasados,
+    name: "gruposPasados",
+    beforeEnter: ifUserAuthenticated
+  },
+  {
+    path: "/grupo/:id",
+    component: editorGrupo,
     name: "editorGrupo",
     beforeEnter: ifWorkerAuthenticated
   },
   {
     path: "/nuevo-grupo",
-    component: creadorCentro,
-    name: "nuevoGrupo",
+    component: creadorGrupo,
+    name: "creadorGrupo",
     beforeEnter: ifWorkerAuthenticated
   },
 

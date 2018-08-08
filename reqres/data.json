@@ -55,6 +55,52 @@
 			}
 		}
 	],
+	"grupos": [
+		{
+			"id": 1,
+			"comunidad": "Cozamalotl",
+			"trabajador": "Luis Castañeda",
+			"integrantes": 20,
+			"progreso": "4/4"
+		},
+		{
+			"id": 2,
+			"comunidad": "Alotl",
+			"trabajador": "Fernando Ávalos",
+			"integrantes": 24,
+			"progreso": "4/4"
+		},
+		{
+			"id": 3,
+			"comunidad": "Arcadio",
+			"trabajador": "Sofía May",
+			"integrantes": 17,
+			"progreso": "4/4"
+		}
+	],
+	"gruposGraduados": [
+		{
+			"id": 1,
+			"comunidad": "Daciano",
+			"trabajador": "Luis Castañeda",
+			"integrantes": 16,
+			"progreso": "4/4"
+		},
+		{
+			"id": 2,
+			"comunidad": "San Mateos",
+			"trabajador": "Fernando Ávalos",
+			"integrantes": 15,
+			"progreso": "4/4"
+		},
+		{
+			"id": 3,
+			"comunidad": "Domingo",
+			"trabajador": "Sofía May",
+			"integrantes": 13,
+			"progreso": "4/4"
+		}
+	],
 	"empleos": [
 		{
 			"id": 1,

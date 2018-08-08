@@ -1,156 +1,113 @@
 <template>
-  <div>
+  <v-container>
+
     <toolbarHandler      
       :key-name="'grupos'"/>
 
-    <div class="data-visualization-container">
-      <p class="module-title">
-        <v-icon>account_balance</v-icon>Beneficiarios
-      </p>
-      <div class="table">
+    <v-layout
+      row
+      justify-center>
 
-        <v-data-table
-          :headers="headers"
-          :items="items"
-          class="elevation-2">
-          <template
-            slot="items"
-            slot-scope="props">
-            <tr @click="props.expanded = !props.expanded">
-              <td>{{ props.item.representante.nombre }}</td>
-              <td>{{ props.item.representante.comunidad }}</td>
-              <td>{{ props.item.datosGenerales.nombre }}</td>
-              <td>{{ props.item.datosGenerales.grupo }}</td>
-              <td>{{ props.item.datosGenerales.fechaCaptura }}</td>
-            </tr>          
-          </template>
+      <v-flex 
+        xs8
+        m8>
+        <v-card>
 
-          <template 
-            slot="expand" 
-            slot-scope="props">
-            <v-container 
-              fluid 
-              justify-space-between
-              grid-list-lg>
-              <v-layout 
-                row 
-                wrap>
-                <v-flex 
-                  xs12
-                  lg6>
-                  <v-list two-line>
+          <v-card-title v-if="selected.length==0">
+            {{ items.length + ' ' }} Grupos Actuales
+            <v-spacer/>
+            <v-text-field
+              v-model="search"
+              append-icon="search"
+              label="Buscar"
+              single-line
+              hide-details/>
 
-                    <v-list-tile>
-                      <v-list-tile-content>
-                        <v-list-tile-title>
-                          {{ props.item.nombre }}
-                        </v-list-tile-title>
-                        <v-list-tile-sub-title>{{ props.item.tipoUsuario.tipo }}</v-list-tile-sub-title>
-                      </v-list-tile-content>
-                    </v-list-tile>
+            <router-link
+              :to="{ name:'creadorGrupo' }">
+              <v-btn
+                flat
+                style="color:rgba(71, 147, 89, 1)">
+                Agregar
+              </v-btn>
+            </router-link>
 
-                    <v-list-tile>
-                      <v-list-tile-content>
-                        <v-list-tile-title>
-                          Grupo
-                        </v-list-tile-title>
-                        <v-list-tile-sub-title>{{ props.item.grupo }}</v-list-tile-sub-title>
-                      </v-list-tile-content>
-                    </v-list-tile>
+            <v-btn
+              flat
+              style="color:rgba(71, 147, 89, 1)"
+              @click="getData()">
+              Actualizar
+            </v-btn>
+          </v-card-title>
 
-                    <v-list-tile>
-                      <v-list-tile-content>
-                        <v-list-tile-title>
-                          Último inicio de sesión
-                        </v-list-tile-title>
-                        <v-list-tile-sub-title>{{ props.item.ultimoLogin | moment("calendar") }}</v-list-tile-sub-title>
-                      </v-list-tile-content>
-                    </v-list-tile>
+          <v-card-title v-if="selected.length > 0">
+            {{ selected.length + ' ' }} elementos seleccionados
+            <v-spacer/>
+            <v-btn 
+              v-if="selected.length == 1"
+              flat
+              @click="editGrupo()">
+              Editar
+            </v-btn>
+            <v-btn 
+              flat
+              @click="deleteSelectedItems()">
+              Borrar
+            </v-btn>
+          </v-card-title>
 
-                  </v-list>
-                </v-flex>
+          <v-data-table
+            :headers="headers"
+            :items="items"
+            :search="search"
+            :loading="loading"
+            v-model="selected"
+            item-key="id"                      
+            select-all
+            class="elevation-2">
 
-                <v-flex 
-                  xs12
-                  lg6>
-                  <v-list three-line>
+            <template
+              slot="items" 
+              slot-scope="props">
+              <td>
+                <v-checkbox
+                  v-model="props.selected"
+                  color="green"
+                  primary
+                  hide-details/>
+              </td>
+              <td>{{ String(props.item[headers[0]["value"]]) }}</td>
+              <td>{{ String(props.item[headers[1]["value"]]) }}</td>
+              <td>{{ String(props.item[headers[2]["value"]]) }}</td>
+              <td>{{ String(props.item[headers[3]["value"]]) }}</td>
+              <td>{{ String(props.item[headers[4]["value"]]) }}</td>
+            </template>
 
-                    <v-list-tile>
-                      <v-list-tile-content>
-                        <v-list-tile-title>
-                          Curso: {{ props.item.curso.nombre }}
-                        </v-list-tile-title>
-                        <v-list-tile-sub-title v-if="props.item.curso.calificacion">
-                          Calificación: {{ props.item.curso.calificacion }}/10
-                        </v-list-tile-sub-title>
-                        <v-list-tile-sub-title v-if="props.item.curso.descripcion">
-                          Descripción: {{ props.item.curso.descripcion }}
-                        </v-list-tile-sub-title>
-                        <v-list-tile-sub-title v-if="props.item.curso.observaciones">
-                          Observaciones: {{ props.item.curso.observaciones }}
-                        </v-list-tile-sub-title>
-                      </v-list-tile-content>
-                    </v-list-tile>
+            <template slot="no-data">
+              <v-alert 
+                :value="true" 
+                outline 
+                color="grey" 
+                icon="info">
+                No hay datos disponibles
+              </v-alert>
+            </template>
+          </v-data-table>
+          
+        </v-card>
 
-                    <v-list-tile>
-                      <v-list-tile-content>
-                        <v-list-tile-title>
-                          Dirección
-                        </v-list-tile-title>
-                        <v-list-tile-sub-title>{{ props.item.direccion.estado }} </v-list-tile-sub-title>
-                        <v-list-tile-sub-title>{{ props.item.direccion.ciudad }} </v-list-tile-sub-title>
-                        <v-list-tile-sub-title>{{ props.item.direccion.cp }} </v-list-tile-sub-title>
-                        <v-list-tile-sub-title>{{ props.item.direccion.calle }} </v-list-tile-sub-title>                        
-                      </v-list-tile-content>                      
-                    </v-list-tile>
+      </v-flex>
 
-                  </v-list>
-                </v-flex>
-              </v-layout>
-              
-              <div class="text-xs-center">
-                <v-btn
-                  outline 
-                  color="error">Eliminar</v-btn>
-                <v-btn 
-                  :to="{ name: 'editorUsuario', params: { id: props.item.id }}"
-                  outline 
-                  color="success">Editar</v-btn>
-              </div>
-            
-            </v-container>
-          </template>
-        </v-data-table>
-
-        <ul v-if="errors && errors.length">
-          <li
-            v-for="error of errors"
-            :key="'error-index-' + error">
-            {{ error.message }}
-          </li>
-        </ul>
-
-      </div>
-    </div>
-
-    <v-btn
-      :to="{ name: 'nuevoBeneficiario' }"    
-      fixed
-      fab
-      bottom
-      right      
-      color="primary">
-      <v-icon>add</v-icon>
-    </v-btn>
-
-  </div>
+    </v-layout>
+  </v-container>
 </template>
 
 <script>
 import axios from "axios";
 import toolbarHandler from "../toolbars/toolbarHandler";
 import { apiRoutes } from "../../configs/apiRoutes.js";
-var apiMode = "jsh";
+//var apiMode = "jsh";
+var apiMode = "testing";
 
 export default {
   components: {
@@ -158,55 +115,107 @@ export default {
   },
   data() {
     return {
-      beneficiariesURL: "http://localhost:5000/api/beneficiarios",
+      //var apiMode = "jsh";
+      apiMode: "testing",
+
+      allGruposURL: apiRoutes[apiMode].allGruposURL,
+
+      loading: true,
+      search: "",
+      selected: [],
+
+      Rawitems: [],
       items: [],
-      errors: [],
-      headers: [
-        { text: "Representante-Nombre", value: "representante.nombre" },
-        { text: "Representante-Comunidad", value: "representante.comunidad" },
-        { text: "Nombre", value: "datosGenerales.nombre" },
-        { text: "Grupo", value: "datosGenerales.grupo" },
-        { text: "Fecha de captura", value: "datosGenerales.fechaCaptura" }
-      ]
+      markers: [],
+      errors: []
     };
+  },
+  computed: {
+    headers: function() {
+      console.log("El API seleccionado será " + apiMode);
+      if (apiMode === "testing") {
+        return [
+          { text: "ID", value: "id" },
+          { text: "Comunidad", value: "comunidad" },
+          { text: "Trabajador Asignado", value: "trabajador" },
+          { text: "# Integrantes", value: "integrantes" },
+          { text: "Progreso", value: "progreso" }
+        ];
+      } else if (apiMode === "jsh") {
+        return [
+          { text: "ID", value: "id" },
+          { text: "Comunidad", value: "comunidad" },
+          { text: "Trabajador Asignado", value: "trabajador" },
+          { text: "# Integrantes", value: "integrantes" },
+          { text: "Progreso", value: "progreso" }
+        ];
+      }
+    }
+  },
+  watch: {
+    $route(to, from) {
+      // Call resizePreserveCenter() on all maps
+      Vue.$gmapDefaultResizeBus.$emit("resize");
+    },
+    items() {
+      if (this.items.length == this.Rawitems.length) {
+        this.loading = false;
+      }
+    }
   },
   created() {
     this.getData();
   },
   methods: {
-    getData() {
+    editGrupo() {
+      var selectedID = this.selected[0].id;
+      this.$router.push({ name: "editorGrupo", params: { id: selectedID } });
+    },
+    deleteSelectedItems() {
+      for (var i = 0; i < this.selected.length; i++) {
+        this.deleteItem(this.selected[i].id);
+      }
+
+      this.selected = [];
+    },
+    deleteItem(grupoID) {
       axios({
-        method: "GET",
-        url: this.beneficiariesURL
+        method: "DELETE",
+        url: this.allGruposURL + "/" + grupoID
       })
         .then(response => {
-          this.items = response.data.data;
-          //console.log(response.data.data);
+          console.log(response);
+          this.getData();
         })
         .catch(e => {
+          console.log("error");
+          console.log(e);
           this.errors.push(e);
         });
     },
-    editItem(item) {
-      this._routerRoot._router.push({
-        name: "editorUsuario",
-        params: { id: item.id }
-      });
+    getData() {
+      axios({
+        method: "GET",
+        url: this.allGruposURL
+      })
+        .then(response => {
+          if (apiMode === "testing") {
+            //My api needs to projections
+            var rawData = response.data.data;
+            this.items = rawData;
+          } else {
+            //Api from amdocs has projections
+            //console.log(response.data._embedded.comunitarios);
+            var rawData = response.data._embedded.comunitarios;
+            this.items = rawData;
+          }
+        })
+        .catch(e => {
+          console.log("error");
+          console.log(e);
+          this.errors.push(e);
+        });
     }
   }
 };
 </script>
-
-<style scoped type="text/css">
-.module-title {
-  text-align: left !important;
-}
-
-.table {
-  width: 90%;
-}
-
-.data-visualization-container {
-  margin-left: 5%;
-}
-</style>

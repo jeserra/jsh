@@ -9,7 +9,7 @@
       justify-center>
 
       <v-flex 
-        xs8
+        xs10
         m8>
         <v-card>
 
@@ -41,7 +41,7 @@
           </v-card-title>
 
           <v-card-title v-if="selected.length > 0">
-            {{ selected.length + ' ' }} elementos seleccionado
+            {{ selected.length + ' ' }} elementos seleccionados
             <v-spacer/>
             <v-btn 
               v-if="selected.length == 1"

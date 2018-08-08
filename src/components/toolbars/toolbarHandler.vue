@@ -63,7 +63,7 @@ export default {
       grupos: {
         items: [
           { title: "Pasados", ref: "gruposPasados" },
-          { title: "Actuales", ref: "gruposActuales" }
+          { title: "Actuales", ref: "grupos" }
         ],
         title: "Grupos"
       },

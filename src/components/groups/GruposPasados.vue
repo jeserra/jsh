@@ -2,7 +2,7 @@
   <v-container>
 
     <toolbarHandler      
-      :key-name="'personas'"/>
+      :key-name="'grupos'"/>
 
     <v-layout
       row
@@ -14,7 +14,7 @@
         <v-card>
 
           <v-card-title v-if="selected.length==0">
-            {{ items.length + ' ' }} Trabajadores Sociales
+            {{ items.length + ' ' }} Grupos Graduados
             <v-spacer/>
             <v-text-field
               v-model="search"
@@ -22,20 +22,27 @@
               label="Buscar"
               single-line
               hide-details/>
+
+            <v-btn
+              flat
+              style="color:rgba(71, 147, 89, 1)"
+              @click="getData()">
+              Actualizar
+            </v-btn>
           </v-card-title>
 
           <v-card-title v-if="selected.length > 0">
-            {{ selected.length + ' ' }} elementos seleccionado
+            {{ selected.length + ' ' }} elementos seleccionados
             <v-spacer/>
             <v-btn 
               v-if="selected.length == 1"
               flat
-              @click="editTutor()">
+              @click="editGrupo()">
               Editar
             </v-btn>
             <v-btn 
               flat
-              @click="deleteSelectedWorkers()">
+              @click="deleteSelectedItems()">
               Borrar
             </v-btn>
           </v-card-title>
@@ -61,12 +68,7 @@
                   hide-details/>
               </td>
               <td>{{ String(props.item[headers[0]["value"]]) }}</td>
-              <td v-if="Boolean(props.item[headers[1]['value']])">
-                Sí
-              </td>
-              <td v-else>
-                No
-              </td>
+              <td>{{ String(props.item[headers[1]["value"]]) }}</td>
               <td>{{ String(props.item[headers[2]["value"]]) }}</td>
               <td>{{ String(props.item[headers[3]["value"]]) }}</td>
               <td>{{ String(props.item[headers[4]["value"]]) }}</td>
@@ -107,7 +109,7 @@ export default {
       //var apiMode = "jsh";
       apiMode: "testing",
 
-      allTutoresURL: apiRoutes[apiMode].allTutoresURL,
+      allGruposGraduadosURL: apiRoutes[apiMode].allGruposGraduadosURL,
 
       loading: true,
       search: "",
@@ -124,19 +126,19 @@ export default {
       console.log("El API seleccionado será " + apiMode);
       if (apiMode === "testing") {
         return [
-          { text: "Nombre", value: "nombre" },
-          { text: "Disponible", value: "disponible" },
+          { text: "ID", value: "id" },
           { text: "Comunidad", value: "comunidad" },
-          { text: "Tipo de curso", value: "tipo" },
-          { text: "Contacto", value: "contacto" }
+          { text: "Trabajador Asignado", value: "trabajador" },
+          { text: "# Integrantes", value: "integrantes" },
+          { text: "Progreso", value: "progreso" }
         ];
       } else if (apiMode === "jsh") {
         return [
-          { text: "Nombre", value: "nombre" },
-          { text: "Disponible", value: "disponible" },
+          { text: "ID", value: "id" },
           { text: "Comunidad", value: "comunidad" },
-          { text: "Tipo de curso", value: "tipo" },
-          { text: "Contacto", value: "contacto" }
+          { text: "Trabajador Asignado", value: "trabajador" },
+          { text: "# Integrantes", value: "integrantes" },
+          { text: "Progreso", value: "progreso" }
         ];
       }
     }
@@ -156,21 +158,21 @@ export default {
     this.getData();
   },
   methods: {
-    editTutor() {
+    editGrupo() {
       var selectedID = this.selected[0].id;
-      this.$router.push({ name: "editorUsuario", params: { id: selectedID } });
+      //this.$router.push({ name: "editorGrupo", params: { id: selectedID } });
     },
-    deleteSelectedWorkers() {
+    deleteSelectedItems() {
       for (var i = 0; i < this.selected.length; i++) {
         this.deleteItem(this.selected[i].id);
       }
 
       this.selected = [];
     },
-    deleteItem(jobID) {
+    deleteItem(grupoID) {
       axios({
         method: "DELETE",
-        url: this.allTutoresURL + "/" + jobID
+        url: this.allGruposGraduadosURL + "/" + grupoID
       })
         .then(response => {
           console.log(response);
@@ -185,7 +187,7 @@ export default {
     getData() {
       axios({
         method: "GET",
-        url: this.allTutoresURL
+        url: this.allGruposGraduadosURL
       })
         .then(response => {
           if (apiMode === "testing") {
