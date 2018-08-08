@@ -570,9 +570,9 @@
 				}
 			},
 			"estructuraFamiliar": {
-				"nombre": "Kirino",
-				"primerApellido": "Ayase",
-				"segundoApellido": "Kurone",
+				"nombre": "Clementino",
+				"primerApellido": "Lopez",
+				"segundoApellido": "Hatsu",
 				"fechaNacimiento": "2000-01-01",
 				"sexo": "Mujer",
 				"estadoCivil": "Casada",
@@ -588,14 +588,14 @@
 				"tipoEmpleo": "Tipo D",
 				"prestaciones": {
 					"A": true,
-					"B": " ",
-					"C": " ",
-					"D": " ",
+					"B": "undefined",
+					"C": "undefined",
+					"D": "undefined",
 					"E": true,
-					"F": " ",
-					"G": " ",
+					"F": "undefined",
+					"G": "undefined",
 					"H": true,
-					"I": " "
+					"I": "undefined"
 				},
 				"jubiladoPension": "",
 				"derechohabiencia": "",
@@ -609,63 +609,63 @@
 			},
 			"servicios": {
 				"luz": {
-					"publico": " ",
+					"publico": "undefined",
 					"planta": true,
-					"panel": " ",
-					"noTiene": " "
+					"panel": "undefined",
+					"noTiene": "undefined"
 				},
 				"drenaje": {
-					"publico": " ",
-					"fosa": " ",
+					"publico": "undefined",
+					"fosa": "undefined",
 					"grieta": true,
-					"rio": " ",
-					"noTiene": " "
+					"rio": "undefined",
+					"noTiene": "undefined"
 				},
 				"baño": {
-					"descarga": " ",
-					"cubeta": " ",
+					"descarga": "undefined",
+					"cubeta": "undefined",
 					"letrina": true,
-					"pozo": " ",
-					"noTiene": " ",
-					"gasTanque": " ",
+					"pozo": "undefined",
+					"noTiene": "undefined",
+					"gasTanque": "undefined",
 					"electricidad": true,
-					"gasNatural": " ",
-					"sinChimenea": " ",
-					"conChimenea": " ",
-					"otroCombustible": " "
+					"gasNatural": "undefined",
+					"sinChimenea": "undefined",
+					"conChimenea": "undefined",
+					"otroCombustible": "undefined"
 				},
 				"combustible": {
-					"descarga": " ",
+					"descarga": "undefined",
 					"cubeta": true,
-					"letrina": " ",
-					"pozo": " ",
-					"noTiene": " ",
+					"letrina": "undefined",
+					"pozo": "undefined",
+					"noTiene": "undefined",
 					"gasTanque": true,
-					"electricidad": " ",
-					"gasNatural": " ",
+					"electricidad": "undefined",
+					"gasNatural": "undefined",
 					"sinChimenea": true,
-					"conChimenea": " ",
-					"otroCombustible": " "
+					"conChimenea": "undefined",
+					"otroCombustible": "undefined"
 				},
 				"agua": {
-					"tomaDomicilaria": " ",
-					"tomaComun": " ",
-					"llavePublica": " ",
+					"tomaDomicilaria": "undefined",
+					"tomaComun": "undefined",
+					"llavePublica": "undefined",
 					"acarrean": true,
-					"pipa": " ",
+					"pipa": "undefined",
 					"pozo": true,
-					"sinServicio": " "
+					"sinServicio": "undefined"
 				}
 			},
 			"infraestructuraVivienda": {
-				"tenencia": " ",
-				"tipoCasa": " ",
+				"tenencia": "undefined",
+				"tipoCasa": "undefined",
 				"muros": true,
-				"piso": " ",
+				"piso": "undefined",
 				"caracteristicas": {
-					"numCuartos": " ",
-					"dormitorios": " ",
-					"cocinaSeparada": " ",
+					"numCuartos": "undefined",
+					"dormitorios": "undefined",
+					"cocinaSeparada": "undefined",
 					"bañoExclusivo": true
 				},
 				"objetosCaseros": {
@@ -675,33 +675,33 @@
 				"condiciones": "Buena"
 			},
 			"condicionesEconomicas": {
-				"vivienda": " ",
-				"alimentacion": " ",
-				"luz": " ",
-				"gas": " ",
+				"vivienda": "undefined",
+				"alimentacion": "undefined",
+				"luz": "undefined",
+				"gas": "undefined",
 				"agua": 50,
-				"telefono": " ",
-				"celular": " ",
-				"atencionMedica": " ",
-				"educacion": " ",
-				"transporte": " ",
-				"otros": " ",
+				"telefono": "undefined",
+				"celular": "undefined",
+				"atencionMedica": "undefined",
+				"educacion": "undefined",
+				"transporte": "undefined",
+				"otros": "undefined",
 				"total": 50,
 				"aportacionSemanal": {
-					"padre": " ",
-					"madre": " ",
+					"padre": "undefined",
+					"madre": "undefined",
 					"hijos": 50,
-					"prospera": " ",
-					"adultosMayores": " ",
-					"becas": " ",
-					"pension": " ",
+					"prospera": "undefined",
+					"adultosMayores": "undefined",
+					"becas": "undefined",
+					"pension": "undefined",
 					"otros": 50,
 					"total": 100
 				},
 				"apoyoEspecie": {
-					"tipos": " ",
-					"quienProporciona": " ",
-					"frecuencia": " "
+					"tipos": "undefined",
+					"quienProporciona": "undefined",
+					"frecuencia": "undefined"
 				},
 				"remesas": {
 					"recibe": true,
@@ -711,15 +711,15 @@
 			"alimentacion": {
 				"adultos": [],
 				"menores": [],
-				"estatus": " ",
+				"estatus": "undefined",
 				"tipo": {
 					"cuota": true,
-					"beca": " ",
+					"beca": "undefined",
 					"mediaBeca": true
 				},
 				"frecuencia": {
 					"semanal": true,
-					"quincenal": " ",
+					"quincenal": "undefined",
 					"mensual": true
 				},
 				"duracion": 5
