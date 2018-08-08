@@ -14,7 +14,7 @@
         <v-card>
 
           <v-card-title v-if="selected.length==0">
-            {{ items.length + ' ' }} Trabajadores Sociales
+            {{ items.length + ' ' }} Mentores
             <v-spacer/>
             <v-text-field
               v-model="search"
@@ -22,6 +22,22 @@
               label="Buscar"
               single-line
               hide-details/>
+
+            <router-link
+              :to="{ name:'creadorMentor' }">
+              <v-btn
+                flat
+                style="color:rgba(71, 147, 89, 1)">
+                Agregar
+              </v-btn>
+            </router-link>
+
+            <v-btn
+              flat
+              style="color:rgba(71, 147, 89, 1)"
+              @click="getData()">
+              Actualizar
+            </v-btn>
           </v-card-title>
 
           <v-card-title v-if="selected.length > 0">
@@ -30,12 +46,12 @@
             <v-btn 
               v-if="selected.length == 1"
               flat
-              @click="editWorker()">
+              @click="editMentor()">
               Editar
             </v-btn>
             <v-btn 
               flat
-              @click="deleteSelectedWorkers()">
+              @click="deleteSelectedItem()">
               Borrar
             </v-btn>
           </v-card-title>
@@ -87,8 +103,8 @@
 
 <script>
 import axios from "axios";
-import toolbarHandler from "../toolbars/toolbarHandler";
-import { apiRoutes } from "../../configs/apiRoutes.js";
+import toolbarHandler from "../../toolbars/toolbarHandler";
+import { apiRoutes } from "../../../configs/apiRoutes.js";
 //var apiMode = "jsh";
 var apiMode = "testing";
 
@@ -148,18 +164,18 @@ export default {
     this.getData();
   },
   methods: {
-    editWorker() {
+    editMentor() {
       var selectedID = this.selected[0].id;
-      this.$router.push({ name: "editorUsuario", params: { id: selectedID } });
+      this.$router.push({ name: "editorMentor", params: { id: selectedID } });
     },
-    deleteSelectedWorkers() {
+    deleteSelectedItem() {
       for (var i = 0; i < this.selected.length; i++) {
-        this.deleteWorker(this.selected[i].id);
+        this.deleteItem(this.selected[i].id);
       }
 
       this.selected = [];
     },
-    deleteWorker(jobID) {
+    deleteItem(jobID) {
       axios({
         method: "DELETE",
         url: this.allMentoresURL + "/" + jobID

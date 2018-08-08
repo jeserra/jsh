@@ -4,166 +4,157 @@
     <toolbarHandler      
       :key-name="'bancos'"/>
 
-    <v-container class="elements-container">
+    <div class="elements-container">
       <v-layout
+        align-center
+        justify-space-around
         row
-        wrap>
-        <v-flex xs3/>
+        fill-height>
 
-        <v-flex xs2>
-          <h2>EDITAR BANCO</h2>
+        <v-flex xs3>
+          <h2>EDITAR CENTRO</h2>
         </v-flex>
       </v-layout>
 
-      <v-layout
+      <v-layout 
+        align-center
+        justify-start
         row
-        wrap>
+        fill-height>
 
-        <v-flex xs2>
+        <v-flex xs3>
           <v-text-field
-            v-model="bankData.Nombre"
-            label="Nombre del Banco"
+            v-model="nombre"
+            label="Nombre del Centro"
             required/>
         </v-flex>
 
-        <v-flex xs2>
+        <v-flex xs1/>
+
+        <v-flex xs3>
+          <div>
+            <v-text-field
+              v-model="fechaRegistro"
+              label="Fecha del registro"
+              required/>
+          </div>
+        </v-flex>
+
+        <v-flex xs1/>
+
+        <v-flex xs3>
           <v-text-field
-            v-model="bankData.RazonSocial"
-            label="Razón social del banco"
+            v-model="comunidad"
+            label="Comunidad"
+            required/>
+        </v-flex>
+      </v-layout>
+
+      <v-layout 
+        align-center
+        justify-start
+        row
+        fill-height>
+
+        <v-flex xs3>
+          <v-text-field
+            v-model="municipio"
+            label="Municipio"
             required/>
         </v-flex>
 
-        <v-flex xs1>
+        <v-flex xs1/>
+
+        <v-flex xs2>
           <v-text-field
-            v-model="bankData.Calificacion"
-            label="Calificación"
+            v-model="familias"
+            label="Número de familias"
             type="number"
             required/>
         </v-flex>
-
-        <v-checkbox
-          v-model="bankData.Habilitado"
-          label="Habilitado"/>
       </v-layout>
 
       <v-layout
+        align-center
+        justify-start
         row
-        wrap>
-
-        <v-flex xs4>
-          <h3>Fecha de Afiliación</h3>
-          <v-date-picker
-            v-if="!loading"
-            :landscape="true"
-            v-model="fechaAfiliacion"
-            locale="es"/>
-        </v-flex>
-
-        <v-flex xs4>
-          <h3>Fecha de Registro</h3>
-          <v-date-picker
-            v-if="!loading"        
-            :landscape="true"
-            v-model="fechaRegistro"
-            locale="es"/>
-        </v-flex>
+        fill-height>
+        <h2>Dirección</h2>
       </v-layout>
 
       <v-layout
-        v-if="!loading"
+        align-center
+        justify-start
         row
-        wrap>
-
-        <h3>Dirección</h3>
-      </v-layout>
-
-      <v-layout
-        v-if="!loading"
-        row
-        wrap>
+        fill-height>
 
         <v-flex xs1>
           <v-text-field
-            v-model="bankData.Direccion.Estado"
+            v-model="direccion.estado"
             label="Estado"/>
         </v-flex>
 
-        <v-flex xs1>
-          <v-text-field
-            v-model="bankData.Direccion.Ciudad"
-            label="Ciudad"/>
-        </v-flex>
+        <v-flex xs1/>
 
         <v-flex xs1>
           <v-text-field
-            v-model="bankData.Direccion.CP"
+            v-model="direccion.ciudad"
+            label="Ciudad"/>
+        </v-flex>
+
+        <v-flex xs1/>
+
+        <v-flex xs1>
+          <v-text-field
+            v-model="direccion.cp"
             type="number"
             label="C.P."/>
         </v-flex>
 
+      </v-layout>
+
+      <v-layout
+        align-center
+        justify-start
+        row
+        fill-height>
+
         <v-flex xs3>
           <v-text-field
-            v-model="bankData.Direccion.Calle"
+            v-model="direccion.calle"
             label="Calle"/>
         </v-flex>
 
+        <v-flex xs1/>
+
         <v-flex xs1>
           <v-text-field
-            v-model="bankData.Direccion.Numero"
+            v-model="direccion.numero"
             label="Número"/>
         </v-flex>
       </v-layout>
 
-      <form v-if="!loading">
-        <h3>Región</h3>
+      <v-layout
+        align-center
+        justify-start
+        row
+        fill-height>
 
         <v-flex xs1>
-          <v-select
-            v-model="bankData.Region.Nombre"
-            :items="regiones"
-            label="Estado"/>
+          <v-text-field
+            v-model="direccion.longitud"
+            label="Longitud"/>
         </v-flex>
-      </form>
 
-      <form v-if="!loading">
-        <h3>Contacto</h3>
-        <v-layout
-          row
-          wrap>
+        <v-flex xs1/>
 
-          <v-flex xs1>
-            <v-text-field
-              v-model="bankData.Direccion.Estado"
-              label="Estado"/>
-          </v-flex>
-
-          <v-flex xs1>
-            <v-text-field
-              v-model="bankData.Direccion.Ciudad"
-              label="Ciudad"/>
-          </v-flex>
-
-          <v-flex xs1>
-            <v-text-field
-              v-model="bankData.Direccion.CP"
-              type="number"
-              label="C.P."/>
-          </v-flex>
-
-          <v-flex xs3>
-            <v-text-field
-              v-model="bankData.Direccion.Calle"
-              label="Calle"/>
-          </v-flex>
-
-          <v-flex xs1>
-            <v-text-field
-              v-model="bankData.Direccion.Numero"
-              label="Número"/>
-          </v-flex>
-        </v-layout>
-      </form>
-    </v-container>
+        <v-flex xs1>
+          <v-text-field
+            v-model="direccion.latitud"
+            label="Latitud"/>
+        </v-flex>
+      </v-layout>
+    </div>
 
     <v-btn
       fixed
@@ -171,7 +162,7 @@
       bottom
       right
       color="primary"
-      @click="saveBank()">
+      @click="updateCenterData()">
       <v-icon>save</v-icon>
     </v-btn>
 
@@ -200,6 +191,7 @@
 import axios from "axios";
 import toolbarHandler from "../toolbars/toolbarHandler";
 import { apiRoutes } from "../../configs/apiRoutes.js";
+//var apiMode = "jsh";
 var apiMode = "testing";
 
 export default {
@@ -208,23 +200,28 @@ export default {
   },
   data() {
     return {
-      allRegionsURL: apiRoutes[apiMode].allRegionsURL,
-      addressURL: apiRoutes[apiMode].addressURL,
-      bankURL: apiRoutes[apiMode].bankURL,
-      contactURL: apiRoutes[apiMode].contactURL,
-      regionURL: apiRoutes[apiMode].regionURL,
+      //var apiMode = "jsh";
+      apiMode: "testing",
 
-      bankID: this.$route.params.id,
-      loading: true,
+      allCommunitaryCentersURL: apiRoutes[apiMode].allCommunitaryCentersURL,
       errors: [],
-      bankData: [],
 
+      centerData: {},
+      id: this.$route.params.id,
+      nombre: "",
       fechaRegistro: "",
-      fechaAfiliacion: "",
-
-      //Región
-      regiones: [],
-      //
+      comunidad: "",
+      municipio: "",
+      familias: "",
+      direccion: {
+        calle: "",
+        numero: "",
+        cp: "",
+        ciudad: "",
+        estado: "",
+        latitud: "",
+        longitud: ""
+      },
 
       // Snackbar config
       snackbar: false,
@@ -232,121 +229,72 @@ export default {
       x: null,
       mode: "",
       timeout: 3000,
-      confirmationMessage: "El Banco ha sido editado"
+      confirmationMessage: "El Centro ha sido guardado"
     };
   },
-  watch: {
-    loading() {
-      if (!this.loading) {
-        var tempRegions = [];
-        for (var region of this.regiones) {
-          tempRegions.push(region.Nombre);
-        }
-        this.regiones = tempRegions;
-      }
-    }
-  },
-  mounted: function() {
-    this.getAllRegions();
-    this.getBankData();
+  mounted() {
+    this.getData();
   },
   methods: {
-    transformToClearDate(fullDateString) {
-      var registrationDate = new Date(fullDateString);
-
-      var year = registrationDate.getUTCFullYear();
-      var month = registrationDate.getUTCMonth() + 1;
-      var day = registrationDate.getUTCDate();
-      var cleanDate = "" + year + "-" + month + "-" + day;
-      return cleanDate;
-    },
-    initializeData() {
-      var callbackFunctions = [this.getRegion, this.getContact];
-
-      this.fechaRegistro = this.transformToClearDate(
-        this.bankData.FechaRegistro
-      );
-
-      this.fechaAfiliacion = this.transformToClearDate(
-        this.bankData.FechaAfiliacion
-      );
-
-      this.getAddress(this.bankData, callbackFunctions);
-    },
-    getBankData() {
+    getData() {
       axios({
         method: "GET",
-        url: this.bankURL + "/" + this.bankID
+        url: this.allCommunitaryCentersURL + "/" + this.id
       })
         .then(response => {
-          var rawData = response.data.data;
-          this.bankData = rawData[0];
+          if (apiMode === "testing") {
+            //My api needs to projections
+            var rawData = response.data.data;
+            this.id = rawData.id;
+            this.nombre = rawData.nombre;
+            this.fechaRegistro = rawData.fechaRegistro;
+            this.comunidad = rawData.comunidad;
+            this.municipio = rawData.municipio;
+            this.familias = rawData.familias;
+            this.direccion = rawData.direccion;
+          } else {
+            //Api from amdocs has projections
+            //console.log(response.data._embedded.comunitarios);
+            var rawData = response.data._embedded.comunitarios;
+            this.items = rawData;
+          }
+        })
+        .catch(e => {
+          console.log("error");
+          console.log(e);
+          this.errors.push(e);
+        });
+    },
+    prepareData() {
+      this.centerData = {
+        id: this.id,
+        nombre: this.nombre,
+        fechaRegistro: this.fechaRegistro,
+        comunidad: this.comunidad,
+        municipio: this.municipio,
+        familias: this.familias,
+        direccion: this.direccion,
+        latitud: this.latitud,
+        longitud: this.longitud
+      };
+    },
+    updateCenterData() {
+      this.prepareData();
 
-          this.initializeData();
+      axios({
+        method: "PUT",
+        data: this.centerData,
+        url: this.allCommunitaryCentersURL + "/" + this.id
+      })
+        .then(response => {
+          console.log(response);
+
+          alert("El centro se ha guardado satisfactoriamente");
+          this.$router.push({ name: "centros" });
         })
         .catch(e => {
           this.errors.push(e);
         });
-    },
-    getAllRegions() {
-      axios({
-        method: "GET",
-        url: this.allRegionsURL
-      })
-        .then(response => {
-          this.regiones = response.data.data;
-        })
-        .catch(e => {
-          this.errors.push(e);
-        });
-    },
-    getAddress(bank, callbackFunctions) {
-      axios({
-        method: "GET",
-        url: this.addressURL + "/" + bank.IDDireccion
-      })
-        .then(response => {
-          var rawData = response.data.data;
-
-          bank["Direccion"] = rawData[0];
-          bank = callbackFunctions[0](bank, callbackFunctions);
-        })
-        .catch(e => {
-          this.errors.push(e);
-        });
-    },
-    getRegion(bank, callbackFunctions) {
-      axios({
-        method: "GET",
-        url: this.regionURL + "/" + bank.IdRegion
-      })
-        .then(response => {
-          var rawData = response.data.data;
-
-          bank["Region"] = rawData[0];
-          bank = callbackFunctions[1](bank, callbackFunctions);
-        })
-        .catch(e => {
-          this.errors.push(e);
-        });
-    },
-    getContact(bank, callbackFunctions) {
-      axios({
-        method: "GET",
-        url: this.contactURL + "/" + bank.IdContacto
-      })
-        .then(response => {
-          var rawData = response.data.data;
-
-          bank["Contacto"] = rawData[0];
-          this.loading = false;
-        })
-        .catch(e => {
-          this.errors.push(e);
-        });
-    },
-    saveBank(bank, callbackFunctions) {
-      console.log("Se ha guardado");
     }
   }
 };

@@ -1795,7 +1795,7 @@ export default {
           });
         })
         .catch(function(error) {
-          console.log("Error in creation of beneficiarie");
+          console.log("Error durante la creación del beneficiario");
           console.log(error);
         });
     },

@@ -1,29 +1,178 @@
 <template>
   <div>
-    <toolbar-handler/>
 
-    <div class="data-visualization-container">
-      <p class="module-title">
-        <v-icon>account_balance</v-icon>Banco de Alimentos
-      </p>
-      <div class="table">
-        <v-client-table          
-          :data="data"
-          :columns="columnNames"
-          :name="'myTable'"
-          class="table"/>
-      </div>
+    <toolbarHandler      
+      :key-name="'servicios'"/>
+
+    <div class="elements-container">
+      <v-layout
+        align-center
+        justify-space-around
+        row
+        fill-height>
+
+        <v-flex xs3>
+          <h2>CREAR SERVICIO</h2>
+        </v-flex>
+      </v-layout>
+
+      <v-layout 
+        align-center
+        justify-start
+        row
+        fill-height>
+
+        <v-flex xs3>
+          <v-text-field
+            v-model="nombre"
+            label="Nombre del negocio"
+            required/>
+        </v-flex>
+
+        <v-flex xs1/>
+
+        <v-flex xs3>
+          <div>
+            <v-text-field
+              v-model="tipo"
+              label="Tipo del beneficio"
+              required/>
+          </div>
+        </v-flex>
+
+        <v-flex xs1/>
+
+        <v-flex xs3>
+          <v-text-field
+            v-model="beneficio"
+            label="Descripción del beneficio"
+            required/>
+        </v-flex>
+      </v-layout>
+
+      <v-layout 
+        align-center
+        justify-start
+        row
+        fill-height>
+
+        <v-flex xs3>
+          <v-text-field
+            v-model="telefono"
+            label="Contacto"
+            required/>
+        </v-flex>
+      </v-layout>
+
+      <v-layout
+        align-center
+        justify-start
+        row
+        fill-height>
+        <h2>Dirección</h2>
+      </v-layout>
+
+      <v-layout
+        align-center
+        justify-start
+        row
+        fill-height>
+
+        <v-flex xs1>
+          <v-text-field
+            v-model="direccion.estado"
+            label="Estado"/>
+        </v-flex>
+
+        <v-flex xs1/>
+
+        <v-flex xs1>
+          <v-text-field
+            v-model="direccion.ciudad"
+            label="Ciudad"/>
+        </v-flex>
+
+        <v-flex xs1/>
+
+        <v-flex xs1>
+          <v-text-field
+            v-model="direccion.cp"
+            type="number"
+            label="C.P."/>
+        </v-flex>
+
+      </v-layout>
+
+      <v-layout
+        align-center
+        justify-start
+        row
+        fill-height>
+
+        <v-flex xs3>
+          <v-text-field
+            v-model="direccion.calle"
+            label="Calle"/>
+        </v-flex>
+
+        <v-flex xs1/>
+
+        <v-flex xs1>
+          <v-text-field
+            v-model="direccion.numero"
+            label="Número"/>
+        </v-flex>
+      </v-layout>
+
+      <v-layout
+        align-center
+        justify-start
+        row
+        fill-height>
+
+        <v-flex xs1>
+          <v-text-field
+            v-model="direccion.longitud"
+            label="Longitud"/>
+        </v-flex>
+
+        <v-flex xs1/>
+
+        <v-flex xs1>
+          <v-text-field
+            v-model="direccion.latitud"
+            label="Latitud"/>
+        </v-flex>
+      </v-layout>
     </div>
 
     <v-btn
-      absolute 
-      dark
+      fixed
       fab
       bottom
-      right 
-      color="green">
-      <v-icon>add</v-icon>
+      right
+      color="primary"
+      @click="saveServiceData()">
+      <v-icon>save</v-icon>
     </v-btn>
+
+    <v-snackbar
+      :timeout="timeout"
+      :top="y === 'top'"
+      :bottom="y === 'bottom'"
+      :right="x === 'right'"
+      :left="x === 'left'"
+      :multi-line="mode === 'multi-line'"
+      :vertical="mode === 'vertical'"
+      v-model="snackbar">
+      {{ confirmationMessage }}
+      <v-btn
+        flat
+        color="pink"
+        @click.native="snackbar = false">
+        Close
+      </v-btn>
+    </v-snackbar>
 
   </div>
 </template>
@@ -31,6 +180,9 @@
 <script>
 import axios from "axios";
 import toolbarHandler from "../toolbars/toolbarHandler";
+import { apiRoutes } from "../../configs/apiRoutes.js";
+//var apiMode = "jsh";
+var apiMode = "testing";
 
 export default {
   components: {
@@ -38,88 +190,73 @@ export default {
   },
   data() {
     return {
-      banksURL: "http://localhost:5000/api/bancos",
+      //var apiMode = "jsh";
+      apiMode: "testing",
 
-      dataUrl: undefined,
-      data: [],
-      columnNames: []
+      allServicesURL: apiRoutes[apiMode].allServicesURL,
+      errors: [],
+
+      serviceData: {},
+      nombre: "",
+      tipo: "",
+      beneficio: "",
+      telefono: "",
+      direccion: {
+        calle: "",
+        numero: "",
+        cp: "",
+        ciudad: "",
+        estado: "",
+        latitud: "",
+        longitud: ""
+      },
+
+      // Snackbar config
+      snackbar: false,
+      y: "bottom",
+      x: null,
+      mode: "",
+      timeout: 3000,
+      confirmationMessage: "El servicio ha sido guardado"
     };
   },
-  watch: {
-    dataUrl: function() {
-      this.data = [];
-
-      this.loadData();
-    }
-  },
-  mounted: function() {
-    this.getBanksInformation();
-    this.loadData();
-  },
   methods: {
-    getBanksInformation: function() {
-      this.dataUrl = this.banksURL;
+    prepareData() {
+      this.serviceData = {
+        id: this.id,
+        nombre: this.nombre,
+        tipo: this.tipo,
+        beneficio: this.beneficio,
+        telefono: this.telefono,
+        direccion: this.direccion,
+        latitud: this.latitud,
+        longitud: this.longitud
+      };
     },
-    loadData: function() {
-      axios({ method: "GET", url: this.dataUrl }).then(
-        result => {
-          var rawData = result.request.response;
-          var parsedData = JSON.parse(rawData);
-          var cleanData = parsedData.data;
-          var dataKeys = [];
+    saveServiceData() {
+      this.prepareData();
 
-          var showAs = ["Nombre", "Región", "Estado", "Ciudad"];
-          var valuesToRecover = [
-            "nombre",
-            ["region", "nombre"],
-            ["direccion", "estado"],
-            ["direccion", "ciudad"]
-          ];
+      axios({
+        method: "POST",
+        data: this.serviceData,
+        url: this.allServicesURL
+      })
+        .then(response => {
+          console.log(response);
 
-          if (showAs.length != valuesToRecover.length) {
-            return "ERROR: Arrays 'showAs' and 'valuesToRecover' in method loadData() have different sizes";
-          }
-
-          this.data = [];
-          this.columnNames = showAs;
-
-          for (var i = 0; i < cleanData.length; i++) {
-            var elementInArray = cleanData[i];
-            var newBank = {};
-            for (var j = 0; j < valuesToRecover.length; j++) {
-              var key = valuesToRecover[j];
-              var saveKeyAs = showAs[j];
-              //Recover value
-              if (key instanceof Array) {
-                var value = elementInArray[key[0]][key[1]];
-              } else {
-                var value = elementInArray[key];
-              }
-
-              newBank[saveKeyAs] = value;
-            }
-            this.data.push(newBank);
-          }
-        },
-        error => {
-          console.error(error);
-        }
-      );
+          alert("El servicio se ha guardado satisfactoriamente");
+          this.$router.push({ name: "servicios" });
+        })
+        .catch(e => {
+          this.errors.push(e);
+        });
     }
   }
 };
 </script>
 
-<style type="text/css">
-.module-title {
-  text-align: left !important;
-}
-
-.table {
-  width: 90%;
-}
-
-.data-visualization-container {
+<style scoped>
+.elements-container {
   margin-left: 5%;
 }
 </style>

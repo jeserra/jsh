@@ -5,9 +5,11 @@
       app>
 
       <v-container>
-        <v-flex xs2>
-          <v-toolbar-title class="toolbar-title">{{ _data[keyName].title }}</v-toolbar-title>
-        </v-flex>
+        <v-layout>
+          <v-flex xs2>
+            <v-toolbar-title class="toolbar-title">{{ _data[keyName].title }}</v-toolbar-title>
+          </v-flex>
+        </v-layout>
 
         <v-layout
           row
@@ -107,6 +109,7 @@ export default {
 }
 
 .toolbar-title {
+  margin-left: 2.5em;
   margin-top: -0.2em;
   height: 2em !important;
 

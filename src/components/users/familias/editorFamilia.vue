@@ -2,7 +2,7 @@
   <div>
 
     <toolbarHandler      
-      :key-name="'empleos'"/>
+      :key-name="'personas'"/>
 
     <div class="elements-container">
       <v-layout
@@ -12,7 +12,7 @@
         fill-height>
 
         <v-flex xs3>
-          <h2>EDITAR EMPLEO</h2>
+          <h2>EDITAR FAMILIA</h2>
         </v-flex>
       </v-layout>
 
@@ -24,19 +24,18 @@
 
         <v-flex xs3>
           <v-text-field
-            v-model="tipo"
-            label="Tipo de empleo"
+            v-model="apellido"
+            label="Apellido de la familia"
             required/>
         </v-flex>
 
         <v-flex xs1/>
 
-        <v-flex xs1>
+        <v-flex xs3>
           <div>
             <v-text-field
-              v-model="oferta"
-              label="Oferta"
-              type="number"
+              v-model="representante"
+              label="Nombre del representante"
               required/>
           </div>
         </v-flex>
@@ -45,21 +44,14 @@
 
         <v-flex xs3>
           <v-text-field
-            v-model="vigencia"
-            label="Vigencia"
+            v-model="integrantes"
+            label="integrantes"
+            type="number"
             required/>
         </v-flex>
       </v-layout>
 
-      <v-layout
-        align-center
-        justify-start
-        row
-        fill-height>
-        <h2>Dirección</h2>
-      </v-layout>
-
-      <v-layout
+      <v-layout 
         align-center
         justify-start
         row
@@ -67,68 +59,18 @@
 
         <v-flex xs1>
           <v-text-field
-            v-model="direccion.estado"
-            label="Estado"/>
+            v-model="comunidad"
+            label="Comunidad"
+            required/>
         </v-flex>
 
         <v-flex xs1/>
 
         <v-flex xs1>
           <v-text-field
-            v-model="direccion.ciudad"
-            label="Ciudad"/>
-        </v-flex>
-
-        <v-flex xs1/>
-
-        <v-flex xs1>
-          <v-text-field
-            v-model="direccion.cp"
-            type="number"
-            label="C.P."/>
-        </v-flex>
-
-      </v-layout>
-
-      <v-layout
-        align-center
-        justify-start
-        row
-        fill-height>
-
-        <v-flex xs3>
-          <v-text-field
-            v-model="direccion.calle"
-            label="Calle"/>
-        </v-flex>
-
-        <v-flex xs1/>
-
-        <v-flex xs1>
-          <v-text-field
-            v-model="direccion.numero"
-            label="Número"/>
-        </v-flex>
-      </v-layout>
-
-      <v-layout
-        align-center
-        justify-start
-        row
-        fill-height>
-
-        <v-flex xs1>
-          <v-text-field
-            v-model="direccion.longitud"
-            label="Longitud"/>
-        </v-flex>
-
-        <v-flex xs1/>
-
-        <v-flex xs1>
-          <v-text-field
-            v-model="direccion.latitud"
-            label="Latitud"/>
+            v-model="contacto"
+            label="Contacto"
+            required/>
         </v-flex>
       </v-layout>
     </div>
@@ -139,7 +81,7 @@
       bottom
       right
       color="primary"
-      @click="updateJobData()">
+      @click="updateFamiliaData()">
       <v-icon>save</v-icon>
     </v-btn>
 
@@ -166,8 +108,8 @@
 
 <script>
 import axios from "axios";
-import toolbarHandler from "../toolbars/toolbarHandler";
-import { apiRoutes } from "../../configs/apiRoutes.js";
+import toolbarHandler from "../../toolbars/toolbarHandler";
+import { apiRoutes } from "../../../configs/apiRoutes.js";
 //var apiMode = "jsh";
 var apiMode = "testing";
 
@@ -180,23 +122,16 @@ export default {
       //var apiMode = "jsh";
       apiMode: "testing",
 
-      allJobsURL: apiRoutes[apiMode].allJobsURL,
+      allFamiliasURL: apiRoutes[apiMode].allFamiliasURL,
       errors: [],
 
-      serviceData: {},
+      familiaData: {},
       id: this.$route.params.id,
-      tipo: "",
-      oferta: "",
-      vigencia: "",
-      direccion: {
-        calle: "",
-        numero: "",
-        cp: "",
-        ciudad: "",
-        estado: "",
-        latitud: "",
-        longitud: ""
-      },
+      apellido: "",
+      representante: "",
+      integrantes: "",
+      comunidad: "",
+      contacto: "",
 
       // Snackbar config
       snackbar: false,
@@ -204,7 +139,7 @@ export default {
       x: null,
       mode: "",
       timeout: 3000,
-      confirmationMessage: "El empleo ha sido guardado"
+      confirmationMessage: "La familia ha sido guardado"
     };
   },
   mounted() {
@@ -214,18 +149,18 @@ export default {
     getData() {
       axios({
         method: "GET",
-        url: this.allJobsURL + "/" + this.id
+        url: this.allFamiliasURL + "/" + this.id
       })
         .then(response => {
           if (apiMode === "testing") {
             //My api needs to projections
             var rawData = response.data.data;
-
             this.id = rawData.id;
-            this.tipo = rawData.tipo;
-            this.oferta = rawData.oferta;
-            this.vigencia = rawData.vigencia;
-            this.direccion = rawData.direccion;
+            this.apellido = rawData.apellido;
+            this.representante = rawData.representante;
+            this.integrantes = rawData.integrantes;
+            this.comunidad = rawData.comunidad;
+            this.contacto = rawData.contacto;
           } else {
             //Api from amdocs has projections
             //console.log(response.data._embedded.comunitarios);
@@ -240,27 +175,28 @@ export default {
         });
     },
     prepareData() {
-      this.serviceData = {
+      this.familiaData = {
         id: this.id,
-        tipo: this.tipo,
-        oferta: this.oferta,
-        vigencia: this.vigencia,
-        direccion: this.direccion
+        apellido: this.apellido,
+        representante: this.representante,
+        integrantes: this.integrantes,
+        comunidad: this.comunidad,
+        contacto: this.contacto
       };
     },
-    updateJobData() {
+    updateFamiliaData() {
       this.prepareData();
 
       axios({
         method: "PUT",
-        data: this.serviceData,
-        url: this.allJobsURL + "/" + this.id
+        data: this.familiaData,
+        url: this.allFamiliasURL + "/" + this.id
       })
         .then(response => {
           console.log(response);
 
-          alert("El empleo se ha guardado satisfactoriamente");
-          this.$router.push({ name: "empleos" });
+          alert("La familia se ha guardado satisfactoriamente");
+          this.$router.push({ name: "familias" });
         })
         .catch(e => {
           this.errors.push(e);

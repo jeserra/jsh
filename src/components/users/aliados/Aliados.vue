@@ -14,7 +14,7 @@
         <v-card>
 
           <v-card-title v-if="selected.length==0">
-            {{ items.length + ' ' }} Trabajadores Sociales
+            {{ items.length + ' ' }} Aliados
             <v-spacer/>
             <v-text-field
               v-model="search"
@@ -22,6 +22,22 @@
               label="Buscar"
               single-line
               hide-details/>
+
+            <router-link
+              :to="{ name:'creadorAliado' }">
+              <v-btn
+                flat
+                style="color:rgba(71, 147, 89, 1)">
+                Agregar
+              </v-btn>
+            </router-link>
+
+            <v-btn
+              flat
+              style="color:rgba(71, 147, 89, 1)"
+              @click="getData()">
+              Actualizar
+            </v-btn>
           </v-card-title>
 
           <v-card-title v-if="selected.length > 0">
@@ -30,7 +46,7 @@
             <v-btn 
               v-if="selected.length == 1"
               flat
-              @click="editWorker()">
+              @click="editAliado()">
               Editar
             </v-btn>
             <v-btn 
@@ -64,8 +80,6 @@
               <td>{{ String(props.item[headers[1]["value"]]) }}</td>
               <td>{{ String(props.item[headers[2]["value"]]) }}</td>
               <td>{{ String(props.item[headers[3]["value"]]) }}</td>
-              <td>{{ String(props.item[headers[4]["value"]]) }}</td>
-              <td>{{ String(props.item[headers[5]["value"]]) }}</td>
             </template>
 
             <template slot="no-data">
@@ -89,8 +103,8 @@
 
 <script>
 import axios from "axios";
-import toolbarHandler from "../toolbars/toolbarHandler";
-import { apiRoutes } from "../../configs/apiRoutes.js";
+import toolbarHandler from "../../toolbars/toolbarHandler";
+import { apiRoutes } from "../../../configs/apiRoutes.js";
 //var apiMode = "jsh";
 var apiMode = "testing";
 
@@ -103,7 +117,7 @@ export default {
       //var apiMode = "jsh";
       apiMode: "testing",
 
-      allFamiliasURL: apiRoutes[apiMode].allFamiliasURL,
+      allAliadosURL: apiRoutes[apiMode].allAliadosURL,
 
       loading: true,
       search: "",
@@ -120,20 +134,16 @@ export default {
       console.log("El API seleccionado será " + apiMode);
       if (apiMode === "testing") {
         return [
-          { text: "Apellido", value: "apellido" },
-          { text: "ID", value: "id" },
-          { text: "Representante", value: "representante" },
-          { text: "Integrantes", value: "integrantes" },
-          { text: "Comunidad", value: "comunidad" },
+          { text: "Nombre", value: "nombre" },
+          { text: "Tipo de Aliado", value: "tipo" },
+          { text: "Descripción", value: "descripcion" },
           { text: "Contacto", value: "contacto" }
         ];
       } else if (apiMode === "jsh") {
         return [
-          { text: "Apellido", value: "apellido" },
-          { text: "ID", value: "id" },
-          { text: "Representante", value: "representante" },
-          { text: "Integrantes", value: "integrantes" },
-          { text: "Comunidad", value: "comunidad" },
+          { text: "Nombre", value: "nombre" },
+          { text: "Tipo de Aliado", value: "tipo" },
+          { text: "Descripción", value: "descripcion" },
           { text: "Contacto", value: "contacto" }
         ];
       }
@@ -154,21 +164,21 @@ export default {
     this.getData();
   },
   methods: {
-    editWorker() {
+    editAliado() {
       var selectedID = this.selected[0].id;
-      this.$router.push({ name: "editorUsuario", params: { id: selectedID } });
+      this.$router.push({ name: "editorAliado", params: { id: selectedID } });
     },
     deleteSelectedWorkers() {
       for (var i = 0; i < this.selected.length; i++) {
-        this.deleteWorker(this.selected[i].id);
+        this.deleteItem(this.selected[i].id);
       }
 
       this.selected = [];
     },
-    deleteWorker(jobID) {
+    deleteItem(jobID) {
       axios({
         method: "DELETE",
-        url: this.allFamiliasURL + "/" + jobID
+        url: this.allAliadosURL + "/" + jobID
       })
         .then(response => {
           console.log(response);
@@ -183,7 +193,7 @@ export default {
     getData() {
       axios({
         method: "GET",
-        url: this.allFamiliasURL
+        url: this.allAliadosURL
       })
         .then(response => {
           if (apiMode === "testing") {

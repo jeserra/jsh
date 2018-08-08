@@ -22,6 +22,22 @@
               label="Buscar"
               single-line
               hide-details/>
+
+            <router-link
+              :to="{ name:'creadorEmpleo' }">
+              <v-btn
+                flat
+                style="color:rgba(71, 147, 89, 1)">
+                Agregar
+              </v-btn>
+            </router-link>
+
+            <v-btn
+              flat
+              style="color:rgba(71, 147, 89, 1)"
+              @click="getData()">
+              Actualizar
+            </v-btn>
           </v-card-title>
 
           <v-card-title v-if="selected.length > 0">

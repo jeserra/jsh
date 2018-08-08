@@ -2,7 +2,7 @@
   <div>
 
     <toolbarHandler      
-      :key-name="'empleos'"/>
+      :key-name="'personas'"/>
 
     <div class="elements-container">
       <v-layout
@@ -12,7 +12,7 @@
         fill-height>
 
         <v-flex xs3>
-          <h2>EDITAR EMPLEO</h2>
+          <h2>EDITAR TUTOR</h2>
         </v-flex>
       </v-layout>
 
@@ -22,113 +22,53 @@
         row
         fill-height>
 
-        <v-flex xs3>
+        <v-flex xs2>
+          <v-text-field
+            v-model="nombre"
+            label="Nombre del Tutor"
+            required/>
+        </v-flex>
+
+        <v-flex xs1/>
+
+        <v-flex xs2>
+          <v-text-field
+            v-model="contacto"
+            label="Contacto"
+            required/>
+        </v-flex>
+
+        <v-flex xs1/>
+
+        <v-flex xs2>
+          <v-text-field
+            v-model="comunidad"
+            label="Comunidad"
+            required/>
+        </v-flex>
+
+        <v-flex xs1/>
+
+        <v-flex xs1>
           <v-text-field
             v-model="tipo"
-            label="Tipo de empleo"
-            required/>
-        </v-flex>
-
-        <v-flex xs1/>
-
-        <v-flex xs1>
-          <div>
-            <v-text-field
-              v-model="oferta"
-              label="Oferta"
-              type="number"
-              required/>
-          </div>
-        </v-flex>
-
-        <v-flex xs1/>
-
-        <v-flex xs3>
-          <v-text-field
-            v-model="vigencia"
-            label="Vigencia"
+            label="Tipo"
             required/>
         </v-flex>
       </v-layout>
 
-      <v-layout
-        align-center
-        justify-start
-        row
-        fill-height>
-        <h2>Dirección</h2>
-      </v-layout>
-
-      <v-layout
+      <v-layout 
         align-center
         justify-start
         row
         fill-height>
 
         <v-flex xs1>
-          <v-text-field
-            v-model="direccion.estado"
-            label="Estado"/>
-        </v-flex>
-
-        <v-flex xs1/>
-
-        <v-flex xs1>
-          <v-text-field
-            v-model="direccion.ciudad"
-            label="Ciudad"/>
-        </v-flex>
-
-        <v-flex xs1/>
-
-        <v-flex xs1>
-          <v-text-field
-            v-model="direccion.cp"
-            type="number"
-            label="C.P."/>
-        </v-flex>
-
-      </v-layout>
-
-      <v-layout
-        align-center
-        justify-start
-        row
-        fill-height>
-
-        <v-flex xs3>
-          <v-text-field
-            v-model="direccion.calle"
-            label="Calle"/>
-        </v-flex>
-
-        <v-flex xs1/>
-
-        <v-flex xs1>
-          <v-text-field
-            v-model="direccion.numero"
-            label="Número"/>
-        </v-flex>
-      </v-layout>
-
-      <v-layout
-        align-center
-        justify-start
-        row
-        fill-height>
-
-        <v-flex xs1>
-          <v-text-field
-            v-model="direccion.longitud"
-            label="Longitud"/>
-        </v-flex>
-
-        <v-flex xs1/>
-
-        <v-flex xs1>
-          <v-text-field
-            v-model="direccion.latitud"
-            label="Latitud"/>
+          <v-switch
+            v-model="disponible"
+            color="green"
+            label="Disponible"
+            required/>
         </v-flex>
       </v-layout>
     </div>
@@ -139,7 +79,7 @@
       bottom
       right
       color="primary"
-      @click="updateJobData()">
+      @click="updateTutorData()">
       <v-icon>save</v-icon>
     </v-btn>
 
@@ -166,8 +106,8 @@
 
 <script>
 import axios from "axios";
-import toolbarHandler from "../toolbars/toolbarHandler";
-import { apiRoutes } from "../../configs/apiRoutes.js";
+import toolbarHandler from "../../toolbars/toolbarHandler";
+import { apiRoutes } from "../../../configs/apiRoutes.js";
 //var apiMode = "jsh";
 var apiMode = "testing";
 
@@ -180,23 +120,16 @@ export default {
       //var apiMode = "jsh";
       apiMode: "testing",
 
-      allJobsURL: apiRoutes[apiMode].allJobsURL,
+      allTutoresURL: apiRoutes[apiMode].allTutoresURL,
       errors: [],
 
-      serviceData: {},
+      tutorData: {},
       id: this.$route.params.id,
+      nombre: "",
+      disponible: "",
+      comunidad: "",
       tipo: "",
-      oferta: "",
-      vigencia: "",
-      direccion: {
-        calle: "",
-        numero: "",
-        cp: "",
-        ciudad: "",
-        estado: "",
-        latitud: "",
-        longitud: ""
-      },
+      contacto: "",
 
       // Snackbar config
       snackbar: false,
@@ -204,7 +137,7 @@ export default {
       x: null,
       mode: "",
       timeout: 3000,
-      confirmationMessage: "El empleo ha sido guardado"
+      confirmationMessage: "El tutor ha sido guardado"
     };
   },
   mounted() {
@@ -214,18 +147,18 @@ export default {
     getData() {
       axios({
         method: "GET",
-        url: this.allJobsURL + "/" + this.id
+        url: this.allTutoresURL + "/" + this.id
       })
         .then(response => {
           if (apiMode === "testing") {
             //My api needs to projections
             var rawData = response.data.data;
-
             this.id = rawData.id;
+            this.nombre = rawData.nombre;
+            this.disponible = rawData.disponible;
+            this.comunidad = rawData.comunidad;
             this.tipo = rawData.tipo;
-            this.oferta = rawData.oferta;
-            this.vigencia = rawData.vigencia;
-            this.direccion = rawData.direccion;
+            this.contacto = rawData.contacto;
           } else {
             //Api from amdocs has projections
             //console.log(response.data._embedded.comunitarios);
@@ -240,27 +173,28 @@ export default {
         });
     },
     prepareData() {
-      this.serviceData = {
+      this.tutorData = {
         id: this.id,
+        nombre: this.nombre,
+        disponible: this.disponible,
+        comunidad: this.comunidad,
         tipo: this.tipo,
-        oferta: this.oferta,
-        vigencia: this.vigencia,
-        direccion: this.direccion
+        contacto: this.contacto
       };
     },
-    updateJobData() {
+    updateTutorData() {
       this.prepareData();
 
       axios({
         method: "PUT",
-        data: this.serviceData,
-        url: this.allJobsURL + "/" + this.id
+        data: this.tutorData,
+        url: this.allTutoresURL + "/" + this.id
       })
         .then(response => {
           console.log(response);
 
-          alert("El empleo se ha guardado satisfactoriamente");
-          this.$router.push({ name: "empleos" });
+          alert("El tutor se ha guardado satisfactoriamente");
+          this.$router.push({ name: "tutores" });
         })
         .catch(e => {
           this.errors.push(e);

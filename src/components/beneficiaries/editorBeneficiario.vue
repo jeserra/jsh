@@ -1797,6 +1797,15 @@ export default {
           this.condicionesEconomicas = data.condicionesEconomicas;
           this.alimentacion = data.alimentacion;
           this.adicionales = data.adicionales;
+
+          if (this.adicionales === undefined) {
+            this.adicionales = {
+              institucion: undefined,
+              cantidadDeTrabajo: undefined,
+              ahorro: undefined,
+              frecuenciaAhorro: undefined
+            };
+          }
         })
         .catch(e => {
           this.errors.push(e);

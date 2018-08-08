@@ -14,7 +14,7 @@
         <v-card>
 
           <v-card-title v-if="selected.length==0">
-            {{ items.length + ' ' }} Beneficiarios
+            {{ items.length + ' ' }} Tutores
             <v-spacer/>
             <v-text-field
               v-model="search"
@@ -24,7 +24,7 @@
               hide-details/>
 
             <router-link
-              :to="{ name:'creadorBeneficiario' }">
+              :to="{ name:'creadorTutor' }">
               <v-btn
                 flat
                 style="color:rgba(71, 147, 89, 1)">
@@ -46,12 +46,12 @@
             <v-btn 
               v-if="selected.length == 1"
               flat
-              @click="editBeneficiario()">
+              @click="editTutor()">
               Editar
             </v-btn>
             <v-btn 
               flat
-              @click="deleteSelectedItems()">
+              @click="deleteSelectedWorkers()">
               Borrar
             </v-btn>
           </v-card-title>
@@ -76,11 +76,16 @@
                   primary
                   hide-details/>
               </td>
-              <td>{{ String(props.item.representante.nombre) }}</td>
-              <td>{{ String(props.item.representante.comunidad) }}</td>
-              <td>{{ String(props.item.datosGenerales.nombre) }}</td>
-              <td>{{ String(props.item.datosGenerales.grupo) }}</td>
-              <td>{{ String(props.item.datosGenerales.fechaCaptura) }}</td>
+              <td>{{ String(props.item[headers[0]["value"]]) }}</td>
+              <td v-if="Boolean(props.item[headers[1]['value']])">
+                Sí
+              </td>
+              <td v-else>
+                No
+              </td>
+              <td>{{ String(props.item[headers[2]["value"]]) }}</td>
+              <td>{{ String(props.item[headers[3]["value"]]) }}</td>
+              <td>{{ String(props.item[headers[4]["value"]]) }}</td>
             </template>
 
             <template slot="no-data">
@@ -104,8 +109,8 @@
 
 <script>
 import axios from "axios";
-import toolbarHandler from "../toolbars/toolbarHandler";
-import { apiRoutes } from "../../configs/apiRoutes.js";
+import toolbarHandler from "../../toolbars/toolbarHandler";
+import { apiRoutes } from "../../../configs/apiRoutes.js";
 //var apiMode = "jsh";
 var apiMode = "testing";
 
@@ -118,7 +123,7 @@ export default {
       //var apiMode = "jsh";
       apiMode: "testing",
 
-      allBeneficiariosURL: apiRoutes[apiMode].allBeneficiariosURL,
+      allTutoresURL: apiRoutes[apiMode].allTutoresURL,
 
       loading: true,
       search: "",
@@ -135,19 +140,19 @@ export default {
       console.log("El API seleccionado será " + apiMode);
       if (apiMode === "testing") {
         return [
-          { text: "Representante-Nombre", value: "representante.nombre" },
-          { text: "Representante-Comunidad", value: "representante.comunidad" },
-          { text: "Nombre", value: "datosGenerales.nombre" },
-          { text: "Grupo", value: "datosGenerales.grupo" },
-          { text: "Fecha de captura", value: "datosGenerales.fechaCaptura" }
+          { text: "Nombre", value: "nombre" },
+          { text: "Disponible", value: "disponible" },
+          { text: "Comunidad", value: "comunidad" },
+          { text: "Tipo de curso", value: "tipo" },
+          { text: "Contacto", value: "contacto" }
         ];
       } else if (apiMode === "jsh") {
         return [
-          { text: "Representante-Nombre", value: "representante.nombre" },
-          { text: "Representante-Comunidad", value: "representante.comunidad" },
-          { text: "Nombre", value: "datosGenerales.nombre" },
-          { text: "Grupo", value: "datosGenerales.grupo" },
-          { text: "Fecha de captura", value: "datosGenerales.fechaCaptura" }
+          { text: "Nombre", value: "nombre" },
+          { text: "Disponible", value: "disponible" },
+          { text: "Comunidad", value: "comunidad" },
+          { text: "Tipo de curso", value: "tipo" },
+          { text: "Contacto", value: "contacto" }
         ];
       }
     }
@@ -167,14 +172,11 @@ export default {
     this.getData();
   },
   methods: {
-    editBeneficiario() {
+    editTutor() {
       var selectedID = this.selected[0].id;
-      this.$router.push({
-        name: "editorBeneficiario",
-        params: { id: selectedID }
-      });
+      this.$router.push({ name: "editorTutor", params: { id: selectedID } });
     },
-    deleteSelectedItems() {
+    deleteSelectedWorkers() {
       for (var i = 0; i < this.selected.length; i++) {
         this.deleteItem(this.selected[i].id);
       }
@@ -184,7 +186,7 @@ export default {
     deleteItem(jobID) {
       axios({
         method: "DELETE",
-        url: this.allBeneficiariosURL + "/" + jobID
+        url: this.allTutoresURL + "/" + jobID
       })
         .then(response => {
           console.log(response);
@@ -199,7 +201,7 @@ export default {
     getData() {
       axios({
         method: "GET",
-        url: this.allBeneficiariosURL
+        url: this.allTutoresURL
       })
         .then(response => {
           if (apiMode === "testing") {

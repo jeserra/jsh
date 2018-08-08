@@ -30,7 +30,7 @@
             <v-btn 
               v-if="selected.length == 1"
               flat
-              @click="editWorker()">
+              @click="editTutor()">
               Editar
             </v-btn>
             <v-btn 
@@ -156,18 +156,18 @@ export default {
     this.getData();
   },
   methods: {
-    editWorker() {
+    editTutor() {
       var selectedID = this.selected[0].id;
       this.$router.push({ name: "editorUsuario", params: { id: selectedID } });
     },
     deleteSelectedWorkers() {
       for (var i = 0; i < this.selected.length; i++) {
-        this.deleteWorker(this.selected[i].id);
+        this.deleteItem(this.selected[i].id);
       }
 
       this.selected = [];
     },
-    deleteWorker(jobID) {
+    deleteItem(jobID) {
       axios({
         method: "DELETE",
         url: this.allTutoresURL + "/" + jobID
