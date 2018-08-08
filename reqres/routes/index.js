@@ -1,5 +1,8 @@
-var data = require("./../data.json"),
+var fs = require('fs'),
+	url = require('url'),
+	data = require("./../data.json"),
 	config = require("./../config.json");
+	filePath = "./data.json";
 
 module.exports = {
 
@@ -23,16 +26,52 @@ module.exports = {
 
 	post: function(req, res, next) {
 		var id = req.body.id || (Math.ceil(Math.random() * 1000)).toString().substring(0, 3),
-			returnData = req.body;
-		returnData.id = id;
+			returnData = req.body,
+			resource = req.params.resource;
+
+		returnData.id = Number(id);
 		returnData.createdAt = new Date().toISOString();
 
-		return res.status(201).send(returnData);
+		console.log("Original: " + data[resource].length)
+		data[resource].push(returnData);
+		console.log("Despues: " + data[resource].length);
+
+		console.log("Element created:");
+		console.log(returnData);
+		console.log("-----------------------------");
+
+	    fs.writeFile(filePath, JSON.stringify(data), function () {
+        	return res.status(201).send(returnData);
+	    });
 	},
 
 	put: function(req, res, next) {
 		var returnData = req.body;
 		returnData.updatedAt = new Date().toISOString();
+
+		var resource = req.params.resource,
+			targetID = returnData.id;
+
+		if(targetID !== null){
+
+			for(var i=0; i<data[resource].length; i++){
+				if(targetID == data[resource][i].id){
+
+					console.log("Element edited:");
+					console.log(data[resource][i]);
+					data[resource][i] = returnData;
+					console.log("-----------------------------");
+					console.log("New information:");
+					console.log(data[resource][i]);
+
+				    fs.writeFile(filePath, JSON.stringify(data), function () {
+				    	console.log("Edited has been completed");
+				    });
+					break;
+				}
+			}
+		}
+
 		return res.status(200).send(returnData);
 	},
 
@@ -54,6 +93,10 @@ module.exports = {
 					console.log(data[resource][i]);
 					console.log("-----------------------------");
 					data[resource].splice(i, 1);
+
+				    fs.writeFile(filePath, JSON.stringify(data), function () {
+				    	console.log("Deleten has been completed");
+				    });					
 					break;
 				}
 			}			
@@ -105,7 +148,8 @@ module.exports = {
 
 function returnAll(items, req, res) {
 	var page = parseInt(req.query.page, 10) || 1,
-		pageSize = parseInt(req.query.per_page, 10) || config.pagination.page_size,
+		//pageSize = parseInt(req.query.per_page, 10) || config.pagination.page_size,
+		pageSize = 100,
 		offset = (page - 1) * pageSize,
 		paginatedItems = items.slice(offset, offset + pageSize);
 	return res.status(200).send({
