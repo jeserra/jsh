@@ -42,7 +42,7 @@
             </v-list-tile-avatar>
             JSH
             <br>
-            JSH@testing.gg
+            <router-link :to="{ name:'logIn'}">JSH@testing.gg</router-link>
 
             <v-divider/>
 
