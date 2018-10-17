@@ -155,6 +155,9 @@
 import axios from "axios";
 import StarRating from "vue-star-rating";
 import toolbarHandler from "../toolbars/toolbarHandler";
+import { apiRoutes } from "../../configs/apiRoutes.js";
+ var apiMode = "jsh";
+
 
 export default {
   components: {
@@ -162,8 +165,13 @@ export default {
     toolbarHandler
   },
   data() {
+   
+
+
     return {
-      coursesURL: "http://localhost:5000/api/curso",
+
+      coursesURL:  "http://localhost:8080/api/cursos", //apiRoutes[apiMode].coursesURL,
+      //coursesURL: "http://localhost:5000/api/curso",
       loading: true,
       search: "",
       items: [],
@@ -184,6 +192,8 @@ export default {
     }
   },
   created() {
+
+    console.log(this.coursesURL);
     this.getData();
   },
   methods: {
@@ -193,7 +203,9 @@ export default {
         url: this.coursesURL
       })
         .then(response => {
-          this.items = response.data.data;
+
+          console.log(response.data);
+          this.items = response.data._embedded.cursos;
           this.loading = false;
         })
         .catch(e => {

@@ -106,8 +106,8 @@
 import axios from "axios";
 import toolbarHandler from "../toolbars/toolbarHandler";
 import { apiRoutes } from "../../configs/apiRoutes.js";
-//var apiMode = "jsh";
-var apiMode = "testing";
+var apiMode = "jsh";
+//var apiMode = "testing";
 
 export default {
   components: {
@@ -115,8 +115,7 @@ export default {
   },
   data() {
     return {
-      //var apiMode = "jsh";
-      apiMode: "testing",
+      
 
       allGruposURL: apiRoutes[apiMode].allGruposURL,
 
@@ -143,9 +142,9 @@ export default {
         ];
       } else if (apiMode === "jsh") {
         return [
-          { text: "ID", value: "id" },
+          { text: "ID", value: "idGrupo" },
           { text: "Comunidad", value: "comunidad" },
-          { text: "Trabajador Asignado", value: "trabajador" },
+          { text: "Trabajador Asignado", value: "trabajadorAsignado.nombre" },
           { text: "# Integrantes", value: "integrantes" },
           { text: "Progreso", value: "progreso" }
         ];
@@ -205,9 +204,10 @@ export default {
             this.items = rawData;
           } else {
             //Api from amdocs has projections
-            //console.log(response.data._embedded.comunitarios);
-            var rawData = response.data._embedded.comunitarios;
+            var rawData = response.data._embedded.grupos;
             this.items = rawData;
+
+            console.log(rawData);
           }
         })
         .catch(e => {

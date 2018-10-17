@@ -74,15 +74,15 @@ const ifUserAuthenticated = (to, from, next) => {
 
   if (store.getters.isAuthenticated) {
     //Check user permissions
-    /*
+     
     var token = store.getters.isAuthenticated;
 
-    jsh / connection / token
+   // jsh / connection / token
     userID = result.userID;
-      ----------------
-    jsh / user / token
+    //  ----------------
+   // jsh / user / token
     if (result.user.id)
-    */
+    
 
     next();
     return;

@@ -5,18 +5,23 @@ export const apiRoutes = {
     Accept: "application/json"
   },
   jsh: {
+
+    apiBaseURL : "http://localhost:8080/api",
     allBanksURL: "http://localhost:5000/api/all/bancoalimentos",
     allRegionsURL: "http://localhost:5000/api/all/region",
 
-    addressURL: "http://localhost:5000/api/direccion/IDDireccion",
+
+
+    addressURL: "http://localhost:8080/api/direccion",
     bankURL: "http://localhost:5000/api/bancoalimentos/IDBancoAlimentos",
+    coursesURL :   "http://localhost:8080/api/cursos",
     contactURL: "http://localhost:5000/api/contacto/IDContacto",
     regionURL: "http://localhost:5000/api/region/IDRegion",
 
-    allGruposURL: "http://localhost:5000/api/grupos",
+    allGruposURL: "http://localhost:8080/api/grupos",
     allGruposGraduadosURL: "http://localhost:5000/api/gruposGraduados",
 
-    allCommunitaryCentersURL: "http://localhost:5000/api/centros",
+    allCommunitaryCentersURL: "http://localhost:8080/api/comunitarios",
     allJobsURL: "http://localhost:5000/api/empleos",
     allServicesURL: "http://localhost:5000/api/servicios",
 

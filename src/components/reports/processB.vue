@@ -84,7 +84,7 @@ export default {
   data() {
     return {
       loading: false,
-      title: "Cuenta Ahorro",
+      title: "Proyecto de vida",
       stars: 4.5,
       totalVotes: 100,
 

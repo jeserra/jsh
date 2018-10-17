@@ -80,6 +80,7 @@
               <td>{{ String(props.item[headers[1]["value"]]) }}</td>
               <td>{{ String(props.item[headers[2]["value"]]) }}</td>
               <td>{{ String(props.item[headers[3]["value"]]) }}</td>
+              <td>{{ String(props.item[headers[4]["value"]]) }}</td>
             </template>
 
             <template slot="no-data">
@@ -126,8 +127,10 @@
 import axios from "axios";
 import toolbarHandler from "../toolbars/toolbarHandler";
 import { apiRoutes } from "../../configs/apiRoutes.js";
-//var apiMode = "jsh";
-var apiMode = "testing";
+ 
+
+var apiMode = "jsh";
+//var apiMode = "testing";
 
 export default {
   components: {
@@ -135,8 +138,8 @@ export default {
   },
   data() {
     return {
-      //var apiMode = "jsh";
-      apiMode: "testing",
+     // var apiMode = "jsh";
+//      apiMode: "testing",
 
       allCommunitaryCentersURL: apiRoutes[apiMode].allCommunitaryCentersURL,
 
@@ -157,6 +160,7 @@ export default {
   computed: {
     headers: function() {
       console.log("El API seleccionado será " + apiMode);
+      console.log(this);
       if (apiMode === "testing") {
         return [
           { text: "ID", value: "id", sortable: false },
@@ -166,10 +170,11 @@ export default {
         ];
       } else if (apiMode === "jsh") {
         return [
-          { text: "ID", value: "_links.self.href", sortable: false },
-          { text: "Comunidad", value: "nombre" },
-          { text: "Municipio", value: "direccion.ciudad" },
-          { text: "Familias", value: "direccion.numero" }
+          { text: "ID", value: "id", sortable: false },
+          { text: "Comunidad", value: "centroComunitario" },
+          { text: "Centro", value: "nombre" }, // REvisar porque no se pinta el subobjeto
+          { text: "Familias", value: "numeroFamilias" },
+          { text: "Indice Marginacion", value: "indiceMarginacion" }
         ];
       }
     }
@@ -241,7 +246,19 @@ export default {
             //Api from amdocs has projections
             //console.log(response.data._embedded.comunitarios);
             var rawData = response.data._embedded.comunitarios;
+
+           /* for(var i= 0; i<= rawData.length; i++)
+            {
+               var itemnew = {"id":rawData[i].id, 
+                              "centroComunitario": rawData[i].centroComunitario, 
+                              "numeroFamilias": rawData[i].numeroFamilias, 
+                              "municipio": rawData[i].direccion.ciudad};
+               this.items.push(itemnew);
+            }*/ 
             this.items = rawData;
+
+            console.log("get data");
+            console.log(this.items);
           }
         })
         .catch(e => {

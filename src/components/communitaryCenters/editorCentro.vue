@@ -58,7 +58,7 @@
 
         <v-flex xs3>
           <v-text-field
-            v-model="municipio"
+            v-model="direccion.ciudad"
             label="Municipio"
             required/>
         </v-flex>
@@ -191,8 +191,8 @@
 import axios from "axios";
 import toolbarHandler from "../toolbars/toolbarHandler";
 import { apiRoutes } from "../../configs/apiRoutes.js";
-//var apiMode = "jsh";
-var apiMode = "testing";
+var apiMode = "jsh";
+//var apiMode = "testing";
 
 export default {
   components: {
@@ -254,8 +254,18 @@ export default {
             this.direccion = rawData.direccion;
           } else {
             //Api from amdocs has projections
-            //console.log(response.data._embedded.comunitarios);
-            var rawData = response.data._embedded.comunitarios;
+
+            console.log(response.data.direccion);
+            console.log(response.data._embedded.comunitarios);
+            //var rawData = response.data._embedded.comunitarios;
+            var rawData = response.data;
+            this.id = rawData.id;
+            this.nombre = rawData.nombre;
+            this.fechaRegistro = rawData.fechaRegistro;
+            this.comunidad = rawData.direccion.comunidad; // 
+            this.municipio = rawData.direccion.municipio; //
+            this.familias = rawData.numeroFamilias;
+            this.direccion = rawData.direccion;
             this.items = rawData;
           }
         })

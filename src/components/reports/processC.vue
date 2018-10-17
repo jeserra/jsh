@@ -84,7 +84,7 @@ export default {
   data() {
     return {
       loading: false,
-      title: "Cuenta Ahorro",
+      title: "Finanzas",
       stars: 4.5,
       totalVotes: 100,
 

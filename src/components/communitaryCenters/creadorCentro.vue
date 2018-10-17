@@ -36,7 +36,9 @@
             <v-text-field
               v-model="fechaRegistro"
               label="Fecha del registro"
-              required/>
+              required 
+              placeholder="yyyy-MM-dd"/>
+
           </div>
         </v-flex>
 
@@ -44,7 +46,7 @@
 
         <v-flex xs3>
           <v-text-field
-            v-model="comunidad"
+            v-model="centroComunitario"
             label="Comunidad"
             required/>
         </v-flex>
@@ -56,13 +58,7 @@
         row
         fill-height>
 
-        <v-flex xs3>
-          <v-text-field
-            v-model="municipio"
-            label="Municipio"
-            required/>
-        </v-flex>
-
+        
         <v-flex xs1/>
 
         <v-flex xs2>
@@ -192,7 +188,7 @@ import axios from "axios";
 import toolbarHandler from "../toolbars/toolbarHandler";
 import { apiRoutes } from "../../configs/apiRoutes.js";
 //var apiMode = "jsh";
-var apiMode = "testing";
+var apiMode = "jsh";
 
 export default {
   components: {
@@ -201,17 +197,18 @@ export default {
   data() {
     return {
       //var apiMode = "jsh";
-      apiMode: "testing",
+      //apiMode: "testing",
 
       allCommunitaryCentersURL: apiRoutes[apiMode].allCommunitaryCentersURL,
+      addressURL: apiRoutes[apiMode].addressURL,
       errors: [],
 
       centerData: {},
       id: "",
       nombre: "",
       fechaRegistro: "",
-      comunidad: "",
-      municipio: "",
+      centroComunitario: "",
+     // municipio: "",
       familias: "",
       direccion: {
         calle: "",
@@ -238,8 +235,8 @@ export default {
         id: this.id,
         nombre: this.nombre,
         fechaRegistro: this.fechaRegistro,
-        comunidad: this.comunidad,
-        municipio: this.municipio,
+        centroComunitario: this.comunidad,
+       // municipio: this.municipio,
         familias: this.familias,
         direccion: this.direccion,
         latitud: this.latitud,
@@ -247,9 +244,32 @@ export default {
       };
     },
     saveCenterData() {
-      this.prepareData();
 
-      axios({
+      console.log("Prepare date to save");
+      console.log( this.addressURL);
+      console.log( apiMode);
+      this.prepareData();
+      
+      console.log(JSON.stringify(this.centerData) );
+             
+      // Save the address before Center
+      /* axios({
+              method: "POST",
+              data: this.centerData.direccion,
+              url: this.addressURL
+            })
+              .then(response => {
+                console.log(response);
+
+
+                alert("La direccion se ha guardado satisfactoriamente");
+                this.$router.push({ name: "direccion" });
+              })
+              .catch(e => {
+                this.errors.push(e);
+              });*/
+
+       axios({
         method: "POST",
         data: this.centerData,
         url: this.allCommunitaryCentersURL
